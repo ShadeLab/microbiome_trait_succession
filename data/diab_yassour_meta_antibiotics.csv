@@ -1,0 +1,234 @@
+Subject,Age (months),Antibiotic type,Antibiotic code,Duration (days),Symptoms
+E003188,6.5,Amoxicillin,J01CA04,7,Acute otitis media
+E003188,7,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E003188,13,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E003188,13.5,Azithromycin,J01FA10,3,Acute otitis media
+E003188,14,Amoxicillin and clavulanic acid,J01CR02,6,Acute otitis media
+E003188,15.5,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E003188,16,Clarithromycin,J01FA09,5,Acute otitis media
+E003188,16,Cefalexin,J01DB01,7,Acute otitis media
+E003188,16.5,Ceftriaxone,J01DD04,Not known,Acute otitis media
+E003188,16.5,Ceftriaxone,J01DD04,Not known,Acute otitis media
+E003188,25,Cefalexin,J01DB01,7,Acute otitis media
+E003188,25,Amoxicillin,J01CA04,5,Exposure (?)
+E003953,6.5,Amoxicillin,J01CA04,7,Acute otitis media
+E003953,10,Amoxicillin,J01CA04,7,Acute otitis media
+E003953,10.5,Trimetoprime and sulfadiazine,J01EE02,5,Acute otitis media
+E003953,12.5,Amoxicillin,J01CA04,5,Acute otitis media
+E003953,14.5,Amoxicillin,J01CA04,7,Acute otitis media
+E003953,15,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E003953,16.5,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E003953,17,Amoxicillin,J01CA04,7,Acute otitis media
+E003953,17.5,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E003953,18,Amoxicillin,J01CA04,11,Acute otitis media
+E003953,23,Clarithromycin,J01FA09,7,Acute otitis media
+E003953,24,Amoxicillin,J01CA04,5,Acute otitis media
+E003953,28,Amoxicillin,J01CA04,7,Acute otitis media
+E003953,29,Phenoxymethylpenicillin ,J01CE02,2,Pharyngitis
+E003953,32,Amoxicillin,J01CA04,7,Acute otitis media
+E004628,7,Amoxicillin,J01CA04,7,Acute otitis media
+E004628,7.5,Cefalexin,J01DB01,7,Acute otitis media
+E004628,10.5,Azithromycin,J01FA10,3,Acute otitis media
+E004628,11.5,Amoxicillin,J01CA04,7,Acute otitis media and bronchitis
+E004628,12.5,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E004628,13,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E004628,16,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E004628,16,Amoxicillin and clavulanic acid,J01CR02,3,Acute otitis media
+E004628,21,Amoxicillin and clavulanic acid,J01CR02,5,Acute otitis media
+E004628,23,Amoxicillin and clavulanic acid,J01CR02,10,Bronchitis. pneumonia
+E004628,27,Trimetoprime and sulfadiazine,J01EE02,5,Acute otitis media
+E004628,28,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E004628,35,Cefalexin,J01DB01,7,Acute otitis media
+E004898,4.5,Amoxicillin,J01CA04,7,Acute otitis media
+E004898,7,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E004898,13,Clarithromycin,J01FA09,7,Cough. flu
+E004898,17,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E004898,20.5,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E004898,20.5,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E004898,21.5,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E004898,23,Amoxicillin,J01CA04,5,Acute otitis media
+E004898,24,Trimetoprime and sulfadiazine,J01EE02,7,Bronchitis
+E004898,26,Azithromycin,J01FA10,3,Bronchitis
+E004898,28.5,Amoxicillin and clavulanic acid,J01CR02,7,Bronchitis
+E004898,30,Amoxicillin,J01CA04,7,Acute otitis media
+E004898,36,Amoxicillin,J01CA04,7,Acute otitis media
+E005786,10,Amoxicillin and clavulanic acid,J01CR02,3,Acute otitis media
+E005786,10,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E005786,13,Trimetoprime and sulfadiazine,J01EE02,5,Acute otitis media
+E005786,17,Trimetoprime and sulfadiazine,J01EE02,10,Acute otitis media
+E005786,18,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E005786,21,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E005786,21,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E005786,22,Clarithromycin,J01FA09,1,Acute otitis media
+E005786,22,Trimetoprime and sulfadiazine,J01EE02,6,Acute otitis media
+E005786,23,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E006091,12,Amoxicillin,J01CA04,7,Acute otitis media
+E006091,14,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E006091,16,Amoxicillin,J01CR02,6,Acute otitis media
+E006091,20,Amoxicillin and clavulanic acid,J01CR02,7,Respiratory infection NAS
+E006091,21,Phenoxymethylpenicillin ,J01CE02,10,Fever. cough
+E006091,22,Trimetoprime and sulfadiazine,J01EE02,10,Fever
+E006091,23,Amoxicillin,J01CA04,5,Acute otitis media
+E006091,24,Trimetoprime and sulfadiazine,J01EE02,5,Acute otitis media
+E006091,24,Amoxicillin,J01CA04,7,Acute otitis media
+E006781,12,Cefaclor,J01DD02,5,Acute otitis media
+E006781,13,Ceftriaxone,J01DD04,7,Acute otitis media
+E006781,17,Amoxicillin,J01CR02,7,Acute otitis media
+E006781,17,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E006781,17,Amoxicillin,J01CA02,7,Acute otitis media
+E006781,17,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E006781,17,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E006781,17,Azithromycin,J01FA10,7,Acute otitis media
+E006781,23,Amoxicillin and clavulanic acid,J01CR02,10,Acute otitis media
+E006781,23,Amoxicillin and clavulanic acid,J01CR02,10,Acute otitis media
+E006781,32,Amoxicillin and clavulanic acid,J01CA04,7,Acute otitis media
+E006781,32,Trimetoprime and sulfadiazine,J01EE02,5,Acute otitis media
+E006781,33,Cefalexin,J01DB01,7,Pyelonefritis
+E006781,34,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E010481,2,Amoxicillin,J01CA04,7,Acute otitis media
+E010481,4,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E010481,5,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E010481,6,Azithromycin,J01FA10,3,Acute otitis media
+E010481,8,Cefalexin,J01DB01,7,Acute otitis media
+E010481,8,Amoxicillin and clavulanic acid,J01CR02,5,Acute otitis media
+E010481,17,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E010481,22,Amoxicillin,J01CA04,7,Acute otitis media
+E010481,25,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E010481,27,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E010481,28,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E010481,28,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E010481,29,Amoxicillin,J01CA04,7,Acute otitis media
+E010481,33,Amoxicillin,J01CA04,7,Conjunctivitis (?)
+E010682,9,Amoxicillin,J01CA04,7,Acute otitis media
+E010682,9.5,Amoxicillin and clavulanic acid,J01CR02,5,Acute otitis media
+E010682,9.5,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E010682,10.5,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E010682,12,Amoxicillin,J01CA04,6,Prophylaxis (acute otitis media)
+E010682,27,Amoxicillin,J01CA04,7,Acute otitis media
+E010682,33,Amoxicillin,J01CA04,7,Acute otitis media
+E010682,33,Amoxicillin and clavulanic acid,J01CA04,5,Acute otitis media
+E010682,35,Amoxicillin,J01CA04,6,Acute otitis media
+E010682,35,Azithromycin,J01FA10,3,Acute otitis media
+E010682,35,Cefaclor,J01DB01,7,Acute otitis media
+E010682,36,Azithromycin,J01FA10,4,Acute otitis media
+E011878,8,Amoxicillin,J01CA04,5,Acute otitis media
+E011878,9.5,Amoxicillin,J01CA04,7,Acute otitis media
+E011878,11,Azithromycin,J01FA10,1,Acute otitis media
+E011878,11,Cefalexin,J01DB01,10,Acute otitis media
+E011878,11,Trimetoprime and sulfadiazine,J01EE02,6,Acute otitis media
+E011878,12,Trimetoprime and sulfadiazine,J01EE02,12,Acute otitis media
+E011878,20,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E011878,22,Amoxicillin and clavulanic acid,J01CR02,10,Acute otitis media
+E011878,24,Cefalexin,J01DB01,10,Acute otitis media
+E011878,24,Amoxicillin,J01CA04,Not known,Acute otitis media
+E011878,25,Amoxicillin,J01CA04,7,Acute otitis media
+E012854,9.5,Amoxicillin,J01CA04,7,Acute otitis media
+E012854,12.5,Amoxicillin and clavulanic acid,J01EE02,5,Acute otitis media
+E012854,17,Amoxicillin,J01CA04,5,Acute otitis media
+E012854,18,Amoxicillin,J01CA04,5,Acute otitis media
+E012854,19,Amoxicillin,J01CA04,5,Acute otitis media
+E012854,20,Azithromycin,J01FA10,3,Bronchitis
+E012854,28,Amoxicillin,J01CA04,7,Acute otitis media
+E012854,28,Trimetoprime and sulfadiazine,J01EE02,10,Acute otitis media
+E012854,30,Amoxicillin,J01CA04,5,Acute otitis media
+E013505,12,Amoxicillin,J01CA04,7,Acute otitis media
+E013505,16,Amoxicillin,J01CA04,7,Acute otitis media
+E013505,17,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E013505,18,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E013505,18,Trimetoprime and sulfadiazine,J01EE02,10,Acute otitis media
+E013505,20,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E013505,20,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E013505,23,Amoxicillin,J01CA04,7,Acute otitis media
+E013505,31,Azithromycin,J01FA10,Not known,Acute otitis media
+E013505,34,Amoxicillin,J01CA04,Not known,Acute otitis media
+E013505,35,Amoxicillin,J01CA04,Not known,Acute otitis media
+E014403,5.5,Amoxicillin,J01CA04,5,Acute otitis media
+E014403,5.5,Amoxicillin and clavulanic acid,J01CR02,5,Acute otitis media
+E014403,6.5,Trimetoprime and sulfadiazine,J01EE02,10,Acute otitis media
+E014403,7.6,Azithromycin,J01FA10,3,Acute otitis media
+E014403,8,Amoxicillin and clavulanic acid,J01CR02,5,Acute otitis media
+E014403,12,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E014403,14.5,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E014403,32.5,Amoxicillin and clavulanic acid,J01CA04,7,Acute otitis media
+E014403,Not_known,Cefalexin,J01DB01,7,Acute otitis media
+E016426,0,Systemic antibiotic NAS,Not_known,1,Suspected infection (?)
+E016426,9,Amoxicillin,J01CA04,2,Acute otitis media
+E016426,9,Systemic antibiotic NAS,Not_known,1,Acute otitis media and vomiting
+E016426,10,Azithromycin,J01FA10,3,Acute otitis media
+E016426,15,Trimetoprime and sulfadiazine,J01EE02,5,Acute otitis media
+E016426,15,Azithromycin,J01FA10,3,Acute otitis media
+E016426,15,Cefaclor,J01DD02,7,Acute otitis media
+E016426,19,Amoxicillin,J01CA04,5,Acute otitis media
+E016426,20,Amoxicillin,J01CA04,5,Acute otitis media
+E016426,21,Cefalexin,J01DB01,7,Acute otitis media
+E016426,21,Cefalexin,J01DB01,7,Acute otitis media
+E016426,22,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E016426,27,Cefalexin,J01DB01,7,Acute otitis media
+E020924,7,Amoxicillin,J01CR02,7,Acute otitis media
+E020924,7,Cefaclor,J01DC04,7,Acute otitis media
+E020924,7,Azithromycin,J01FA10,5,Acute otitis media
+E020924,14,Amoxicillin,J01CA04,5,Acute otitis media
+E020924,15,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E020924,17,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E020924,18,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E020924,18,Azithromycin,J01FA10,3,Acute otitis media
+E020924,21,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E020924,24,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E020924,24,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E020924,25,Azithromycin,J01FA10,3,Acute otitis media
+E020924,25,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E020924,29,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E021235,0,Penicillin G,J01CE01,Not known,RSV
+E021235,0,Netilmicin,J01GB07,Not known,RSV
+E021235,7,Amoxicillin,J01CA04,10,Acute otitis media
+E021235,8,Amoxicillin,J01CA04,5,Acute otitis media
+E021235,9,Azithromycin,J01FA10,3,Acute otitis media
+E021235,10,Azithromycin,J01FA10,3,Acute otitis media
+E021235,12,Cefalexin,J01DB01,7,Acute otitis media
+E021235,13,Cefalexin,J01DB01,7,Acute otitis media
+E021235,13,Azithromycin,J01FA10,2,Acute otitis media
+E021235,13,Amoxicillin,J01CA04,7,Acute otitis media
+E021822,5,Amoxicillin,J01CA04,7,Acute otitis media
+E021822,12,Amoxicillin,J01CA04,7,Acute otitis media
+E021822,14,Azithromycin,J01FA10,3,Acute otitis media
+E021822,16,Trimetoprime and sulfadiazine,J01EE02,5,Acute otitis media
+E021822,20,Azithromycin,J01FA10,3,Acute otitis media
+E021822,23,Azithromycin,J01FA10,3,Acute otitis media
+E021822,24,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E021822,27,Trimetoprime and sulfadiazine,J01EE02,Not known,Acute otitis media
+E021822,27,Amoxicillin,J01CA04,Not known,Acute otitis media
+E021822,36,Amoxicillin,J01CA04,Not known,Acute otitis media
+E021940,6,Amoxicillin,J01CA04,3,Acute otitis media
+E021940,6,Cefalexin,J01DB01,8,Acute otitis media
+E021940,6,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E021940,11,Trimetoprime and sulfadiazine,J01EE02,5,Acute otitis media
+E021940,12,Amoxicillin,J01CA04,7,Acute otitis media
+E021940,14,Amoxicillin,J01CA04,7,Acute otitis media
+E021940,19,Azithromycin,J01FA10,4,Respiratory infection NAS
+E021940,22,Azithromycin,J01FA10,4,Respiratory infection NAS
+E021940,27,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E021940,34,Amoxicillin,J01CA04,5,Acute otitis media
+E021940,35,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media
+E023445,12,Amoxicillin,J01CA04,5,Acute otitis media
+E023445,13,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E023445,15,Amoxicillin,J01CA04,7,Acute otitis media
+E023445,16,Trimetoprime and sulfadiazine,J01EE02,7,Acute otitis media
+E023445,18,Azithromycin,J01FA10,3,Acute otitis media
+E023445,18.5,Trimetoprime and sulfadiazine,J01EE02,14,Prophylaxis (acute otitis media)
+E023445,22,Cefalexin,J01DB01,5,Acute otitis media
+E023445,29,Amoxicillin,J01CA04,7,Bronchitis
+E023445,31,Cefalexin,J01DB01,7,Acute otitis media
+E024907,5,Amoxicillin,J01CA04,5,Acute otitis media
+E024907,6,Cefaclor,J01DC04,3,Acute otitis media
+E024907,6,Cefalexin,J01DB01,5,Acute otitis media
+E024907,11,Cefalexin,J01DB01,7,Acute otitis media
+E024907,12,Trimetoprime and sulfadiazine,J01EE02,6,Acute otitis media
+E024907,16,Trimetoprime and sulfadiazine,J01AE02,6,Acute otitis media
+E024907,16,Trimetoprime and sulfadiazine,J01EE02,6,Acute otitis media
+E024907,20,Amoxicillin,J01CA04,5,Acute otitis media
+E024907,23,Amoxicillin,J01CA04,5,Acute otitis media
+E024907,23.5,Azithromycin,J01FA10,3,Acute otitis media and bronchitis
+E024907,24,Amoxicillin,J01CA04,5,Acute otitis media
+E024907,26,Trimetoprime and sulfadiazine,J01EE02,6,Acute otitis media
+E024907,26,Amoxicillin,J01CA04,10,Acute otitis media
+E028794,28,Amoxicillin and clavulanic acid,J01CR02,7,Acute otitis media

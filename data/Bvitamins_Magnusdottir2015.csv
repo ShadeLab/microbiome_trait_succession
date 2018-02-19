@@ -1,0 +1,514 @@
+tax,NCBI Taxonomy ID,Biotin,Cobalamin,Folate,Niacin,Pantothenate,Pyridoxin,Riboflavin,Thiamin,Body Site
+Actinomyces odontolyticus ATCC 17982 (411466.7),411466,0,0,0,0,1,1,0,0,HGM
+Corynebacterium ammoniagenes DSM 20306 (649754.3),649754,0,0,1,1,1,0,1,1,HGM
+Succinatimonas hippei YIT 12066 (762983.3),762983,1,0,0,0,0,1,1,1,HGM
+Listeria grayi DSM 20601 (525367.9),525367,0,0,1,0,1,1,1,0,HGM
+Listeria monocytogenes str. 1/2a F6854 (267409.1),267409,0,1,1,1,1,1,0,0,HGM
+Bacillus subtilis subsp. subtilis str. 168 (224308.1),224308,1,0,1,1,1,1,1,1,HGM
+Alistipes indistinctus YIT 12060 (742725.3),742725,1,0,0,1,1,1,1,1,HGM
+Bacteroides caccae ATCC 43185 (411901.7),411901,1,0,1,1,1,1,1,1,HGM
+Bacteroides cellulosilyticus DSM 14838 (537012.5),537012,1,1,1,1,1,1,1,1,HGM
+Bacteroides coprocola DSM 17136 (470145.6),470145,1,0,1,1,1,0,1,1,HGM
+Bacteroides coprophilus DSM 18228 (547042.5),547042,1,0,1,1,1,0,1,1,HGM
+Bacteroides dorei DSM 17855 (483217.6),483217,1,1,1,1,1,1,1,1,HGM
+Bacteroides eggerthii 1_2_48FAA (665953.3),665953,1,0,1,1,1,1,1,1,HGM
+Bacteroides eggerthii DSM 20697 (483216.6),483216,1,0,1,1,1,1,1,1,HGM
+Bacteroides finegoldii DSM 17565 (483215.6),483215,1,0,0,1,1,1,1,1,HGM
+Bacteroides fragilis 3_1_12 (457424.5),457424,1,1,1,1,1,1,1,1,HGM
+Bacteroides fragilis NCTC 9343 (272559.17),272559,1,1,1,1,1,1,1,1,HGM
+Bacteroides fragilis YCH46 (295405.3),295405,1,1,1,1,1,1,1,1,HGM
+Bacteroides intestinalis DSM 17393 (471870.8),471870,1,1,1,1,1,1,1,1,HGM
+Bacteroides ovatus ATCC 8483 (411476.11),411476,1,0,1,1,1,1,1,1,HGM
+Bacteroides ovatus SD CC 2a (702444.3),702444,1,0,1,1,1,1,1,1,HGM
+Bacteroides ovatus SD CMC 3f (702443.3),702443,1,0,1,1,1,1,1,1,HGM
+Bacteroides plebeius DSM 17135 (484018.6),484018,1,0,1,1,1,0,1,1,HGM
+Bacteroides sp. 1_1_30 (457387.3),457387,1,0,1,1,1,1,1,1,HGM
+Bacteroides sp. 1_1_6 (469586.3),469586,1,0,1,1,1,1,1,1,HGM
+Bacteroides sp. 2_1_16 (469587.3),469587,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. 2_1_22 (469588.3),469588,1,0,1,1,1,1,1,1,HGM
+Bacteroides sp. 2_1_33B (469589.3),469589,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. 2_1_7 (457388.5),457388,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. 2_2_4 (469590.5),469590,1,0,1,1,1,1,1,1,HGM
+Bacteroides sp. 3_1_19 (469592.4),469592,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. 3_1_23 (457390.3),457390,1,0,1,1,1,1,1,1,HGM
+Bacteroides sp. 3_1_33FAA (457391.3),457391,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. 3_1_40A (469593.3),469593,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. 3_2_5 (457392.3),457392,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. 4_1_36 (457393.3),457393,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. 4_3_47FAA (457394.3),457394,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. 9_1_42FAA (457395.6),457395,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. D1 (556258.5),556258,1,0,1,1,1,1,1,1,HGM
+Bacteroides sp. D2 (556259.3),556259,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. D20 (585543.3),585543,1,1,1,1,1,1,1,1,HGM
+Bacteroides sp. D22 (585544.3),585544,1,0,1,1,1,1,1,1,HGM
+Bacteroides stercoris ATCC 43183 (449673.7),449673,1,1,1,1,1,1,1,1,HGM
+Bacteroides thetaiotaomicron CL09T03C10 (997888.3),997888,1,0,0,1,1,1,1,1,HGM
+Bacteroides thetaiotaomicron dnLKV9 (1235785.3),1235785,1,0,1,1,1,1,1,1,HGM
+Bacteroides thetaiotaomicron VPI-5482 (226186.1),226186,1,0,1,1,1,1,1,1,HGM
+Bacteroides uniformis ATCC 8492 (411479.10),411479,1,1,1,1,1,1,1,1,HGM
+Bacteroides vulgatus ATCC 8482 (435590.6),435590,1,1,1,1,1,1,1,1,HGM
+Bacteroides vulgatus PC510 (702446.3),702446,1,1,1,1,1,1,1,1,HGM
+Bacteroides xylanisolvens SD CC 1b (702447.3),702447,1,0,1,1,1,1,1,1,HGM
+Bacteroides xylanisolvens XB1A (657309.4),657309,1,0,1,1,1,1,1,1,HGM
+Parabacteroides distasonis ATCC 8503 (435591.10),435591,1,1,1,1,1,1,1,1,HGM
+Parabacteroides johnsonii DSM 18315 (537006.5),537006,1,1,1,1,1,1,1,1,HGM
+Parabacteroides merdae ATCC 43184 (411477.4),411477,1,1,1,1,1,1,1,1,HGM
+Parabacteroides sp. D13 (563193.3),563193,1,1,1,1,1,1,1,1,HGM
+Prevotella copri DSM 18205 (537011.5),537011,0,0,1,1,1,1,1,1,HGM
+Prevotella salivae DSM 15606 (888832.3),888832,0,0,0,0,1,1,1,0,HGM
+Bifidobacterium adolescentis (1680.3),1680,0,0,1,0,0,1,0,1,HGM
+Bifidobacterium angulatum DSM 20098 (518635.5),518635,0,0,0,1,0,1,0,1,HGM
+Bifidobacterium animalis subsp. lactis AD011 (442563.3),442563,0,0,0,0,0,1,0,0,HGM
+Bifidobacterium bifidum NCIMB 41171 (398513.5),398513,0,0,1,1,0,1,0,1,HGM
+Bifidobacterium breve DSM 20213 = JCM 1192 (518634.7),518634,0,0,1,1,0,1,0,1,HGM
+Bifidobacterium catenulatum DSM 16992 (566552.4),566552,0,0,0,1,0,1,0,1,HGM
+Bifidobacterium dentium ATCC 27678 (473819.7),473819,0,0,1,0,0,1,0,1,HGM
+Bifidobacterium gallicum DSM 20093 (561180.4),561180,0,0,0,0,0,1,0,0,HGM
+Bifidobacterium longum DJO10A (205913.1),205913,0,0,0,1,0,1,0,1,HGM
+Bifidobacterium longum NCC2705 (206672.1),206672,0,0,0,1,0,1,0,1,HGM
+Bifidobacterium longum subsp. infantis 157F (565040.3),565040,0,0,0,1,0,1,0,1,HGM
+Bifidobacterium longum subsp. infantis ATCC 15697 (391904.3),391904,0,0,1,1,0,1,1,1,HGM
+Bifidobacterium longum subsp. infantis ATCC 55813 (548480.3),548480,0,0,0,1,0,1,0,1,HGM
+Bifidobacterium longum subsp. infantis CCUG 52486 (537937.5),537937,0,0,0,1,0,1,0,1,HGM
+Bifidobacterium longum subsp. longum JCM 1217 (565042.3),565042,0,0,0,1,0,1,0,1,HGM
+Bifidobacterium pseudocatenulatum DSM 20438 (547043.6),547043,0,0,0,0,0,1,0,1,HGM
+Burkholderiales bacterium 1_1_47 (469610.4),469610,0,0,0,0,1,0,0,0,HGM
+Oxalobacter formigenes HOxBLS (556268.6),556268,1,0,1,1,1,0,1,1,HGM
+Oxalobacter formigenes OXCC13 (556269.4),556269,1,0,1,1,1,0,1,0,HGM
+Ralstonia sp. 5_7_47FAA (658664.3),658664,1,0,1,1,1,1,1,1,HGM
+Sutterella wadsworthensis 3_1_45B (742821.3),742821,0,0,0,0,0,0,1,0,HGM
+Campylobacter coli JV20 (864566.3),864566,1,0,1,0,1,0,1,1,HGM
+Campylobacter upsaliensis JV21 (888826.3),888826,1,0,0,0,1,0,1,1,HGM
+Helicobacter bilis ATCC 43879 (613026.4),613026,1,0,1,0,1,0,1,0,HGM
+Helicobacter canadensis MIT 98-5491 (537970.5),537970,1,0,0,1,1,0,1,0,HGM
+Helicobacter cinaedi CCUG 18818 (537971.5),537971,1,0,1,1,1,0,1,0,HGM
+Helicobacter pullorum MIT 98-5489 (537972.5),537972,1,0,0,1,1,0,1,0,HGM
+Helicobacter pylori 26695 (85962.1),85962,1,0,1,1,1,0,1,0,HGM
+Helicobacter winghamensis ATCC BAA-430 (556267.4),556267,1,0,0,1,1,0,1,0,HGM
+Eubacterium dolichum DSM 3991 (428127.7),428127,0,0,0,0,0,0,0,0,HGM
+Parvimonas micra ATCC 33270 (411465.10),411465,0,0,0,0,0,0,0,0,HGM
+Butyrivibrio crossotus DSM 2876 (511680.4),511680,0,0,0,0,1,1,1,0,HGM
+Anaerococcus hydrogenalis DSM 7454 (561177.4),561177,0,0,0,0,1,0,1,1,HGM
+Clostridium nexile DSM 1787 (500632.7),500632,0,0,0,1,0,0,0,0,HGM
+Ruminococcus bromii L2-63 (657321.5),657321,0,0,0,1,0,0,0,0,HGM
+Ruminococcus sp. 18P13 (213810.4),213810,0,0,0,1,0,0,0,0,HGM
+Eubacterium biforme DSM 3989 (518637.5),518637,0,0,0,1,0,0,1,0,HGM
+Clostridium leptum DSM 753 (428125.8),428125,0,0,0,1,0,1,0,0,HGM
+Eubacterium siraeum 70/3 (657319.3),657319,0,0,0,1,0,1,0,0,HGM
+Eubacterium siraeum DSM 15702 (428128.7),428128,0,0,0,1,0,1,0,0,HGM
+Eubacterium ventriosum ATCC 27560 (411463.4),411463,0,0,0,1,1,1,0,0,HGM
+Anaerofustis stercorihominis DSM 17244 (445971.6),445971,0,0,0,1,1,0,0,1,HGM
+Clostridium methylpentosum DSM 5476 (537013.3),537013,0,0,0,1,1,1,0,1,HGM
+Clostridium sp. L2-50 (411489.7),411489,0,0,0,1,1,1,1,1,HGM
+Clostridium sp. SS2/1 (411484.7),411484,0,0,0,1,1,1,1,1,HGM
+Roseburia intestinalis L1-82 (536231.5),536231,0,0,0,1,1,1,1,1,HGM
+Clostridium sp. 7_2_43FAA (457396.3),457396,0,0,1,0,0,1,0,0,HGM
+Coprococcus eutactus ATCC 27759 (411474.6),411474,0,0,1,1,1,1,1,1,HGM
+Lachnospiraceae bacterium 5_1_63FAA (658089.3),658089,0,0,1,1,1,1,1,1,HGM
+Bacteroides capillosus ATCC 29799 (411467.6),411467,0,1,0,0,0,0,0,0,HGM
+Bacteroides pectinophilus ATCC 43243 (483218.5),483218,0,1,0,0,0,0,0,0,HGM
+Bryantella formatexigens DSM 14469 (478749.5),478749,0,1,0,0,0,0,0,0,HGM
+Clostridium asparagiforme DSM 15981 (518636.5),518636,0,1,0,0,0,0,0,0,HGM
+Faecalibacterium prausnitzii A2-165 (411483.3),411483,0,1,0,0,0,0,0,0,HGM
+Subdoligranulum variabile DSM 15176 (411471.5),411471,0,1,0,0,0,0,0,0,HGM
+Clostridium sp. M62/1 (411486.3),411486,0,1,0,0,0,0,1,0,HGM
+Faecalibacterium cf. prausnitzii KLE1255 (748224.3),748224,0,1,0,0,0,0,1,0,HGM
+Faecalibacterium prausnitzii L2-6 (718252.3),718252,0,1,0,0,0,0,1,0,HGM
+Faecalibacterium prausnitzii SL3/3 (657322.3),657322,0,1,0,0,0,0,1,0,HGM
+Clostridiales bacterium 1_7_47FAA (457421.5),457421,0,1,0,0,0,0,1,1,HGM
+Anaerotruncus colihominis DSM 17241 (445972.6),445972,0,1,0,0,0,0,0,0,HGM
+Roseburia inulinivorans DSM 16841 (622312.4),622312,0,1,0,1,0,0,0,0,HGM
+Clostridium hylemonae DSM 15053 (553973.6),553973,0,1,0,1,0,0,0,1,HGM
+Clostridium scindens ATCC 35704 (411468.9),411468,0,1,0,1,0,0,0,1,HGM
+Clostridium bolteae ATCC BAA-613 (411902.9),411902,0,1,0,1,0,0,1,0,HGM
+Clostridium clostridioforme 2_1_49FAA (742735.4),742735,0,1,0,1,0,0,1,0,HGM
+Clostridium symbiosum WAL-14163 (742740.3),742740,0,1,0,1,0,0,1,0,HGM
+Clostridium symbiosum WAL-14673 (742741.3),742741,0,1,0,1,0,0,1,0,HGM
+Ruminococcus gnavus ATCC 29149 (411470.6),411470,0,1,0,1,0,1,0,0,HGM
+Lachnospiraceae bacterium 8_1_57FAA (665951.3),665951,0,1,0,1,1,0,1,0,HGM
+Ruminococcus torques ATCC 27756 (411460.6),411460,0,1,0,1,1,0,1,0,HGM
+Butyrivibrio fibrisolvens 16/4 (657324.3),657324,0,1,0,1,1,0,1,1,HGM
+Clostridium hiranonis DSM 13275 (500633.7),500633,0,1,0,1,1,0,1,1,HGM
+Coprococcus comes ATCC 27758 (470146.3),470146,0,1,0,1,1,0,1,1,HGM
+Ruminococcus sp. 5_1_39BFAA (457412.4),457412,0,1,0,1,1,0,1,1,HGM
+Ruminococcus lactaris ATCC 29176 (471875.6),471875,0,1,0,1,1,1,0,1,HGM
+Clostridium sporogenes ATCC 15579 (471871.7),471871,0,1,0,1,1,1,1,1,HGM
+Dorea longicatena DSM 13814 (411462.6),411462,0,1,0,1,1,1,1,1,HGM
+Eubacterium hallii DSM 3353 (411469.3),411469,0,1,0,1,1,1,1,1,HGM
+Eubacterium rectale DSM 17629 (657318.4),657318,0,1,0,1,1,1,1,1,HGM
+Eubacterium rectale M104/1 (657317.3),657317,0,1,0,1,1,1,1,1,HGM
+Blautia hydrogenotrophica DSM 10507 (476272.5),476272,0,1,1,0,0,0,0,0,HGM
+Blautia hansenii DSM 20583 (537007.6),537007,0,1,1,1,0,0,1,1,HGM
+Ruminococcus obeum A2-162 (657314.3),657314,0,1,1,1,0,0,1,1,HGM
+Clostridium bartlettii DSM 16795 (445973.7),445973,0,1,1,1,0,1,1,1,HGM
+Clostridium difficile CD196 (645462.3),645462,0,1,1,1,1,0,1,1,HGM
+Clostridium difficile NAP07 (525258.3),525258,0,1,1,1,1,0,1,1,HGM
+Clostridium difficile NAP08 (525259.3),525259,0,1,1,1,1,0,1,1,HGM
+Ruminococcus sp. SR1/5 (657323.3),657323,0,1,1,1,1,0,1,1,HGM
+Anaerostipes caccae DSM 14662 (411490.6),411490,0,1,1,1,1,1,1,1,HGM
+Anaerostipes sp. 3_2_56FAA (665937.3),665937,0,1,1,1,1,1,1,1,HGM
+Ruminococcaceae bacterium D16 (552398.3),552398,1,1,0,0,0,0,1,0,HGM
+Ruminococcus torques L2-14 (657313.3),657313,1,1,0,1,1,1,0,1,HGM
+Collinsella aerofaciens ATCC 25986 (411903.6),411903,0,1,0,1,0,1,0,0,HGM
+Collinsella intestinalis DSM 13280 (521003.7),521003,0,0,0,1,0,0,0,0,HGM
+Collinsella stercoris DSM 13279 (445975.6),445975,0,0,0,1,0,0,0,0,HGM
+Eggerthella sp. 1_3_56FAA (665943.3),665943,0,0,0,0,1,1,0,1,HGM
+Gordonibacter pamelaeae 7-10-1-b (657308.3),657308,0,1,0,0,0,1,0,0,HGM
+Bilophila wadsworthia 3_1_6 (563192.3),563192,0,1,0,1,1,1,1,1,HGM
+Desulfovibrio piger ATCC 29098 (411464.8),411464,0,1,0,1,1,1,1,1,HGM
+Desulfovibrio sp. 3_1_syn3 (457398.5),457398,0,1,0,1,1,1,1,1,HGM
+Escherichia sp. 1_1_43 (457400.3),457400,0,0,0,0,1,0,0,1,HGM
+Proteus penneri ATCC 35198 (471881.3),471881,1,0,1,0,1,1,1,1,HGM
+Enterobacter cancerogenus ATCC 35316 (500639.8),500639,1,0,1,1,1,1,1,1,HGM
+Escherichia coli O157:H7 str. Sakai (386585.9),511145,1,0,1,1,1,1,1,1,HGM
+Escherichia coli SE11 (409438.11),386585,1,0,1,1,1,1,1,1,HGM
+Escherichia coli str. K-12 substr. MG1655 (511145.6),409438,1,0,1,1,1,1,1,1,HGM
+Escherichia coli UTI89 (364106.7),364106,1,0,1,1,1,1,1,1,HGM
+Escherichia sp. 3_2_53FAA (469598.5),469598,1,0,1,1,1,1,1,1,HGM
+Escherichia sp. 4_1_40B (457401.3),457401,1,0,1,1,1,1,1,1,HGM
+Providencia alcalifaciens DSM 30120 (520999.6),520999,1,0,1,1,1,1,1,1,HGM
+Providencia rettgeri DSM 1131 (521000.6),521000,1,0,1,1,1,1,1,1,HGM
+Providencia rustigianii DSM 4541 (500637.6),500637,1,0,1,1,1,1,1,1,HGM
+Providencia stuartii ATCC 25827 (471874.6),471874,1,0,1,1,1,1,1,1,HGM
+Salmonella enterica subsp. enterica serovar Typhimurium str. (946034.3),946034,1,1,1,1,1,1,1,1,HGM
+Edwardsiella tarda ATCC 23685 (500638.3),500638,1,1,1,0,1,1,1,0,HGM
+Citrobacter sp. 30_2 (469595.3),469595,1,1,1,1,1,1,1,1,HGM
+Citrobacter youngae ATCC 29220 (500640.5),500640,1,1,1,1,1,1,1,1,HGM
+Enterobacteriaceae bacterium 9_2_54FAA (469613.3),469613,1,1,1,1,1,1,1,1,HGM
+Klebsiella pneumoniae 1162281 (1037908.3),1037908,1,1,1,1,1,1,1,1,HGM
+Klebsiella sp. 1_1_55 (469608.3),469608,1,1,1,1,1,1,1,1,HGM
+Erysipelotrichaceae bacterium 5_2_54FAA (552396.3),552396,0,0,0,0,0,0,0,0,HGM
+Holdemania filiformis DSM 12042 (545696.5),545696,0,0,0,0,0,0,0,0,HGM
+Coprobacillus sp. 29_1 (469596.3),469596,0,0,0,0,0,0,1,0,HGM
+Catenibacterium mitsuokai DSM 15897 (451640.5),451640,0,0,0,1,0,0,0,0,HGM
+Clostridium ramosum DSM 1402 (445974.6),445974,0,0,0,1,0,0,0,0,HGM
+Clostridium spiroforme DSM 1552 (428126.7),428126,0,0,0,1,0,0,0,0,HGM
+Erysipelotrichaceae bacterium 3_1_53 (658659.3),658659,0,0,0,1,0,0,1,0,HGM
+Fusobacterium gonidiaformans ATCC 25563 (469615.3),469615,1,1,1,0,0,0,1,1,HGM
+Fusobacterium mortiferum ATCC 9817 (469616.3),469616,1,1,0,1,0,1,1,1,HGM
+Fusobacterium sp. 1_1_41FAA (469621.3),469621,1,1,1,1,0,0,1,1,HGM
+Fusobacterium sp. 2_1_31 (469599.3),469599,1,1,1,1,0,0,1,1,HGM
+Fusobacterium sp. 3_1_27 (469602.3),469602,1,1,1,1,0,0,1,1,HGM
+Fusobacterium sp. 3_1_33 (469603.3),469603,1,1,1,1,0,0,1,1,HGM
+Fusobacterium sp. 3_1_36A2 (469604.3),469604,1,1,1,1,0,0,1,1,HGM
+Fusobacterium sp. 3_1_5R (469605.3),469605,1,1,1,0,0,0,1,1,HGM
+Fusobacterium sp. 4_1_13 (469606.3),469606,1,1,1,1,0,0,1,1,HGM
+Fusobacterium sp. 7_1 (457405.3),457405,1,1,1,1,0,0,1,1,HGM
+Fusobacterium sp. D11 (556264.3),556264,1,1,1,1,0,0,1,1,HGM
+Fusobacterium sp. D12 (556263.3),556263,1,1,1,1,0,0,1,1,HGM
+Fusobacterium ulcerans ATCC 49185 (469617.3),469617,1,1,0,1,0,1,1,1,HGM
+Fusobacterium varium ATCC 27725 (469618.3),469618,1,1,0,1,0,1,1,1,HGM
+Enterococcus sp. 7L76 (657310.3),657310,0,0,0,0,0,0,0,0,HGM
+Lactobacillus acidophilus ATCC 4796 (525306.3),525306,0,0,0,0,0,0,0,0,HGM
+Lactobacillus acidophilus NCFM (272621.3),272621,0,0,0,0,0,0,0,0,HGM
+Lactobacillus casei ATCC 334 (321967.8),321967,0,0,0,0,0,0,0,0,HGM
+Lactobacillus casei BL23 (543734.3),543734,0,0,0,0,0,0,0,0,HGM
+Lactobacillus delbrueckii subsp. bulgaricus ATCC 11842 (390333.6),390333,0,0,0,0,0,0,0,0,HGM
+Lactobacillus delbrueckii subsp. bulgaricus ATCC BAA-365 (321956.5),321956,0,0,0,0,0,0,0,0,HGM
+Lactobacillus gasseri ATCC 33323 (324831.10),324831,0,0,0,0,0,0,0,0,HGM
+Lactobacillus helveticus DPC 4571 (405566.3),405566,0,0,0,0,0,0,0,0,HGM
+Lactobacillus helveticus DSM 20075 (585520.4),585520,0,0,0,0,0,0,0,0,HGM
+Lactobacillus johnsonii NCC 533 (257314.1),257314,0,0,0,0,0,0,0,0,HGM
+Lactobacillus paracasei subsp. paracasei 8700:2 (537973.8),537973,0,0,0,0,0,0,0,0,HGM
+Lactobacillus paracasei subsp. paracasei ATCC 25302 (525337.3),525337,0,0,0,0,0,0,0,0,HGM
+Lactobacillus plantarum WCFS1 (220668.1),220668,0,0,0,0,0,0,0,0,HGM
+Lactobacillus rhamnosus GG (568703.9),568703,0,0,0,0,0,0,0,0,HGM
+Lactobacillus rhamnosus LMS2-1 (525361.3),525361,0,0,0,0,0,0,0,0,HGM
+Lactobacillus sakei subsp. sakei 23K (314315.12),314315,0,0,0,0,0,0,0,0,HGM
+Lactobacillus salivarius ATCC 11741 (525364.3),1423799,0,0,0,0,0,0,0,0,HGM
+Lactobacillus salivarius UCC118 (362948.14),362948,0,0,0,0,0,0,0,0,HGM
+Leuconostoc mesenteroides subsp. cremoris ATCC 19254 (586220.3),586220,0,0,0,0,0,0,0,0,HGM
+Pediococcus acidilactici 7_4 (563194.3),563194,0,0,0,0,0,0,0,0,HGM
+Pediococcus acidilactici DSM 20284 (862514.3),862514,0,0,0,0,0,0,0,0,HGM
+Streptococcus anginosus 1_2_62CV (742820.3),742820,0,0,0,0,0,0,0,0,HGM
+Weissella paramesenteroides ATCC 33313 (585506.3),585506,0,0,0,0,0,0,0,0,HGM
+Lactobacillus amylolyticus DSM 11664 (585524.3),585524,0,0,0,0,0,0,1,0,HGM
+Lactobacillus antri DSM 16041 (525309.3),525309,0,0,0,0,0,0,1,0,HGM
+Lactobacillus brevis ATCC 367 (387344.13),387344,0,0,0,0,0,0,1,0,HGM
+Lactobacillus crispatus 125-2-CHN (575595.3),575595,0,0,0,0,0,0,1,0,HGM
+Lactobacillus fermentum ATCC 14931 (525325.3),525325,0,0,0,0,0,0,1,0,HGM
+Lactobacillus fermentum IFO 3956 (334390.3),334390,0,0,0,0,0,0,1,0,HGM
+Lactobacillus plantarum 16 (1327988.3),1327988,0,0,0,0,0,0,1,0,HGM
+Lactobacillus plantarum subsp. plantarum ATCC 14917 (525338.3),525338,0,0,0,0,0,0,1,0,HGM
+Lactobacillus ultunensis DSM 16047 (525365.3),525365,0,0,0,0,0,0,1,0,HGM
+Lactobacillus buchneri ATCC 11577 (525318.3),525318,0,0,0,0,0,0,0,0,HGM
+Lactobacillus hilgardii ATCC 8290 (525327.3),1423757,0,0,0,0,0,0,0,0,HGM
+Streptococcus equinus ATCC 9812 (525379.3),525379,0,0,0,0,0,1,1,0,HGM
+Enterococcus faecalis TX0104 (491074.3),525278,0,0,0,0,1,0,0,0,HGM
+Enterococcus faecalis TX1322 (525278.3),749518,0,0,0,0,1,0,0,0,HGM
+Enterococcus faecalis TX2134 (749518.3),333849,0,0,0,0,1,0,0,0,HGM
+Enterococcus faecium DO (333849.6),491074,0,0,0,0,1,0,0,0,HGM
+Lactobacillus brevis subsp. gravesensis ATCC 27305 (525310.3),525310,0,0,0,1,0,1,0,0,HGM
+Lactobacillus ruminis ATCC 25644 (525362.3),525362,0,0,0,1,0,1,0,0,HGM
+Streptococcus sp. 2_1_36FAA (469609.3),469609,0,0,1,0,0,0,0,0,HGM
+Streptococcus infantarius subsp. infantarius ATCC BAA-102 (471872.6),471872,0,0,1,1,1,1,1,0,HGM
+Lactobacillus reuteri CF48-3A (525341.3),525341,0,1,0,0,0,0,0,0,HGM
+Lactobacillus reuteri SD2112 (491077.3),491077,0,1,0,0,0,0,0,0,HGM
+Lactobacillus reuteri DSM 20016 (557436.4),557436,0,1,0,0,0,0,1,0,HGM
+Lactobacillus reuteri JCM 1112 (557433.3),557433,0,1,0,0,0,0,1,0,HGM
+Lactobacillus reuteri MM2-3 (585517.3),585517,0,1,0,0,0,0,1,0,HGM
+Lactobacillus reuteri MM4-1A (548485.3),548485,0,1,0,0,0,0,1,0,HGM
+Acinetobacter junii SH205 (575587.3),575587,1,0,1,1,1,1,1,1,HGM
+Acidaminococcus sp. D21 (563191.3),563191,0,0,0,0,1,0,1,1,HGM
+Mitsuokella multacida DSM 20544 (500635.8),500635,0,1,0,0,0,1,1,1,HGM
+Phascolarctobacterium sp. YIT 12067 (626939.3),626939,0,1,0,0,1,1,1,1,HGM
+Veillonella sp. 6_1_27 (450749.3),450749,1,1,0,0,1,0,1,0,HGM
+Veillonella sp. 3_1_44 (457416.3),457416,1,1,0,0,1,0,1,1,HGM
+Megamonas hypermegale ART12/1 (657316.3),657316,1,1,0,1,1,1,1,1,HGM
+Acetobacteraceae bacterium AT-5844 (1054213.3),1054213,0,1,0,0,0,1,1,1,Skin
+Achromobacter piechaudii ATCC 43553 (742159.3),742159,1,0,1,1,1,1,1,1,Airways
+Acinetobacter baumannii ATCC 19606 (575584.3),575584,1,0,1,1,1,1,1,1,Urogenital_tract
+Acinetobacter haemolyticus ATCC 19194 (707232.3),707232,1,0,1,1,1,1,1,1,Airways
+Acinetobacter johnsonii SH046 (575586.4),575586,1,0,1,1,1,1,1,1,Skin
+Acinetobacter lwoffii SH145 (575588.3),575588,0,0,1,1,1,1,1,1,Skin
+Acinetobacter radioresistens SK82 (596318.3),596318,1,0,1,1,1,1,1,1,Skin
+Acinetobacter sp. SH024 (575565.3),575565,1,0,1,1,1,1,1,1,Skin
+Actinobacillus ureae ATCC 25976 (887324.3),887324,1,0,1,0,0,1,1,0,Airways
+Actinobaculum massiliae ACS-171-V-Col2 (883066.3),883066,0,0,0,0,1,0,0,0,Urogenital_tract
+Actinomyces coleocanis DSM 15436 (525245.3),525245,0,0,0,0,0,0,0,0,Urogenital_tract
+Actinomyces graevenitzii C83 (435830.3),435830,0,0,0,0,1,0,0,0,Airways
+Actinomyces neuii BVS029A5 (888439.3),888439,0,0,1,0,0,1,1,0,Urogenital_tract
+Actinomyces sp. oral taxon 175 str. F0384 (944560.4),944560,0,0,0,0,1,1,1,0,Oral
+Actinomyces sp. oral taxon 180 str. F0310 (888052.3),888052,0,0,0,0,1,1,0,0,Oral
+Actinomyces sp. oral taxon 848 str. F0332 (649743.3),649743,0,0,0,0,1,0,0,0,Oral
+Actinomyces turicensis ACS-279-V-Col4 (883077.3),883077,0,0,0,0,1,1,0,0,Urogenital_tract
+Actinomyces urogenitalis DSM 15434 (525246.3),525246,0,0,0,0,1,1,0,0,Urogenital_tract
+Actinomyces viscosus C505 (562973.4),562973,0,0,0,0,1,1,1,0,Airways
+Aerococcus urinae ACS-120-V-Col10a (866775.3),866775,0,1,0,1,0,1,0,0,Urogenital_tract
+Aerococcus viridans ATCC 11563 (655812.3),655812,0,0,0,0,0,0,1,0,Urogenital_tract
+Aggregatibacter aphrophilus F0387 (679198.3),679198,1,0,1,0,0,0,1,0,Oral
+Aggregatibacter segnis ATCC 33393 (888057.3),888057,1,0,1,0,0,0,1,0,Oral
+Anaerococcus hydrogenalis ACS-025-V-Sch4 (879306.3),879306,0,0,0,0,0,0,1,1,Urogenital_tract
+Anaerococcus lactolyticus ATCC 51172 (525254.4),525254,0,0,0,0,0,0,0,0,Urogenital_tract
+Anaerococcus prevotii ACS-065-V-Col13 (879305.3),879305,0,0,0,0,0,0,1,1,Urogenital_tract
+Anaerococcus tetradius ATCC 35098 (525255.3),525255,0,0,0,0,0,0,1,1,Urogenital_tract
+Anaeroglobus geminatus F0357 (861450.3),861450,0,1,0,0,0,0,1,1,Oral
+Atopobium rimae ATCC 49626 (553184.4),553184,0,0,0,0,0,0,0,0,Oral
+Atopobium vaginae DSM 15829 (525256.5),525256,0,0,0,0,0,1,0,0,Urogenital_tract
+Bacillus sp. BT1B_CT2 (665958.3),665958,1,0,1,1,1,1,1,1,Oral
+Bacteroidetes oral taxon 274 str. F0058 (575590.3),575590,0,0,1,1,1,1,1,1,Oral
+Bifidobacterium breve ACS-071-V-Sch8b (866777.3),866777,0,0,1,1,0,1,0,1,Urogenital_tract
+Bifidobacterium dentium ATCC 27679 (871562.3),871562,0,0,1,0,0,1,0,1,Urogenital_tract
+Brevibacterium mcbrellneri ATCC 49030 (585530.3),585530,0,0,0,0,0,1,1,0,Urogenital_tract
+Bulleidia extructa W1219 (679192.3),679192,0,0,0,0,0,0,0,0,Oral
+Campylobacter gracilis RM3268 (553220.3),553220,0,0,0,0,1,0,1,1,Oral
+Campylobacter rectus RM3267 (553218.4),553218,0,0,0,1,1,0,1,1,Oral
+Campylobacter showae RM3277 (553219.3),553219,0,0,0,1,1,0,1,1,Oral
+Campylobacter sp. FOBRC14 (936554.3),936554,0,0,1,1,1,0,1,1,Oral
+Capnocytophaga gingivalis ATCC 33624 (553178.3),553178,0,0,1,0,1,1,1,0,Oral
+Capnocytophaga ochracea str. Holt 25 (1125719.3),1125719,0,0,1,0,1,1,1,0,Oral
+Capnocytophaga sp. oral taxon 335 str. F0486 (1125720.3),1125720,0,0,1,0,1,1,1,0,Oral
+Capnocytophaga sputigena ATCC 33612 (553177.6),553177,0,0,1,0,1,1,1,0,Oral
+Cardiobacterium hominis ATCC 15826 (638300.3),638300,0,0,1,0,0,0,1,1,Blood
+Centipeda periodontii DSM 2778 (888060.3),888060,0,1,0,0,0,0,1,0,Oral
+Chryseobacterium gleum ATCC 35910 (525257.3),525257,0,0,0,1,1,1,1,1,Urogenital_tract
+Clostridiales genomosp. BVAB3 str. UPII9-5 (699246.3),699246,0,0,0,0,0,0,0,1,Urogenital_tract
+Clostridium sp. MSTE9 (1105031.3),1105031,0,0,0,0,0,1,1,1,Oral
+Corynebacterium accolens ATCC 49726 (862512.3),862512,1,0,1,1,0,1,1,1,Airways
+Corynebacterium amycolatum SK46 (553204.6),553204,0,1,1,1,1,1,1,1,Skin
+Corynebacterium aurimucosum ATCC 700975 (Prj:31451) (548476.7),548476,0,0,1,0,1,1,1,1,Urogenital_tract
+Corynebacterium efficiens YS-314 (Prj:34585) (196164.10),196164,0,0,1,1,1,0,1,1,Skin
+Corynebacterium genitalium ATCC 33030 (585529.3),585529,0,0,1,1,0,0,1,1,Urogenital_tract
+Corynebacterium glucuronolyticum ATCC 51867 (548477.4),548477,1,1,1,1,0,1,1,0,Urogenital_tract
+Corynebacterium jeikeium ATCC 43734 (525262.3),525262,0,0,1,1,1,1,1,1,Urogenital_tract
+Corynebacterium lipophiloflavum DSM 44291 (525263.3),525263,0,0,1,1,1,1,1,1,Urogenital_tract
+Corynebacterium matruchotii ATCC 14266 (553207.3),553207,0,1,1,0,0,0,0,0,Oral
+Corynebacterium pseudogenitalium ATCC 33035 (525264.4),525264,1,0,1,0,0,1,1,0,Urogenital_tract
+Corynebacterium striatum ATCC 6940 (525268.3),525268,1,0,1,1,1,1,1,1,Urogenital_tract
+Corynebacterium tuberculostearicum SK141 (553206.4),553206,0,0,1,0,0,1,1,0,Skin
+Dermacoccus sp. Ellin185 (188626.3),188626,0,1,1,0,1,1,1,0,Skin
+Desmospora sp. 8437 (997346.3),997346,0,0,0,1,1,0,1,1,Blood
+Dialister invisus DSM 15470 (592028.3),592028,1,1,1,0,0,0,1,0,Oral
+Dialister micraerophilus DSM 19965 (888062.3),888062,0,0,0,0,0,0,1,0,Urogenital_tract
+Dialister microaerophilus UPII 345-E (910314.3),910314,0,0,0,0,0,0,1,0,Urogenital_tract
+Eikenella corrodens ATCC 23834 (546274.4),546274,0,0,1,1,1,1,1,0,Oral
+Enhydrobacter aerosaccus SK60 (553217.3),553217,0,0,1,1,1,1,1,0,Skin
+Enterobacter hormaechei ATCC 49162 (888063.3),888063,1,0,1,1,1,1,1,1,Oral
+Enterococcus casseliflavus ATCC 12755 (888066.3),888066,0,0,0,0,0,0,1,0,Oral
+Enterococcus durans FB129-CNAB-4 (883162.3),883162,0,0,0,0,0,0,0,0,Urogenital_tract
+Enterococcus faecalis TUSoD Ef11 (553209.3),553209,0,0,0,0,0,0,0,0,Oral
+Enterococcus faecium TX0082 (749520.3),749520,0,0,0,0,0,0,0,0,Blood
+Enterococcus italicus DSM 15952 (888064.3),888064,0,0,0,0,0,0,0,0,Oral
+Eremococcus coleocola ACS-139-V-Col8 (908337.3),908337,0,0,0,0,0,0,0,0,Urogenital_tract
+Erysipelothrix rhusiopathiae ATCC 19414 (525280.3),525280,0,0,0,0,0,0,0,0,Skin
+Escherichia coli 83972 (525281.3),525281,1,0,1,1,1,1,1,1,Urogenital_tract
+Eubacteriaceae bacterium OBRC8 (796941.3),796941,0,1,0,0,0,0,0,0,Oral
+Eubacterium infirmum F0142 (883109.3),883109,0,1,0,0,0,0,0,1,Oral
+Eubacterium saphenum ATCC 49989 (592031.3),592031,0,0,0,0,0,0,1,0,Oral
+Eubacterium sp. AS15 (1115804.3),936556,0,1,0,0,0,0,1,0,Oral
+Eubacterium yurii subsp. margaretiae ATCC 43715 (864565.3),864565,0,1,0,0,0,0,1,0,Oral
+Filifactor alocis ATCC 35896 (546269.5),546269,0,0,0,1,0,0,1,0,Oral
+Finegoldia magna ATCC 53516 (525282.5),525282,0,0,1,0,0,0,0,1,Urogenital_tract
+Fusobacterium necrophorum subsp. funduliforme ATCC 51357 (1095747.3),1095747,1,1,1,1,1,0,1,1,Liver
+Fusobacterium nucleatum subsp. polymorphum F0401 (693991.3),693991,1,1,1,1,0,0,1,1,Oral
+Fusobacterium periodonticum ATCC 33693 (546275.3),546275,1,1,1,1,0,0,1,1,Oral
+Gardnerella vaginalis 409-05 (553190.4),553190,0,0,0,0,0,1,0,1,Urogenital_tract
+Gemella haemolysans ATCC 10379 (546270.5),546270,0,0,0,0,0,0,1,0,Oral
+Gemella sanguinis M325 (562983.3),562983,0,0,0,0,0,0,0,0,Airways
+Granulicatella adiacens ATCC 49175 (638301.3),638301,0,0,0,0,0,0,0,0,Oral
+Granulicatella elegans ATCC 700633 (626369.3),626369,0,0,0,0,0,0,0,0,Oral
+Haemophilus aegyptius ATCC 11116 (888728.3),888728,1,0,1,0,0,0,1,0,Oral
+Haemophilus parainfluenzae ATCC 33392 (888828.3),888828,1,0,1,0,0,0,1,0,Skin
+Haemophilus sp. oral taxon 851 str. F0397 (762965.3),762965,1,0,1,0,0,0,1,0,Oral
+Haemophilus sputorum HK 2154 (1078483.3),1078483,0,0,1,0,0,0,1,0,Blood
+Johnsonella ignava ATCC 51276 (679200.3),679200,0,1,0,0,0,0,1,1,Oral
+Jonquetella anthropi E3_33 E1 (645512.3),645512,0,1,0,0,1,0,1,1,Oral
+Kingella denitrificans ATCC 33394 (888741.3),888741,0,0,0,0,1,1,1,0,Airways
+Kingella kingae ATCC 23330 (887327.3),887327,0,0,1,0,1,1,1,0,Airways
+Kingella oralis ATCC 51147 (629741.3),629741,0,0,0,0,1,1,1,0,Oral
+Klebsiella pneumoniae subsp. rhinoscleromatis ATCC 13884 (667127.3),667127,1,1,1,1,1,1,1,1,Airways
+Klebsiella sp. OBRC7 (936565.3),936565,1,1,1,1,1,1,1,1,Oral
+Lachnospiraceae bacterium ICM7 (936594.3),936594,0,1,0,0,0,0,0,0,Oral
+Lachnospiraceae oral taxon 107 str. F0167 (575593.3),575593,0,1,0,0,0,0,0,0,Oral
+Lactobacillus coleohominis 101-4-CHN (575594.3),575594,0,0,0,0,0,0,0,0,Urogenital_tract
+Lactobacillus crispatus CTV-05 (440496.3),440496,0,0,0,0,0,0,1,0,Urogenital_tract
+Lactobacillus fermentum 28-3-CHN (575599.3),575599,0,0,0,0,0,0,1,0,Urogenital_tract
+Lactobacillus gasseri MV-22 (559301.5),559301,0,0,0,0,0,0,0,0,Urogenital_tract
+Lactobacillus iners ATCC 55195 (888801.3),888801,0,0,0,0,0,0,0,0,Urogenital_tract
+Lactobacillus jensenii JV-V16 (525329.3),525329,0,0,0,0,0,0,1,0,Urogenital_tract
+Lactobacillus johnsonii ATCC 33200 (525330.3),525330,0,0,0,0,0,0,0,0,Urogenital_tract
+Lactobacillus oris F0423 (944562.4),944562,0,0,0,0,0,0,1,0,Oral
+Lactobacillus parafarraginis F0439 (797515.3),797515,0,0,0,1,0,1,1,0,Oral
+Lactobacillus vaginalis ATCC 49540 (525366.3),1423814,0,0,0,0,0,0,0,0,Urogenital_tract
+Lautropia mirabilis ATCC 51599 (887898.3),887898,0,1,0,1,0,1,1,0,Oral
+Leptotrichia hofstadii F0254 (634994.3),634994,0,1,0,0,0,0,1,0,Oral
+Megasphaera genomosp. type_1 str. 28L (699218.3),699218,1,1,1,0,1,0,1,1,Urogenital_tract
+Megasphaera micronuciformis F0359 (706434.3),706434,0,1,0,0,0,0,1,1,Oral
+Megasphaera sp. UPII 199-6 (1000568.3),1000568,1,1,1,0,1,0,1,1,Urogenital_tract
+Micrococcus luteus SK58 (596312.3),596312,0,0,1,1,1,1,1,1,Skin
+Mobiluncus curtisii ATCC 43063 (548479.6),548479,0,0,0,1,0,1,0,0,Urogenital_tract
+Mobiluncus mulieris FB024-16 (866770.3),866770,0,0,0,0,1,1,0,0,Urogenital_tract
+Mogibacterium sp. CM50 (936375.3),936375,0,0,0,0,0,0,1,1,Oral
+Mycobacterium parascrofulaceum ATCC BAA-614 (525368.3),525368,0,1,1,1,1,1,1,1,Urogenital_tract
+Neisseria bacilliformis ATCC BAA-1200 (888742.3),888742,1,0,1,1,1,0,1,1,Oral
+Neisseria cinerea ATCC 14685 (546262.4),546262,1,0,1,1,1,0,1,1,Airways
+Neisseria elongata subsp. glycolytica ATCC 29315 (546263.3),546263,1,0,1,1,0,1,1,1,Airways
+Neisseria flavescens SK114 (596320.3),596320,1,0,1,1,1,1,1,1,Skin
+Neisseria lactamica ATCC 23970 (546265.5),546265,1,0,1,1,1,1,1,1,Airways
+Neisseria meningitidis ATCC 13091 (862513.3),862513,1,0,1,1,1,1,1,1,Airways
+Neisseria mucosa C102 (435832.3),435832,1,0,1,1,1,1,1,1,Airways
+Neisseria polysaccharea ATCC 43768 (546267.4),546267,1,0,1,1,1,1,1,1,Airways
+Neisseria shayeganii 871 (1032488.3),1032488,1,0,1,1,0,1,1,1,Airways
+Neisseria sicca ATCC 29256 (547045.3),547045,1,0,1,1,1,1,1,1,Airways
+Neisseria sp. oral taxon 014 str. F0314 (641149.3),641149,1,0,1,0,1,1,1,0,Oral
+Neisseria subflava NJ9703 (546268.4),546268,1,0,1,1,1,1,1,1,Oral
+Neisseria wadsworthii 9715 (1030841.3),1030841,1,0,1,1,1,1,1,1,Skin
+Olsenella sp. oral taxon 809 str. F0356 (661087.3),661087,0,0,0,0,0,0,0,0,Oral
+Oribacterium sinus F0268 (585501.3),585501,0,0,0,0,0,0,0,0,Oral
+Oribacterium sp. oral taxon 108 str. F0425 (904296.3),904296,0,0,0,0,0,0,0,0,Oral
+Paenibacillus sp. oral taxon 786 str. D14 (621372.3),621372,0,0,1,1,1,1,1,1,Oral
+Parascardovia denticolens DSM 10105 = JCM 12538 (864564.4),864564,0,0,0,0,0,0,0,0,Oral
+Parvimonas sp. oral taxon 110 str. F0139 (767100.3),767100,0,0,0,0,0,0,0,0,Oral
+Parvimonas sp. oral taxon 393 str. F0440 (944565.4),944565,0,0,0,0,0,0,0,0,Oral
+Pasteurella dagmatis ATCC 43325 (667128.3),667128,1,0,1,0,0,0,1,0,Airways
+Peptoniphilus duerdenii ATCC BAA-1640 (862517.3),862517,0,0,0,0,0,0,1,0,Urogenital_tract
+Peptoniphilus harei ACS-146-V-Sch2b (908338.3),908338,0,0,1,1,0,0,1,0,Urogenital_tract
+Peptoniphilus lacrimalis 315-B (596330.3),596330,0,0,0,1,0,0,1,0,Urogenital_tract
+Peptoniphilus sp. oral taxon 375 str. F0436 (879308.3),879308,0,1,0,1,0,0,1,0,Oral
+Peptostreptococcus anaerobius 653-L (596329.3),596329,0,1,0,1,0,0,1,1,Skin
+Peptostreptococcus stomatis DSM 17678 (596315.3),596315,0,1,0,1,1,0,1,1,Oral
+Porphyromonas asaccharolytica PR426713P-I (910312.3),910312,1,1,1,1,1,1,1,1,Urogenital_tract
+Porphyromonas endodontalis ATCC 35406 (553175.3),553175,1,1,1,1,1,1,1,1,Oral
+Porphyromonas gingivalis ATCC 33277 (431947.7),431947,1,1,1,1,1,1,1,1,Oral
+Porphyromonas sp. oral taxon 279 str. F0450 (1125723.3),1125723,0,1,1,0,1,1,1,1,Oral
+Porphyromonas uenonis 60-3 (596327.3),596327,1,1,1,1,1,1,1,1,Urogenital_tract
+Prevotella amnii CRIS 21A-A (679191.3),679191,0,0,1,1,1,1,1,0,Urogenital_tract
+Prevotella bergensis DSM 17361 (585502.3),585502,0,0,0,1,1,1,1,1,Skin
+Prevotella bivia JCVIHMP010 (553171.3),553171,0,0,1,1,1,1,1,1,Urogenital_tract
+Prevotella buccae ATCC 33574 (873513.3),873513,0,0,1,1,1,1,1,1,Oral
+Prevotella buccalis ATCC 35310 (679190.3),679190,0,0,1,1,0,1,1,0,Urogenital_tract
+Prevotella dentalis DSM 3688 (908937.4),908937,0,0,0,0,0,1,1,0,Oral
+Prevotella denticola F0289 (767031.3),767031,0,0,1,1,1,1,1,0,Oral
+Prevotella disiens FB035-09AN (866771.4),866771,0,0,1,1,1,1,1,1,Urogenital_tract
+Prevotella histicola F0411 (857291.3),857291,0,0,1,1,1,1,1,0,Oral
+Prevotella marshii DSM 16973 (862515.4),862515,0,0,1,0,1,1,1,0,Oral
+Prevotella melaninogenica ATCC 25845 (553174.6),553174,0,0,1,1,1,1,1,1,Oral
+Prevotella micans F0438 (883158.3),883158,0,0,1,1,1,1,1,0,Oral
+Prevotella multiformis DSM 16608 (888743.3),888743,0,0,1,1,1,1,1,0,Oral
+Prevotella nigrescens ATCC 33563 (997352.4),997352,0,0,1,1,1,1,1,1,Oral
+Prevotella oralis ATCC 33269 (873533.3),873533,0,0,1,1,0,0,1,0,Urogenital_tract
+Prevotella oris F0302 (649760.3),649760,0,0,0,0,1,1,1,0,Oral
+Prevotella oulorum F0390 (702438.4),702438,0,0,0,0,1,1,1,0,Oral
+Prevotella pallens ATCC 700821 (997353.4),997353,0,0,1,1,1,1,1,1,Oral
+Prevotella sp. MSX73 (1032506.3),1032506,0,0,1,1,1,1,1,1,Oral
+Prevotella sp. oral taxon 299 str. F0039 (575614.3),575614,0,0,0,0,1,1,1,0,Oral
+Prevotella tannerae ATCC 51259 (626522.3),626522,0,0,1,1,1,1,1,0,Oral
+Prevotella timonensis CRIS 5C-B1 (679189.3),679189,0,0,0,1,0,1,1,0,Urogenital_tract
+Prevotella veroralis F0319 (649761.3),649761,0,0,1,0,1,1,1,0,Oral
+Propionibacterium acnes SK137 (553199.9),553199,1,1,1,0,0,1,1,1,Skin
+Propionibacterium avidum ATCC 25577 (997355.3),997355,0,1,1,1,0,1,1,0,Oral
+Propionibacterium propionicum F0230a (767029.3),767029,0,1,0,0,0,0,0,0,Oral
+Propionibacterium sp. CC003-HC2 (1005703.3),1005703,0,1,1,0,0,1,1,1,Oral
+Proteus mirabilis ATCC 29906 (525369.4),525369,1,0,1,0,1,1,1,1,Urogenital_tract
+Pseudoramibacter alactolyticus ATCC 23263 (887929.3),887929,0,1,0,1,1,0,1,1,Oral
+Pyramidobacter piscolens W5455 (352165.3),352165,0,1,0,0,1,0,1,0,Oral
+Rhodococcus equi ATCC 33707 (525370.3),525370,0,1,1,1,1,1,1,1,Skin
+Rhodococcus erythropolis SK121 (596309.3),596309,0,1,1,1,1,1,1,1,Skin
+Roseomonas cervicalis ATCC 49957 (525371.3),525371,0,1,0,0,0,1,1,0,Urogenital_tract
+Rothia aeria F0474 (1125724.3),1125724,0,0,1,0,0,1,1,1,Oral
+Rothia dentocariosa ATCC 17931 (762948.4),762948,0,0,1,0,0,1,1,1,Oral
+Rothia mucilaginosa M508 (563033.4),563033,0,0,1,0,0,1,1,1,Airways
+Scardovia inopinata F0304 (641146.3),641146,0,0,0,0,0,0,0,0,Oral
+Scardovia wiggsiae F0424 (857290.3),857290,0,0,0,0,0,0,0,0,Oral
+Segniliparus rugosus ATCC BAA-974 (679197.3),679197,0,0,0,1,0,1,1,1,Airways
+Selenomonas artemidis F0399 (749551.3),749551,0,1,0,0,0,0,1,0,Oral
+Selenomonas flueggei ATCC 43531 (638302.3),638302,0,1,0,0,0,0,1,0,Oral
+Selenomonas infelix ATCC 43532 (679201.3),679201,0,1,0,0,0,0,1,0,Oral
+Selenomonas noxia F0398 (702437.3),702437,0,1,0,0,0,0,1,0,Oral
+Selenomonas sp. F0473 (999423.3),999423,0,1,0,0,0,0,1,0,Oral
+Selenomonas sp. oral taxon 137 str. F0430 (879310.3),879310,0,1,0,0,0,0,1,0,Oral
+Selenomonas sputigena ATCC 35185 (546271.5),546271,0,1,0,0,1,0,1,1,Oral
+Serratia odorifera DSM 4582 (667129.3),667129,1,0,1,1,1,1,1,1,Airways
+Shuttleworthia satelles DSM 14600 (626523.3),626523,0,1,0,0,0,0,0,0,Oral
+Simonsiella muelleri ATCC 29453 (641147.3),641147,0,0,1,0,1,1,1,0,Oral
+Slackia exigua ATCC 700122 (649764.3),649764,0,0,0,0,0,1,0,0,Oral
+Slackia sp. CM382 (1111137.3),1111137,0,0,0,0,0,1,0,0,Oral
+Solobacterium moorei F0204 (706433.3),706433,0,0,0,0,0,0,0,0,Oral
+Sphingobacterium spiritivorum ATCC 33861 (525373.3),525373,0,0,1,1,1,1,1,1,Urogenital_tract
+Staphylococcus aureus subsp. aureus MN8 (548470.3),548470,1,0,1,0,1,1,1,0,Urogenital_tract
+Staphylococcus capitis SK14 (553212.3),553212,0,0,1,0,1,1,1,1,Skin
+Staphylococcus caprae C87 (435838.3),435838,0,0,1,0,1,1,1,1,Airways
+Staphylococcus epidermidis SK135 (596317.3),596317,1,0,1,0,1,1,1,1,Skin
+Staphylococcus hominis SK119 (629742.3),629742,0,0,1,0,1,1,1,1,Skin
+Staphylococcus lugdunensis ACS-027-V-Sch2 (883164.3),883164,0,0,1,0,0,1,1,1,Urogenital_tract
+Staphylococcus simulans ACS-120-V-Sch1 (883166.5),883166,0,0,1,1,0,1,1,1,Urogenital_tract
+Staphylococcus warneri L37603 (596319.3),596319,0,0,1,0,1,1,1,1,Skin
+Streptococcus anginosus SK1138 (1161422.3),1161422,0,0,0,0,0,0,0,0,Blood
+Streptococcus australis ATCC 700641 (888833.3),888833,0,1,1,0,0,0,0,0,Oral
+Streptococcus bovis ATCC 700338 (864569.5),864569,0,0,1,1,0,0,1,0,Urogenital_tract
+Streptococcus constellatus subsp. constellatus SK53 (1095730.3),1095730,0,0,0,0,0,0,0,0,Airways
+Streptococcus cristatus ATCC 51100 (889201.3),889201,0,0,1,0,0,0,0,0,Oral
+Streptococcus downei F0415 (904293.3),904293,0,0,0,0,0,0,0,0,Oral
+Streptococcus dysgalactiae subsp. equisimilis SK1250 (1005706.3),1005706,0,0,1,0,0,0,0,0,Oral
+Streptococcus gallolyticus subsp. gallolyticus TX20005 (545774.3),545774,0,0,1,1,1,1,1,0,Heart
+Streptococcus infantis ATCC 700779 (889204.3),889204,0,0,1,0,0,1,0,0,Airways
+Streptococcus intermedius SK54 (1095731.3),1095731,0,0,0,0,0,0,0,0,Oral
+Streptococcus mitis bv. 2 str. F0392 (768726.4),768726,0,0,1,0,0,1,0,0,Oral
+Streptococcus oralis SK1074 (1095738.3),1095738,0,0,1,0,0,1,0,0,Blood
+Streptococcus parasanguinis ATCC 15912 (760570.3),760570,0,0,1,0,0,0,0,0,Oral
+Streptococcus peroris ATCC 700780 (888746.3),888746,0,0,0,0,0,1,0,0,Oral
+Streptococcus pneumoniae TCH8431/19A (525381.4),525381,0,0,1,1,0,1,1,0,Airways
+Streptococcus pseudoporcinus SPIN 20026 (910313.3),910313,0,0,1,0,0,0,0,0,Urogenital_tract
+Streptococcus pyogenes ATCC 10782 (864568.3),864568,0,0,1,1,0,0,0,0,Airways
+Streptococcus salivarius SK126 (596322.3),596322,0,0,1,0,0,1,0,0,Skin
+Streptococcus sanguinis SK405 (888817.3),888817,0,1,1,0,0,0,0,0,Blood
+Streptococcus sp. AS14 (936577.3),936577,0,1,1,0,0,0,0,0,Oral
+Streptococcus sp. BS35b (1105032.3),1105032,0,0,1,0,0,1,0,0,Oral
+Streptococcus sp. F0441 (999424.3),999424,0,0,1,0,0,1,0,0,Oral
+Streptococcus sp. F0442 (999425.3),999425,0,1,1,0,0,0,0,0,Oral
+Streptococcus sp. M143 (563037.3),563037,0,0,1,0,0,1,0,0,Airways
+Streptococcus sp. oral taxon 056 str. F0418 (904294.3),904294,0,0,0,0,0,0,0,0,Oral
+Streptococcus sp. oral taxon 071 str. 73H25AP (864570.3),864570,0,0,1,0,0,1,0,0,Oral
+Streptococcus sp. SK140 (1095726.3),1095726,0,0,1,0,0,1,0,0,Oral
+Streptococcus urinalis FB127-CNA-2 (883168.3),883168,0,0,1,0,0,0,0,0,Urogenital_tract
+Streptococcus vestibularis F0396 (904306.3),904306,0,0,1,0,0,1,0,0,Oral
+Synergistetes bacterium SGP1 (651822.3),651822,0,0,0,0,0,0,1,1,Oral
+Treponema denticola F0402 (699187.3),699187,0,1,0,0,0,0,0,0,Oral
+Treponema phagedenis F0421 (754027.3),754027,0,0,0,0,0,0,1,0,Urogenital_tract
+Treponema vincentii ATCC 35580 (596324.3),596324,0,0,0,0,0,0,0,1,Oral
+Veillonella atypica ACS-049-V-Sch6 (866776.4),866776,1,1,0,0,0,0,1,0,Urogenital_tract
+Veillonella dispar ATCC 17748 (546273.3),546273,1,1,0,0,0,0,1,0,Oral
+Veillonella parvula ATCC 17745 (686660.3),686660,1,1,0,0,0,0,1,1,Oral
+Veillonella ratti ACS-216-V-Col6b (883156.3),883156,1,1,1,0,1,0,1,1,Urogenital_tract
+Veillonella sp. ACP1 (936588.3),936588,1,1,0,0,0,0,1,0,Oral
+Veillonella sp. oral taxon 158 str. F0412 (879309.3),879309,1,1,0,0,0,0,1,0,Oral

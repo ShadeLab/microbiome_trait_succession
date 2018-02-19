@@ -1,0 +1,327 @@
+Note: Genomes were sequenced for multiple cultures from the same species in the culture collection. Subsequently multiple copies of the same species presented in Figure1 are included in the analysis here. ,,,,
+,"Species Name                                                                                                         (Closest BLAST Match, ?98.7% match unless otherwise stated)",Public identifier for species not cultured in this study,Category,signature score
+1,Akkermansia muciniphila,GCA_000020225.1,known non-spore formers,0.25
+2,Alicyclobacillus acidocaldarius,GCA_000024285.1,known spore formers,0.66
+4,Alistipes finegoldii,cultured in this study,Cultures from untreated plates,0.17
+3,Alistipes finegoldii,cultured in this study,Cultures from untreated plates,0.16
+5,Alkaliphilus oremlandii,GCA_000018325.1,known spore formers,0.75
+6,Ammonifex degensii KC4,GCA_000024605.1,known spore formers,0.66
+7,Anaeromyxobacter dehalogenans,GCA_000013385.1,known non-spore formers,0.17
+193,Anaerostipes hadrum_98%,cultured in this study,Cultures from untreated plates,0.56
+8,Anaerostipes hadrus,cultured in this study,Cultures from untreated plates,0.58
+9,Anaerostipes hadrus,cultured in this study,Cultures from untreated plates,0.56
+10,Anaerostipes hadrus,cultured in this study,Cultures from untreated plates,0.55
+11,Anaerostipes hadrus,cultured in this study,Cultures from untreated plates,0.55
+12,Anaerostipes hadrus,cultured in this study,Cultures from untreated plates,0.55
+13,Anaerotruncus colihominis,cultured in this study,Cultures from ethanol treated plates,0.66
+14,Anaerotruncus colihominis_91%,cultured in this study,Cultures from ethanol treated plates,0.66
+15,Aquifex aeolicus,GCA_000008625.1,known non-spore formers,0.17
+16,Bacillus amyloliquefaciens,GCA_000015785.1,known spore formers,0.73
+17,Bacillus anthracis,GCA_000007845.1,known spore formers,0.73
+18,Bacillus cereus,GCA_000007825.1,known spore formers,0.73
+19,Bacillus clausii,GCA_000009825.1,known spore formers,0.69
+20,Bacillus halodurans,GCA_000011145.1,known spore formers,0.70
+21,Bacillus licheniformis,GCA_000008425.1,known spore formers,0.72
+22,Bacillus pumilus,GCA_000017885.1,known spore formers,0.72
+23,Bacillus subtilis,GCA_000009045.1,known spore formers,0.73
+24,Bacillus thuringiensis serovar konkukian,GCA_000008505.1,known spore formers,0.73
+25,Bacillus weihenstephanensis,GCA_000018825.1,known spore formers,0.73
+26,Bacteroides caccae,cultured in this study,Cultures from untreated plates,0.19
+27,Bacteroides caccae,cultured in this study,Cultures from untreated plates,0.17
+32,Bacteroides coprocola_94%,cultured in this study,Cultures from untreated plates,0.17
+28,Bacteroides finegoldi,cultured in this study,Cultures from untreated plates,0.17
+31,Bacteroides finegoldii_98%,cultured in this study,Cultures from untreated plates,0.17
+49,Bacteroides fragilis,GCA_000009925.1,known non-spore formers,0.17
+34,Bacteroides intestinalis_98%,cultured in this study,Cultures from untreated plates,0.17
+29,Bacteroides ovatus,cultured in this study,Cultures from untreated plates,0.17
+33,Bacteroides plebius_95%,cultured in this study,Cultures from untreated plates,0.16
+30,Bacteroides salyersiae,cultured in this study,Cultures from untreated plates,0.17
+35,Bacteroides thetaiotaomicron,cultured in this study,Cultures from untreated plates,0.19
+36,Bacteroides thetaiotaomicron,cultured in this study,Cultures from untreated plates,0.19
+37,Bacteroides thetaiotaomicron,cultured in this study,Cultures from untreated plates,0.19
+38,Bacteroides thetaiotaomicron,cultured in this study,Cultures from untreated plates,0.19
+39,Bacteroides uniformis,cultured in this study,Cultures from untreated plates,0.19
+44,Bacteroides uniformis,cultured in this study,Cultures from untreated plates,0.19
+40,Bacteroides uniformis,cultured in this study,Cultures from untreated plates,0.17
+41,Bacteroides uniformis,cultured in this study,Cultures from untreated plates,0.17
+42,Bacteroides uniformis,cultured in this study,Cultures from untreated plates,0.17
+43,Bacteroides uniformis,cultured in this study,Cultures from untreated plates,0.17
+45,Bacteroides vulgatus,cultured in this study,Cultures from untreated plates,0.17
+46,Bacteroides vulgatus,cultured in this study,Cultures from untreated plates,0.17
+47,Bacteroides vulgatus,cultured in this study,Cultures from untreated plates,0.17
+48,Bacteroides xylanisolvens,cultured in this study,Cultures from untreated plates,0.19
+64,Balutia luti_96%,cultured in this study,Cultures from untreated plates,0.45
+51,Bifidobacterium adolescentis,cultured in this study,Cultures from untreated plates,0.13
+52,Bifidobacterium adolescentis,cultured in this study,Cultures from untreated plates,0.13
+50,Bifidobacterium adolscentis,cultured in this study,Cultures from untreated plates,0.11
+53,Bifidobacterium bifidum,cultured in this study,Cultures from untreated plates,0.13
+55,Bifidobacterium bifidum,GCA_000165905.1,known non-spore formers,0.13
+54,Bifidobacterium pseudocatenulatum,cultured in this study,Cultures from untreated plates,0.11
+56,Blautia hydrogenotrophica,cultured in this study,Cultures from ethanol treated plates,0.59
+61,Blautia hydrogenotrophica_96%,cultured in this study,Cultures from ethanol treated plates,0.61
+60,Blautia luti_95%,cultured in this study,Cultures from untreated plates,0.52
+63,Blautia luti_95%,cultured in this study,Cultures from untreated plates,0.50
+62,Blautia luti_96%,cultured in this study,Cultures from untreated plates,0.53
+59,Blautia luti_96%,cultured in this study,Cultures from ethanol treated plates,0.50
+67,Blautia luti_96%,cultured in this study,Cultures from ethanol treated plates,0.48
+57,Blautia luti_97%,cultured in this study,Cultures from ethanol treated plates,0.50
+65,Blautia luti_98%,cultured in this study,Cultures from untreated plates,0.53
+66,Blautia producta_94%,cultured in this study,Cultures from untreated plates,0.58
+68,Blautia wexlerae,cultured in this study,Cultures from untreated plates,0.48
+69,Blautia wexlerae,cultured in this study,Cultures from untreated plates,0.48
+70,Bordetella parapertussis,GCA_000317935.1,known non-spore formers,0.30
+71,Brevibacillus brevis,GCA_000010165.1,known spore formers,0.70
+72,Brucella melitensis,GCA_000022625.1,known non-spore formers,0.17
+73,Brucella suis,GCA_000018905.1,known non-spore formers,0.19
+75,Butyricicoccus pullicaecorum_94%,cultured in this study,Cultures from ethanol treated plates,0.56
+74,Butyricicoccus pullicaecorum_96%,cultured in this study,Cultures from ethanol treated plates,0.56
+76,Caldanaerobacter subterraneus subsp tengcongensis,GCA_000007085.1,known spore formers,0.81
+77,Caldicellulosiruptor bescii DSM6725,GCA_000022325.1,known spore formers,0.63
+78,Caldicellulosiruptor hydrothermalis 108,GCA_000166355.1,known spore formers,0.61
+79,Caldicellulosiruptor kristjanssonii I77R1B,GCA_000166695.1,known spore formers,0.58
+80,Caldicellulosiruptor kronotskyensis 2002,GCA_000166775.1,known spore formers,0.61
+82,Caldicellulosiruptor obsidiansis OB47,GCA_000145215.1,known spore formers,0.58
+83,Caldicellulosiruptor owensensis OL,GCA_000166335.1,known spore formers,0.58
+84,Caldicellulosiruptor saccharolyticus DSM8903,GCA_000016545.1,known spore formers,0.59
+85,Campylobacter jejuni,GCA_000009085.1,known non-spore formers,0.16
+86,Candidatus Desulforudis audaxviator MP104C,GCA_000018425.1,known spore formers,0.67
+87,Carboxydothermus hydrogenoformans,GCA_000012865.1,known spore formers,0.67
+88,Catenibacterium mitsuokai,cultured in this study,Cultures from untreated plates,0.25
+89,Catenibacterium mitsuokai,cultured in this study,Cultures from untreated plates,0.20
+141,Clostridium acetobutylicum,GCA_000008765.1,known spore formers,0.73
+90,Clostridium baratii,cultured in this study,Cultures from ethanol treated plates,0.77
+91,Clostridium baratii,cultured in this study,Cultures from untreated plates,0.77
+92,Clostridium bartlettii,cultured in this study,Cultures from ethanol treated plates,0.88
+142,Clostridium beijerinckii,GCA_000016965.1,known spore formers,0.73
+111,Clostridium beijerinckii_96%,cultured in this study,Cultures from ethanol treated plates,0.73
+120,Clostridium boltae_93%,cultured in this study,Cultures from untreated plates,0.56
+131,Clostridium boltae_94%,cultured in this study,Cultures from ethanol treated plates,0.67
+143,Clostridium botulinum,GCA_000017045.1,known spore formers,0.83
+130,Clostridium celerecrescens_93%,cultured in this study,Cultures from ethanol treated plates,0.56
+105,Clostridium celerecrescens_94%,cultured in this study,Cultures from untreated plates,0.58
+104,Clostridium celerecrescens_94%,cultured in this study,Cultures from untreated plates,0.55
+121,Clostridium celerescens_93%,cultured in this study,Cultures from untreated plates,0.56
+93,Clostridium clostridioforme,cultured in this study,Cultures from ethanol treated plates,0.64
+129,Clostridium clostridioforme_93%,cultured in this study,Cultures from untreated plates,0.52
+109,Clostridium clostridioforme_98%,cultured in this study,Cultures from ethanol treated plates,0.67
+112,Clostridium cocleatum_93%,cultured in this study,Cultures from untreated plates,0.41
+96,Clostridium disporicum,cultured in this study,Cultures from ethanol treated plates,0.80
+95,Clostridium disporicum,cultured in this study,Cultures from untreated plates,0.78
+94,Clostridium disporicum,cultured in this study,Cultures from untreated plates,0.77
+138,Clostridium disporicum_98%,cultured in this study,Cultures from ethanol treated plates,0.80
+139,Clostridium disporicum_98%,cultured in this study,Cultures from untreated plates,0.78
+136,Clostridium ghonii_98%,cultured in this study,Cultures from ethanol treated plates,0.83
+137,Clostridium ghonii_98%,cultured in this study,Cultures from ethanol treated plates,0.83
+126,Clostridium glycolicum_97%,cultured in this study,Cultures from ethanol treated plates,0.88
+97,Clostridium hathewayi,cultured in this study,Cultures from ethanol treated plates,0.67
+98,Clostridium hathewayi,cultured in this study,Cultures from ethanol treated plates,0.64
+116,Clostridium hathewayi_92%,cultured in this study,Cultures from untreated plates,0.53
+99,Clostridium innocuum,cultured in this study,Cultures from ethanol treated plates,0.48
+125,Clostridium innocuum_95%,cultured in this study,Cultures from ethanol treated plates,0.47
+144,Clostridium kluyveri,GCA_000016505.1,known spore formers,0.78
+119,Clostridium lituseburense_98%,cultured in this study,Cultures from ethanol treated plates,0.86
+107,Clostridium methylpentosum_92%,cultured in this study,Cultures from ethanol treated plates,0.64
+127,Clostridium nexile_94%,cultured in this study,Cultures from ethanol treated plates,0.67
+145,Clostridium novyi,GCA_000014125.1,known spore formers,0.75
+100,Clostridium orbiscindens,cultured in this study,Cultures from ethanol treated plates,0.72
+133,Clostridium orbiscindens_94%,cultured in this study,Cultures from ethanol treated plates,0.64
+114,Clostridium orbiscindens_95%,cultured in this study,Cultures from ethanol treated plates,0.58
+108,Clostridium oroticum_95%,cultured in this study,Cultures from ethanol treated plates,0.61
+117,Clostridium oroticum_95%,cultured in this study,Cultures from untreated plates,0.58
+128,Clostridium oroticum_95%,cultured in this study,Cultures from untreated plates,0.56
+122,Clostridium oroticum_96%,cultured in this study,Cultures from ethanol treated plates,0.52
+101,Clostridium paraputrificum,cultured in this study,Cultures from ethanol treated plates,0.77
+102,Clostridium paraputrificum,cultured in this study,Cultures from untreated plates,0.77
+103,Clostridium perfringens,cultured in this study,Cultures from ethanol treated plates,0.72
+146,Clostridium perfringens,GCA_000009685.1,known spore formers,0.72
+118,Clostridium saccharogumia_93%,cultured in this study,Cultures from untreated plates,0.41
+106,Clostridium saccharolyticum_94%,cultured in this study,Cultures from untreated plates,0.53
+113,Clostridium spiroforme_93%,cultured in this study,Cultures from untreated plates,0.42
+135,Clostridium spiroforme_93%,cultured in this study,Cultures from untreated plates,0.39
+110,Clostridium straminisolvens_89%,cultured in this study,Cultures from untreated plates,0.64
+140,Clostridium symbiosum,cultured in this study,Cultures from ethanol treated plates,0.67
+147,Clostridium tetani E88,GCA_000007625.1,known spore formers,0.77
+134,Clostridium thermocellum_86%,cultured in this study,Cultures from ethanol treated plates,0.64
+132,Clostridium thermocellum_87%,cultured in this study,Cultures from ethanol treated plates,0.66
+123,Clostridium xylanolyticum_92%,cultured in this study,Cultures from ethanol treated plates,0.58
+115,Clostridium xylanolyticum_93%,cultured in this study,Cultures from untreated plates,0.63
+124,Clostridium xylanolyticum_95%,cultured in this study,Cultures from untreated plates,0.56
+149,Collinsella aerofaciens,cultured in this study,Cultures from untreated plates,0.19
+148,Collinsella aerofaciens,cultured in this study,Cultures from untreated plates,0.17
+150,Collinsella aerofaciens,cultured in this study,Cultures from untreated plates,0.17
+151,Collinsella aerofaciens_92%,cultured in this study,Cultures from untreated plates,0.20
+152,Coprococcus comes,cultured in this study,Cultures from ethanol treated plates,0.52
+153,Coprococcus comes,cultured in this study,Cultures from untreated plates,0.52
+154,Coprococcus comes,cultured in this study,Cultures from untreated plates,0.50
+155,Coprococcus comes,cultured in this study,Cultures from untreated plates,0.50
+156,Coprococcus eutactus,cultured in this study,Cultures from untreated plates,0.52
+157,Coprococcus eutactus,cultured in this study,Cultures from ethanol treated plates,0.52
+159,Coprococcus eutactus,cultured in this study,Cultures from untreated plates,0.52
+158,Coprococcus eutactus,cultured in this study,Cultures from untreated plates,0.50
+160,Coprococcus eutactus_97%,cultured in this study,Cultures from ethanol treated plates,0.53
+161,Coprococcus nexile_95%,cultured in this study,Cultures from ethanol treated plates,0.50
+162,Desulfitobacterium hafniense,GCA_000010045.1,known spore formers,0.75
+163,Desulfotomaculum acetoxidans,GCA_000024205.1,known spore formers,0.72
+164,Desulfotomaculum kuznetsovii,GCA_000214705.1,known spore formers,0.67
+165,Desulfotomaculum reducens,GCA_000016165.1,known spore formers,0.72
+166,Desulfovibrio vulgaris,GCA_000195755.1,known non-spore formers,0.27
+172,Dorea formicigenerans_98%,cultured in this study,Cultures from untreated plates,0.55
+167,Dorea longicatena,cultured in this study,Cultures from untreated plates,0.52
+168,Dorea longicatena,cultured in this study,Cultures from untreated plates,0.52
+171,Dorea longicatena,cultured in this study,Cultures from untreated plates,0.52
+169,Dorea longicatena,cultured in this study,Cultures from untreated plates,0.48
+170,Dorea longicatena,cultured in this study,Cultures from untreated plates,0.48
+173,Eggerthella lenta,GCA_000024265.1,known non-spore formers,0.17
+174,Enterococcus faecalis V583,GCA_000007785.1,known non-spore formers,0.23
+175,Escherichia coli,GCA_000005845.2,known non-spore formers,0.22
+176,Ethanoligenens harbinense YUAN-3,GCA_000178115.2,known spore formers,0.66
+177,Eubacterium contortum,cultured in this study,Cultures from ethanol treated plates,0.63
+190,Eubacterium contortum_97%,cultured in this study,Cultures from untreated plates,0.58
+179,Eubacterium eligens,cultured in this study,Cultures from untreated plates,0.55
+178,Eubacterium eligens,cultured in this study,Cultures from untreated plates,0.53
+188,Eubacterium fissicatens_95%,cultured in this study,Cultures from ethanol treated plates,0.64
+180,Eubacterium halii,cultured in this study,Cultures from ethanol treated plates,0.58
+181,Eubacterium hallii,cultured in this study,Cultures from untreated plates,0.58
+194,Eubacterium hallii_97%,cultured in this study,Cultures from untreated plates,0.55
+189,Eubacterium hallii_98%,cultured in this study,Cultures from ethanol treated plates,0.58
+191,Eubacterium hallii_98%,cultured in this study,Cultures from untreated plates,0.56
+187,Eubacterium infirmum_91%,cultured in this study,Cultures from untreated plates,0.53
+192,Eubacterium infirmum_94%,cultured in this study,Cultures from ethanol treated plates,0.66
+182,Eubacterium ramulus,cultured in this study,Cultures from untreated plates,0.52
+303,Eubacterium rectale,cultured in this study,Cultures from untreated plates,0.56
+183,Eubacterium rectale,cultured in this study,Cultures from untreated plates,0.47
+184,Eubacterium rectale,cultured in this study,Cultures from untreated plates,0.47
+185,Eubacterium rectale,cultured in this study,Cultures from untreated plates,0.47
+186,Eubacterium siraeum,cultured in this study,Cultures from untreated plates,0.47
+196,Faecalibacterium prausnitzii,cultured in this study,Cultures from untreated plates,0.45
+198,Faecalibacterium prausnitzii,cultured in this study,Cultures from untreated plates,0.45
+197,Faecalibacterium prausnitzii,cultured in this study,Cultures from untreated plates,0.13
+199,Faecalibacterium prausnitzii_98%,cultured in this study,Cultures from untreated plates,0.45
+200,Faecalibacterium prausnitzii_98%,cultured in this study,Cultures from untreated plates,0.45
+202,Flavonifractor plautii,cultured in this study,Cultures from ethanol treated plates,0.69
+203,Flavonifractor plautii,cultured in this study,Cultures from ethanol treated plates,0.69
+201,Flavonifractor plautii,cultured in this study,Cultures from untreated plates,0.50
+205,Flavonifractor plautii_95%,cultured in this study,Cultures from untreated plates,0.66
+206,Flavonifractor plautii_95%,cultured in this study,Cultures from untreated plates,0.64
+207,Flavonifractor plautii_95%,cultured in this study,Cultures from ethanol treated plates,0.61
+204,Flavonifractor plautii_95%,cultured in this study,Cultures from ethanol treated plates,0.58
+208,Flavonifractor plautii_96%,cultured in this study,Cultures from ethanol treated plates,0.67
+209,Fusicatenibacter saccharivorans,cultured in this study,Cultures from ethanol treated plates,0.55
+211,Fusicatenibacter saccharivorans,cultured in this study,Cultures from untreated plates,0.53
+210,Fusicatenibacter saccharivorans,cultured in this study,Cultures from untreated plates,0.52
+212,Fusicatenibacter saccharivorans_93%,cultured in this study,Cultures from ethanol treated plates,0.59
+213,Fusobacterium necrophorum,GCA_000242215.1,known non-spore formers,0.22
+214,Fusobacterium nucleatum GCF 000007325.1 ASM732v1,GCA_000007325.1,known non-spore formers,0.20
+215,Geobacillus kaustophilus,GCA_000009785.1,known spore formers,0.70
+216,Geobacillus thermodenitrificans,GCA_000015745.1,known spore formers,0.73
+217,Geobacter sulfurreducens,GCA_000007985.2,known non-spore formers,0.22
+218,Haemophilus influenzae,GCA_000027305.1,known non-spore formers,0.17
+219,Halothermothrix orenii H168,GCA_000020485.1,known spore formers,0.69
+220,Helicobacter pylori,GCA_000008525.1,known non-spore formers,0.13
+221,Heliobacterium modesticaldum,GCA_000019165.1,known spore formers,0.70
+222,Kyrpidia tusciae,GCA_000092905.1,known spore formers,0.69
+223,Lachnoclostridium phytofermentans,GCA_000018685.1,known spore formers,0.69
+224,Lachnospira pectinoschiza,cultured in this study,Cultures from untreated plates,0.52
+225,Lachnospira pectinoschiza,cultured in this study,Cultures from untreated plates,0.52
+226,Lachnospira pectinoshiza_91%,cultured in this study,Cultures from untreated plates,0.50
+227,Lactobacillus acidophilus,GCA_000786395.1,known non-spore formers,0.22
+228,Leptospira interrogans,GCA_000092565.1,known non-spore formers,0.16
+229,Listeria innocua,GCA_000195795.1,known non-spore formers,0.33
+230,Lysinibacillus sphaericus,GCA_000568835.1,known spore formers,0.58
+231,Megasphaera elsdenii_95%,cultured in this study,Cultures from untreated plates,0.25
+232,Mitsuokella jalaludinii,cultured in this study,Cultures from untreated plates,0.28
+233,Moorella thermoacetica,GCA_000013105.1,known spore formers,0.72
+234,Mycobacterium avium,GCA_000007865.1,known non-spore formers,0.23
+235,Mycobacterium bovis,GCA_000195835.1,known non-spore formers,0.23
+236,Mycobacterium leprae,GCA_000195855.1,known non-spore formers,0.22
+237,Mycobacterium marinum,GCA_000018345.1,known non-spore formers,0.23
+238,Mycobacterium smegmatis,GCA_000015005.1,known non-spore formers,0.25
+239,Mycobacterium tuberculosis,GCA_000195955.2,known non-spore formers,0.23
+240,Mycobacterium ulcerans,GCA_000013925.1,known non-spore formers,0.22
+241,Myxococcus xanthus,GCA_000012685.1,known non-spore formers,0.22
+242,Natranaerobius thermophilus JWNM-WN-LF,GCA_000020005.1,known spore formers,0.66
+243,Neisseria meningtidis,GCA_000008805.1,known non-spore formers,0.20
+244,Nitrosomonas europaea,GCA_000009145.1,known non-spore formers,0.19
+245,Oceanobacillus iheyensis,GCA_000011245.1,known spore formers,0.70
+247,Oscillibacter valericigenes_95%,cultured in this study,Cultures from ethanol treated plates,0.66
+246,Oscillibacter valericigenes_96%,cultured in this study,Cultures from untreated plates,0.64
+248,Paenibacillus polymyxa,GCA_000146875.1,known spore formers,0.72
+251,Parabacteroides distasonis,cultured in this study,Cultures from untreated plates,0.20
+250,Parabacteroides distasonis,cultured in this study,Cultures from untreated plates,0.19
+252,Parabacteroides distasonis,cultured in this study,Cultures from untreated plates,0.19
+249,Parabacteroides distasonis,cultured in this study,Cultures from untreated plates,0.17
+253,Parabacteroides merdae,cultured in this study,Cultures from untreated plates,0.20
+254,Pelotomaculum thermopropionicum,GCA_000010565.1,known spore formers,0.69
+255,Peptoclostridium difficile,GCA_000009205.1,known spore formers,0.97
+256,Photobacterium profundum,GCA_000196255.1,known non-spore formers,0.25
+257,Prevotella copri,cultured in this study,Cultures from untreated plates,0.03
+258,Prevotella stercorea,GCA_000235885.1,known non-spore formers,0.16
+259,Prochlorococcus marinus,GCA_000007925.1,known non-spore formers,0.13
+260,Propionibacterium acnes,GCA_000008345.1,known non-spore formers,0.19
+261,Proteus mirabilis,GCA_000069965.1,known non-spore formers,0.25
+262,Pseudomonas fluorescens,GCA_000006765.1,known non-spore formers,0.28
+263,Pseudomonas syringae,GCA_000012245.1,known non-spore formers,0.28
+264,Roseburia faecis,cultured in this study,Cultures from untreated plates,0.55
+269,Roseburia faecis_95%,cultured in this study,Cultures from untreated plates,0.63
+265,Roseburia hominis,cultured in this study,Cultures from untreated plates,0.59
+266,Roseburia intestinalis,cultured in this study,Cultures from untreated plates,0.61
+267,Roseburia inulinivorans,cultured in this study,Cultures from untreated plates,0.64
+270,Roseburia inulinivorans_94%,cultured in this study,Cultures from ethanol treated plates,0.61
+268,Roseburia inulinvorans,cultured in this study,Cultures from untreated plates,0.63
+271,Ruminiclostridium thermocellum,GCA_000015865.1,known spore formers,0.81
+283,Ruminococcus albus_95%,cultured in this study,Cultures from ethanol treated plates,0.64
+284,Ruminococcus albus_95%,cultured in this study,Cultures from ethanol treated plates,0.52
+290,Ruminococcus albus_95%,cultured in this study,Cultures from untreated plates,0.50
+296,Ruminococcus albus_95%,cultured in this study,Cultures from ethanol treated plates,0.48
+297,Ruminococcus albus_98%,cultured in this study,Cultures from ethanol treated plates,0.63
+272,Ruminococcus bromii,cultured in this study,Cultures from untreated plates,0.56
+285,Ruminococcus bromii_92%,cultured in this study,Cultures from ethanol treated plates,0.59
+295,Ruminococcus bromii_93%,cultured in this study,Cultures from ethanol treated plates,0.58
+292,Ruminococcus bromii_94%,cultured in this study,Cultures from ethanol treated plates,0.66
+279,Ruminococcus bromii_94%,cultured in this study,Cultures from untreated plates,0.13
+294,Ruminococcus flavefaciens_93%,cultured in this study,Cultures from untreated plates,0.53
+293,Ruminococcus flavefaciens_95%,cultured in this study,Cultures from untreated plates,0.47
+273,Ruminococcus gnavus,cultured in this study,Cultures from ethanol treated plates,0.58
+288,Ruminococcus gnavus_98%,cultured in this study,Cultures from untreated plates,0.61
+275,Ruminococcus obeum,cultured in this study,Cultures from untreated plates,0.50
+276,Ruminococcus obeum,cultured in this study,Cultures from untreated plates,0.50
+278,Ruminococcus obeum,cultured in this study,Cultures from untreated plates,0.50
+277,Ruminococcus obeum,cultured in this study,Cultures from untreated plates,0.48
+274,Ruminococcus obeum,cultured in this study,Cultures from untreated plates,0.47
+58,Ruminococcus obeum_96%,cultured in this study,Cultures from untreated plates,0.55
+291,Ruminococcus obeum_96%,cultured in this study,Cultures from untreated plates,0.48
+287,Ruminococcus obeum_98%,cultured in this study,Cultures from untreated plates,0.53
+286,Ruminococcus obeum_98%,cultured in this study,Cultures from untreated plates,0.47
+302,Ruminococcus torques,cultured in this study,Cultures from untreated plates,0.58
+299,Ruminococcus torques,cultured in this study,Cultures from untreated plates,0.55
+300,Ruminococcus torques,cultured in this study,Cultures from untreated plates,0.53
+298,Ruminococcus torques,cultured in this study,Cultures from untreated plates,0.52
+301,Ruminococcus torques,cultured in this study,Cultures from untreated plates,0.52
+280,Ruminococcus torques_96%,cultured in this study,Cultures from untreated plates,0.53
+289,Ruminococcus torques_96%,cultured in this study,Cultures from untreated plates,0.53
+281,Ruminococcus torques_97%,cultured in this study,Cultures from untreated plates,0.59
+282,Ruminococcus torques_97%,cultured in this study,Cultures from untreated plates,0.56
+304,Salmonella enterica,GCA_000006945.1,known non-spore formers,0.28
+305,Sarcina ventriculi,cultured in this study,Cultures from ethanol treated plates,0.69
+306,Shigella flexneri,GCA_000006925.2,known non-spore formers,0.22
+307,Staphylococcus aureus,GCA_000512505.1,known non-spore formers,0.23
+308,Streptococcus mutans UA159,GCA_000007465.2,known non-spore formers,0.20
+309,Streptococcus pneumoniae,GCA_000007045.1,known non-spore formers,0.23
+310,Streptococcus pyogenes,GCA_000006785.2,known non-spore formers,0.17
+311,Streptococcus thermophilus,GCA_000011845.1,known non-spore formers,0.23
+312,Streptomyces avermitilis,GCA_000009765.1,known non-spore formers,0.27
+313,Streptomyces coelicolor,GCA_000203835.1,known non-spore formers,0.27
+314,Sulfobacillus acidophilus,GCA_000219855.1,known spore formers,0.53
+315,Sutterella parvirubra,GCA_000250875.1,known non-spore formers,0.16
+316,Symbiobacterium thermophilum,GCA_000009905.1,known spore formers,0.66
+317,Synergistes jonesii,GCA_000712295.1,known non-spore formers,0.22
+318,Syntrophothermus lipocalidus DSM12680,GCA_000092405.1,known spore formers,0.66
+319,Thermincola potens JR,GCA_000092945.1,known spore formers,0.70
+320,Thermoanaerobacter ethanolicus CCSD1,GCA_000175815.1,known spore formers,0.80
+321,Thermoanaerobacter pseudethanolicus ATCC33223,GCA_000192295.2,known spore formers,0.81
+322,Thermosediminibacter oceani DSM16646,GCA_000144645.1,known spore formers,0.77
+323,Thermus thermophilus,GCA_000091545.1,known non-spore formers,0.17
+324,Turibacter sanguinis,cultured in this study,Cultures from ethanol treated plates,0.56
+326,Turicibacter sanguinis,cultured in this study,Cultures from ethanol treated plates,0.53
+327,Turicibacter sanguinis,cultured in this study,Cultures from ethanol treated plates,0.53
+325,Turicibacter sanguinis,cultured in this study,Cultures from untreated plates,0.52

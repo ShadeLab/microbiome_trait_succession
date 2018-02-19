@@ -1,0 +1,1778 @@
+---
+title: "Trait-based community assembly and succession in the infant gut microbiome: Tables and Figures"
+author: "John Guittar, Ashley Shade, Elena Litchman"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+\begin{center}
+\bigskip
+\bigskip
+{\Huge Tables and figures}
+\end{center}
+
+\pagebreak
+
+
+```{r global_options, include = FALSE}
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = TRUE)
+
+```
+
+
+```{r load data, include = FALSE}
+
+##Note... for which analysis are otus from 'unclassified' genera valid? Should I give these unkonwn genera specific keys? What about when I have trait data for an otu ID with an 'unclassified' genus -- maybe I could propagate trait data among different 'unclassified' genera, if they have some trait info.
+wd <- 'C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\'
+setwd(wd)
+source('custom_functions.R')
+loadpax(pkg = c('gtable','tidyverse','knitr','data.table','vegan','GGally','grid','gridExtra','betapart','scales','stringr', 'kableExtra'))
+
+#process data or just load it
+if (FALSE) {
+  source('processing_diabimmune_data.R')
+  source('processing_trait_data.R')
+} 
+
+otus_wide <- readRDS('data\\otus_wide.RDS')
+meta <- readRDS('data\\meta.RDS')
+tax <- readRDS('data\\tax.RDS')
+traits <- read.csv('data\\traits.csv')
+traits_all <- fread('data\\traits_all.csv')
+traits_sparse <- fread('data\\traits_sparse.csv')
+
+#create narrow data.frame for tidy reasons
+otus <- otus_wide %>%
+  gather(otu, abun, -sampleID, -subject, -t) %>%
+  filter(abun > 0)
+
+#Set plotting theme
+th <- theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.background = element_blank())
+
+#only use well sampled studies
+meta <- filter(meta, n > 10 & t_min < 180)
+otus <- filter(otus, subject %in% meta$subject)
+otus_wide <- otus_wide[, names(otus_wide) %in% c('sampleID','subject','t', sort(unique(otus$otu)))]
+traits <- filter(traits, otu %in% otus$otu) %>% mutate(otu = as.character(otu))
+
+```
+
+
+```{r table 1}
+
+tmp <- rename(traits, 
+  Genes = Gene_number, 
+  Genome_size = Genome_Mb, 
+  Aggregation = Aggregation_score,
+  `16S_gene_copies` = Copies_16S, 
+  IgA_binding_affinity = IgA,
+  Temperature_optimum = Temp_optimum
+  )
+
+j <- otus %>%
+  select(otu, abun) %>%
+  left_join(tmp, by = 'otu') %>%
+  gather(trait, val, -otu, -abun) %>%
+  group_by(trait) %>%
+  summarise(
+    `Community Coverage` = sum(abun[!is.na(val)]) / sum(abun),
+    `OTU Coverage` = length(val[!is.na(val)]) / length(val))
+
+j <- tmp %>%  
+  gather(trait, val, -otu) %>% 
+  group_by(trait) %>% 
+  filter(!is.na(val)) %>%
+  summarise(
+    min = min(val), 
+    max = max(val), 
+    median = median(val)) %>% 
+  left_join(j, by = 'trait') %>%
+  mutate(trait = gsub('_', ' ', trait, fixed = T)) %>% 
+  mutate_if(is.numeric, signif, 2)
+
+j$Source <- c(
+  "PICRUSt, NCBI",
+  "IJSEM",
+  "Magnusdottir et al. 2015",
+  "IJSEM, BacDive",
+  "NCBI",
+  "NCBI",
+  "IJSEM, BacDive",
+  "Palm et al. 2014",
+  "IJSEM, BacDive",
+  "IJSEM",
+  "IJSEM, BacDive",
+  "IJSEM, BacDive",
+  "IJSEM, BacDive",
+  "Browne et al. 2016",
+  "IJSEM, BacDive",
+  "IJSEM, BacDive"
+)
+
+j$Unit <- c(
+   "No. in genome",
+   "0 or 1",
+   "No. pathways in genome",
+   "Percent (\\%)",
+   "No. in genome",
+   "Mb",
+   "0 or 1",
+   "log ([IgA+]/[IgA-] + 1)",
+   "log ($\\mu$m)",
+   "0 or 1",
+   "Nominal score (1 - 5)*",
+   "pH",
+   "g/l",
+   "Continuous score (0 - 1)",
+   "$^{\\circ}$C",
+   "log ($\\mu$m)"
+)
+
+j$min[j$trait == 'IgA binding affinity'] <- 0
+
+j <- transmute(j,
+  Trait = trait,
+  Sources = Source,
+  Units = Unit,
+  Range = paste(min, '-', max),
+  Coverage = `Community Coverage`
+)
+
+#kable(j)
+
+kable(j, format = 'latex', escape = F, booktabs = T, align = c('l','l','l','r','r'), linesep = "") %>%
+  kable_styling(full_width = T, font_size = 8) %>%
+  column_spec(c(1,2), width = '11em') %>%
+  column_spec(c(3), width = '13em') %>%
+  row_spec(0, bold = T) %>%
+  footnote(general = "Sources of trait data. Coverage refers to proportion of sequences with trait information.", general_title = "Table S1.", footnote_as_chunk = T, symbol = c("1: Anaerobe; 2: Facultative aerobe; 3: Facultative anaerobe; 4: Microaerophile; 5: Obligate aerobe."))
+
+
+```
+
+\pagebreak
+
+``` {r multipanel succession diagram, fig.width = 8, fig.height = 6}
+
+# bump up any t<2 to 2 because noise
+
+# determine abundance 'peaks' of OTUs by taking the abundance-weighted mean occurence. 
+# focus only on taxa more than .1% abundant, and only taxan that appear for 3 or more consecutive months
+tmp <- otus %>%
+  mutate() %>%
+  mutate(
+    t = round(t/30),
+    t = ifelse(t < 2, 2, t),
+    t = ifelse(t > 36, 36, t)) %>%
+  group_by(t, otu) %>%
+  summarise(abun = sum(abun)) %>%
+  group_by(t) %>%
+  filter(abun / sum(abun) > 0.001) %>%
+  group_by(otu) %>%
+  filter(max(t) - min(t) > 3) %>%
+  mutate(
+    tmean = weighted.mean(t, w = abun),
+    start = min(t),
+    end = max(t))
+
+#calculate percent of total community reads
+tmp2 <- otus %>%
+  group_by(otu) %>%
+  summarise(abun = sum(abun)) %>%
+  ungroup() %>%
+  mutate(abun = abun / sum(abun))
+
+# merge peak abundance and percent reads
+tmp$abun <- tmp2$abun[match(tmp$otu, tmp2$otu)]
+
+#reduce dataframe size and add rank
+tmp2 <- tmp %>%
+  ungroup() %>%
+  distinct(otu, tmean, .keep_all = TRUE) %>%
+  arrange(tmean) %>%
+  mutate(otuRank = seq_along(otu))
+tmp$otuRank <- tmp2$otuRank[match(tmp$otu, tmp2$otu)]
+
+#set rules to define groupings
+#tmp$group <- ifelse(tmp$start < 6 & tmp$end <= 30, 'Early successional', 'Late successional')
+#tmp$group <- ifelse(tmp$start < 9 & tmp$end > 30, 'Mid-successional / No trend', tmp$group)
+
+######### another way to determine succession status is to use regression coefficients
+
+tmp2 <- otus %>%
+  mutate(t = round(t/30)) %>%
+  mutate(
+    t = ifelse(t < 2, 2, t),
+    t = ifelse(t > 36, 36, t)) %>%
+  group_by(t, otu) %>%
+  summarise(abun = sum(abun))
+
+#note that I divide by the length of unique sampleIDs. This takes care of the off chance that there are multiple samples merged under the 2 or 36 month groups.
+regs <- otus_wide %>%
+  gather(otu, abun, -t, -sampleID, -subject) %>%
+  mutate(t = round(t/30)) %>%
+  mutate(
+    t = ifelse(t < 2, 2, t),
+    t = ifelse(t > 36, 36, t)) %>%
+  group_by(otu, t) %>%
+  summarise(abun = sum(abun) / length(unique(sampleID))) %>%
+  do(mod = summary(lm(abun ~ t, .))) %>%
+  mutate(
+    pval = mod$coefficients[[8]],
+    tval = mod$coefficients[[6]],
+    group = ifelse(pval < 0.05 & tval < 0, 'Early successional', 'Mid-successional / No trend'),
+    group = ifelse(pval < 0.05 & tval > 0, 'Late successional', group)
+  )
+
+tmp2 <- left_join(tmp2, regs[, c('otu','group')], by = 'otu')
+tmp2 <- left_join(tmp2, tax, by = 'otu')
+tmp2$group <- factor(tmp2$group, levels = c('Early successional','Mid-successional / No trend','Late successional'))
+
+#if i want this regression-based method... delete old group column and add the new one
+# eventually i should just remove the original method
+tmp$group <- NULL
+tmp <- left_join(tmp, regs[, c('otu','group')], by = 'otu')
+
+###########
+
+tmp <- left_join(tmp, tax, by = 'otu')
+tmp$group <- factor(tmp$group, levels = c('Early successional','Mid-successional / No trend','Late successional'))
+
+#save a version for a subsequent boxplot figure
+by_group <- tmp
+
+p0 <- ggplot(tmp, aes(x = t, y = otuRank)) +
+  geom_line(aes(group = otuRank, color = group), size = 0.75) +
+  scale_color_brewer(palette = 'Set1') + 
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.background = element_blank(),
+    axis.text.y=element_blank(),
+    axis.ticks.y=element_blank(),
+    legend.position = 'none') +
+  labs(x = 'Month', y = 'OTU, ranked by peak global abundance')
+
+p1 <- tmp2 %>%
+  ungroup() %>%
+  filter(group == 'Early successional') %>%
+  mutate(abun = abun / sum(abun)) %>%
+  group_by(Order, Family) %>%
+  summarise(abun = sum(abun)) %>%
+  ungroup() %>%
+  arrange(-abun) %>%
+  mutate(Family = ifelse(Family == 'unclassified', paste(Order, Family, sep = '_'), Family)) %>%
+  mutate(Family = ifelse(Family %in% Family[1:5], Family, 'Other')) %>%
+  mutate(Family = factor(Family, level = rev(unique(Family)))) %>%
+  group_by(Family) %>%
+  summarise(abun = sum(abun)) %>%
+  ggplot(aes(x = Family, y = abun, fill = Family)) +
+   geom_bar(stat = 'identity', color = 'black', fill = '#E41A1C') +
+   geom_text(aes(label = Family), hjust = 'left', nudge_y = 0.01) +
+   coord_flip() +
+   scale_y_continuous(limits = c(0,0.75)) +
+   theme_bw() +
+   theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank(),
+      legend.position = 'none') +
+  labs(y = 'Relative abundance', x = 'Family') +
+    ggtitle(" ")
+
+p2 <- tmp2 %>%
+  ungroup() %>%
+  filter(group == 'Mid-successional / No trend') %>%
+  mutate(abun = abun / sum(abun)) %>%
+  group_by(Order, Family) %>%
+  summarise(abun = sum(abun)) %>%
+  ungroup() %>%
+  arrange(-abun) %>%
+  mutate(Family = ifelse(Family == 'unclassified', paste(Order, Family, sep = '_'), Family)) %>%
+  mutate(Family = ifelse(Family %in% Family[1:5], Family, 'Other')) %>%
+  mutate(Family = factor(Family, level = rev(unique(Family)))) %>%
+  group_by(Family) %>%
+  summarise(abun = sum(abun)) %>%
+  ggplot(aes(x = Family, y = abun, fill = Family)) +
+   geom_bar(stat = 'identity', color = 'black', fill = '#377EB8') +
+   geom_text(aes(label = Family), hjust = 'left', nudge_y = 0.01) +
+   coord_flip() +
+   scale_y_continuous(limits = c(0,1.05)) +
+   theme_bw() +
+   theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank(),
+      legend.position = 'none') +
+  labs(y = 'Relative abundance', x = 'Family') +
+  ggtitle(" ")
+
+p3 <- tmp2 %>%
+  ungroup() %>%
+  filter(group == 'Late successional') %>%
+  mutate(abun = abun / sum(abun)) %>%
+  group_by(Order, Family) %>%
+  summarise(abun = sum(abun)) %>%
+  ungroup() %>%
+  arrange(-abun) %>%
+  mutate(Family = ifelse(Family == 'unclassified', paste(Order, Family, sep = '_'), Family)) %>%
+  mutate(Family = ifelse(Family %in% Family[1:5], Family, 'Other')) %>%
+  mutate(Family = factor(Family, level = rev(unique(Family)))) %>%
+  group_by(Family) %>%
+  summarise(abun = sum(abun)) %>%
+  ggplot(aes(x = Family, y = abun, fill = Family)) +
+   geom_bar(stat = 'identity', color = 'black', fill = '#4DAF4A') +
+   geom_text(aes(label = Family), hjust = 'left', nudge_y = 0.01) +
+   coord_flip() +
+   scale_y_continuous(limits = c(0,0.75)) +
+   theme_bw() +
+   theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank(),
+      legend.position = 'none') +
+  labs(y = 'Relative abundance', x = 'Family') +
+  ggtitle(" ")
+
+tmp_abuns <- otus %>%
+  mutate(t = round(t/30)) %>%
+  mutate(
+    t = ifelse(t < 2, 2, t),
+    t = ifelse(t > 36, 36, t)) %>%
+  group_by(t, otu) %>%
+  summarise(abun = sum(abun) / length(unique(sampleID))) %>%
+  group_by(t) %>%
+  mutate(abun = 100 * abun / sum(abun))
+  
+p4 <- tmp_abuns %>%
+  filter(otu %in% tmp2$otu[tmp2$group == 'Early successional']) %>%
+  ggplot(aes(x = t, y = abun)) +
+    geom_bar(stat = 'identity', color = '#E41A1C', fill = '#E41A1C') +
+    scale_y_continuous(limits = c(0,70)) +
+    th +
+    labs(x = 'Month', y = '% Abundance') + 
+  ggtitle('Early successional')
+
+p5 <- tmp_abuns %>%
+  filter(otu %in% tmp2$otu[tmp2$group == 'Mid-successional / No trend']) %>%
+  ggplot(aes(x = t, y = abun)) +
+    geom_bar(stat = 'identity', color = '#377EB8', fill = '#377EB8') +
+    scale_y_continuous(limits = c(0,70)) +
+    th +
+    labs(x = 'Month', y = '% Abundance') + 
+  ggtitle('Mid-successional / No trend')
+
+p6 <- tmp_abuns %>%
+  filter(otu %in% tmp2$otu[tmp2$group == 'Late successional']) %>%
+  ggplot(aes(x = t, y = abun)) +
+    geom_bar(stat = 'identity', color = '#4DAF4A', fill = '#4DAF4A') +
+    scale_y_continuous(limits = c(0,70)) +
+    th +
+    labs(x = 'Month', y = '% Abundance') + 
+  ggtitle('Late successional')
+
+mygrobs <- lapply(list(p0, p3, p2, p1, p6, p5, p4), ggplotGrob)
+
+gt <- gtable(widths=unit(rep(1,3), "null"),
+             heights=unit(rep(1,3), "null"))
+
+gt <- gtable_add_grob(gt, mygrobs, 
+                       l=c(1,3,3,3,2,2,2),
+                       r=c(1,3,3,3,2,2,2),
+                       t=c(1,1,2,3,1,2,3),
+                       b=c(3,1,2,3,1,2,3))
+grid::grid.newpage()
+grid::grid.draw(gt)
+
+```
+
+## Figure 1. OTU and family-level abundance patterns over time.
+Successional ranges of taxa (left), ranked by peak global abundance. Colored horizontal lines represent OTUs, and their ranges represent the first and last times their mean abundance surpassed 0.1% across infants. Taxa that never attained 0.1% mean abundance are not shown. OTU colors reflect their successional status. Taxa were categorized as early (red) or late (green) successional if their global abundances trended significantly (p < 0.05) negative or positive over time based on linear regression. Center column panels reflect relative abundances across all infants. Right column panels show the top five most abundant families and their relative contributions.
+
+\pagebreak
+
+```{r traits over time plotted together}
+
+j <- otus %>%
+  filter(abun > 0) %>%
+  group_by(subject) %>%
+  filter(min(t) < 90 & max(t) > 730) %>%
+  filter(length(unique(t)) > 10) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun) %>%
+  ungroup()
+
+j %>%
+  group_by(trait, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  ggplot(aes(x = t/30, y = val, color = trait)) +
+    stat_smooth(se = FALSE) +
+    #geom_point() +
+    scale_color_discrete(name = '') +
+    theme(legend.position = 'none') +
+    th +
+    labs(x = 'Months after birth', y = 'Community trait value (scaled)')
+
+```
+
+## Figure 2. Shifts in abundance-weighted trait values over time.
+Lines show community weighted mean trait values of gut microbiota over time across all infants. Trait values are scaled and centered to enable plotting on the same axis. Due to limited data, trait means represent only 25% (Salt optimum) to 68% (16S gene copy number) of the total community; for all coverage statistics see Table 1. Note that some traits are correlated, meaning that not each observation is statistically independent.
+
+\pagebreak
+
+```{r traits over time, fig.width=6}
+
+j <- otus %>%
+  filter(abun > 0) %>%
+  group_by(subject) %>%
+  filter(min(t) < 90 & max(t) > 730) %>%
+  filter(length(unique(t)) > 10) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun) %>%
+  ungroup()
+
+iwant <- c('Sporulation','Motility','Copies_16S','Gram_positive',
+           'Oxygen_tolerance','Gene_number')
+
+j %>%
+  left_join(meta) %>%
+  group_by(trait, t, delivery) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  group_by(trait) %>%
+  filter(trait %in% iwant) %>%
+  mutate(t = t/30) %>%
+  filter(t <= 36) %>%
+  ggplot(aes(x = t, y = val)) +
+    geom_point(color = 'red', alpha = 0.2) +
+    stat_smooth(color = 'black') +
+    facet_wrap(~trait, scale = 'free_y') +
+    #scale_color_manual(values = c('black','red')) +
+    labs(x = "Months after birth", y = "Abundance-weighted community mean") +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'none')
+
+```
+
+## Figure 3. Abundance-weighted trait patterns over time.
+Lines show community weighted mean trait values of gut microbiota over time across all infants. Grey shaded areas show 95% confidence intervals. Due to limited trait data, trait means represent only from 33% (Motility) to 68% (16S gene copy number) of the total community. For all trait-based trends see Supplementary Materials; for all coverage statistics see Table 1.
+
+\pagebreak
+
+```{r step wise delta diss, fig.height = 3.5}
+
+### bray curtis stuff
+meltdist <- function(x, sub, n, meth = 'bray') {
+  # n removes taxa with fewer than 10 reads per subject
+  # here, make a distance matrix using meth method and then melt it
+  x <- as.data.frame(x)
+  tz <- x$t
+  x$t <- NULL
+  x <- x[, sapply(x, is.numeric)]
+  x <- x[, colSums(x, na.rm = T) > n]
+  row.names(x) <- tz
+  x <- vegdist(x, method = meth)
+  x <- as.matrix(x)
+  x <- melt(x, varnames=c('t1', 't2'), value.name = 'dist')
+  x <- data.frame(subject = sub, x)
+  x$subject <- as.character(x$subject)
+  return(x)
+}
+
+j1 <- otus_wide %>%
+  select(-sampleID) %>%
+  group_by(subject) %>%
+  filter(min(t) < 90 & max(t) > 1095) %>%
+  filter(length(unique(t)) > 10) %>%
+  do(meltdist(., sub = .$subject[[1]], n = 5)) %>%
+  group_by(subject, t1) %>%
+  filter(t2 > t1) %>%
+  filter(t2 == min(t2)) %>%
+  mutate(delta = t2 - t1) %>%
+  filter(delta < 100) %>%
+  ungroup()
+
+j2 <- otus %>%
+  filter(abun > 0) %>%
+  group_by(subject) %>%
+  filter(min(t) < 90 & max(t) > 1095) %>%
+  filter(length(unique(t)) > 10) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  group_by(subject, trait, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  ungroup() %>%
+  spread(trait, val, fill = 0) %>%
+  group_by(subject) %>%
+  do(meltdist(., sub = .$subject[[1]], n = -1e6, meth = 'euclidean')) %>%
+  group_by(subject, t1) %>%
+  filter(t2 > t1) %>%
+  filter(t2 == min(t2)) %>%
+  mutate(delta = t2 - t1) %>%
+  filter(delta < 100) %>%
+  ungroup()
+
+j2 <- j2 %>%
+  group_by(subject) %>%
+  mutate(
+     dist = as.numeric(scale(dist)), 
+     dist = dist - min(dist),
+     dist = dist / max(dist)) %>%
+  ungroup()
+
+j <- rbind(mutate(j1, group = 'OTUs (Bray-Curtis)'), 
+           mutate(j2, group = 'Traits (Euclidean)')) #adjusted so gam scales properly
+
+#for delta plot
+j_delta <- j
+
+j <- j %>%
+  group_by(group) %>%
+  mutate(dist = ifelse(group == 'OTUs (Bray-Curtis)', scale(dist), scale(dist)*0.75)) #adjusted so gam scales properly
+
+# for later (can simplify this later)
+j_next <- j
+
+j1 <- otus_wide %>%
+  select(-sampleID) %>%
+  group_by(subject) %>%
+  filter(min(t) < 90 & max(t) > 1095) %>%
+  filter(length(unique(t)) > 10) %>%
+  do(meltdist(., sub = .$subject[[1]], n = 5)) %>%
+  group_by(subject) %>%
+  filter(t2 == max(t2) & t1 != max(t2)) %>%
+  ungroup()
+
+j2 <- otus %>%
+  filter(abun > 0) %>%
+  group_by(subject) %>%
+  filter(min(t) < 90 & max(t) > 1095) %>%
+  filter(length(unique(t)) > 10) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  group_by(subject, trait, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  ungroup() %>%
+  spread(trait, val, fill = 0) %>%
+  group_by(subject) %>%
+  do(meltdist(., sub = .$subject[[1]], n = -1e6, meth = 'euclidean')) %>%
+  group_by(subject) %>%
+  filter(t2 == max(t2) & t1 != max(t2)) %>%
+  ungroup()
+
+j2 <- j2 %>%
+  group_by(subject) %>%
+  mutate(
+     dist = as.numeric(scale(dist)), 
+     dist = dist - min(dist),
+     dist = dist / max(dist)) %>%
+  ungroup()
+
+j <- rbind(mutate(j1, group = 'OTUs (Bray-Curtis)') %>% mutate(dist = scale(dist)), 
+           mutate(j2, group = 'Traits (Euclidean)') %>% mutate(dist = scale(dist)-0.6)) #adjusted so gam scales properly
+
+j <- rbind(mutate(j, group2 = 'Dissimilarity to final sample'), mutate(ungroup(j_next), delta = NULL, group2 = 'Dissimilarity to next sample'))
+j <- mutate(j, group2 = factor(group2, levels = unique(j$group2)[c(2,1)]))
+
+ggplot(j, aes(x = t1/30, y = dist, color = group)) +
+  #stat_smooth(data = filter(j, group == 'OTUs (Bray-Curtis)'), method = 'lm', color = 'black', lty = 2, se = FALSE) +
+  stat_smooth() +
+  facet_wrap(~group2, scales = 'free') +
+  scale_color_discrete(name = '') +
+  theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+  labs(x = 'Months after birth', y = 'Dissimilarity (scaled)')
+
+
+```
+
+## Figure 4. Taxonomic and trait-based rates of community change within infants.
+Lines show the mean dissimilarity between gut microbiome community samples over infant development, and compare OTU-based composition with trait-based composition. At left, lines show how dissimilarity between subsequent samples generally decreases over time, highlighting the development of a more stable community both in terms of OTUs and traits. At right, lines show dissimilarity between samples and the final community sample for each infant, taken at around 36 months after birth. While both OTU-based and trait-based lines decrease monotonically, illustrating the gradual convergence in composition over early development, trait-based convergence occurs sooner than OTU-based convergence, suggesting that OTU turnover becomes more functionally redundant over time. In all cases, LOESS trendlines are scaled and centered around zero for comparability. 
+
+\pagebreak
+
+```{r retention of initial species, include = FALSE}
+
+otus %>% left_join(meta[, c('subject','delivery')]) %>% filter(!is.na(delivery)) %>% group_by(subject) %>% filter(otu %in% otu[t == min(t) & min(t) < 100]) %>% group_by(subject, t, delivery) %>% summarise(abun = sum(abun)) %>% ggplot(aes(x = t, y = abun/12000, color = delivery)) + stat_smooth() + ggtitle("proportion of community that was present in first sample")
+
+```
+
+
+```{r richness over time, fig.height = 4}
+
+j1 <- otus %>%
+  mutate(t = t / 30) %>%
+  group_by(subject, t) %>%
+  summarise(rich = length(unique(otu)), group1 = 'Richness', group2 = 'Within subjects') %>%
+  ungroup() %>%
+  select(t, subject, rich, group1, group2)
+
+j2 <- otus %>%
+  mutate(t = t / 30) %>%
+  group_by(t) %>%
+  summarise(subject = 1, rich = length(unique(otu)), group1 = 'Richness', group2 = 'Across subjects')
+
+j3 <- otus %>%
+  #group_by(subject) %>%
+  #filter(length(unique(t)) > 10) %>%
+  mutate(t = round(t / 30)) %>%
+  distinct(subject, t, otu) %>%
+  group_by(subject) %>%
+  arrange(t) %>%
+  mutate(rich = cummax(as.numeric(factor(otu, levels = unique(otu))))) %>%
+  group_by(subject, t) %>%
+  summarise(rich = max(rich), group1 = 'Cumulative richness', group2 = 'Within subjects') %>%
+  ungroup() %>%
+  select(subject, t, rich, group1, group2)
+
+j4 <- otus %>%
+  mutate(t = round(t / 30)) %>%
+  distinct(t, otu) %>%
+  arrange(t) %>%
+  mutate(rich = cummax(as.numeric(factor(otu, levels = unique(otu))))) %>%
+  group_by(t) %>%
+  summarise(subject = 1, rich = max(rich), group1 = 'Cumulative richness', group2 = 'Across subjects')
+
+j <- rbind(mutate(rbind(j1, j3), scale = 'Individual infants'), 
+      mutate(rbind(j2, j4), scale = 'All infants')) %>%
+  filter(t <= 36) %>%
+  select(-group2)
+
+j5 <- j %>%
+  mutate(t = round(t)) %>%
+  group_by(t, group1) %>%
+  summarise(
+    rich = mean(rich[scale == 'Individual infants']) / mean(rich[scale == 'All infants']),
+    scale = 'Individual infants / All infants',
+    subject = 1) %>%
+  ungroup() 
+
+j <- rbind(j, j5) %>%
+  mutate(scale = factor(scale, levels = c('Individual infants', 'All infants', 'Individual infants / All infants')))
+
+j1 <- j %>%
+  mutate(
+    scale1 = ifelse(scale != 'Individual infants / All infants' & group1 == 'Richness', 'Richness', 'Individual infants / All infants'),
+    scale1 = ifelse(scale != 'Individual infants / All infants' & group1 == 'Cumulative richness', 'Cumulative richness', scale1),
+    scale1 = factor(scale1, levels = c('Richness','Cumulative richness')))
+
+j1 %>%
+  filter(scale != 'Individual infants / All infants') %>%
+  ggplot(aes(x = t, y = rich, color = scale)) +
+  stat_smooth(aes(group = interaction(scale, group1))) +
+  scale_color_discrete(name = '') +
+  theme_bw() +
+   theme(
+      panel.grid.minor = element_blank(),
+      #panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+  facet_wrap(~scale1, scales = 'free_y') +
+  labs(x = 'Months after birth', y = 'OTU richness')
+
+```
+
+## Figure 5. OTU richness in individual infants and across all infants.
+
+\pagebreak
+
+\begin{center}
+\bigskip
+\bigskip
+{\Huge Supplementary figures}
+\end{center}
+
+\pagebreak
+
+```{r intragenus trait variation}
+
+reg_pool <- traits_all %>%
+  filter(!is.na(Genus)) %>%
+  select(-Domain, -Phylum, -Class, -Order, -Family, -Species) %>%
+  gather(trait, val, -Genus, -otu) %>%
+  filter(!is.na(val)) %>%
+  distinct()
+  
+j <- reg_pool %>%
+  group_by(trait, Genus) %>%
+  mutate(n = length(Genus)) %>%
+  filter(n > 2) %>%
+  summarise(
+    n = length(Genus),
+    mean = mean(val),
+    mean_random = mean(replicate(10, mean(sample(reg_pool$val[reg_pool$trait == trait[1]], size = n)))),
+    sd = sd(val),
+    sd_random = mean(replicate(10, sd(sample(reg_pool$val[reg_pool$trait == trait[1]], size = n)))),
+    range = range(val)[[1]] - range(val)[[2]],
+    var = var(val),
+    var_random = mean(replicate(10, var(sample(reg_pool$val[reg_pool$trait == trait[1]], size = n)))),
+    min = min(var, var_random),
+    max = max(var, var_random)) %>%
+  group_by(trait) %>%
+  arrange(mean) %>%
+  mutate(rank = seq_along(Genus))
+
+j %>%
+  filter(trait != 'Spore') %>%
+  ggplot(aes(x = mean, y = rank, color = trait)) +
+    geom_point(aes(size = n)) +
+    geom_errorbarh(aes(xmin = mean - sd, xmax = mean + sd)) +
+    facet_wrap(~trait, scales = 'free', ncol = 4) +
+    th
+
+```
+
+
+```{r all traits over time, fig.width=6, fig.height = 7}
+
+j <- otus %>%
+  filter(abun > 0) %>%
+  group_by(subject) %>%
+  filter(min(t) < 90 & max(t) > 730) %>%
+  filter(length(unique(t)) > 10) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun) %>%
+  ungroup() %>%
+  filter(trait != 'Genome_Mb')
+
+iwant <- c('Sporulation','Motility','Copies_16S','Gram_positive',
+           'Oxygen_tolerance','Gene_number')
+
+j %>%
+  group_by(trait, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  group_by(trait) %>%
+  mutate(t = t/30) %>%
+  filter(t <= 36) %>%
+  ggplot(aes(x = t, y = val, color = trait)) +
+    stat_smooth() +
+    facet_wrap(~trait, scale = 'free_y', ncol = 3) +
+    labs(x = "Months after birth", y = "Abundance-weighted community mean") +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'none')
+
+```
+
+## Abundance-weighted trait patterns over time.
+Lines show community weighted mean trait values of gut microbiota over time across all infants. Grey shaded areas show 95% confidence intervals. Due to limited trait data, trait means represent only from 33% (Motility) to 68% (16S gene copy number) of the total community. For all coverage statistics see Table 1.  
+
+
+\pagebreak
+
+```{r density plot of diet transitions, fig.width =5, fig.height = 3.5}
+
+tmp <- meta %>%
+  group_by(subject) %>%
+  filter(!(is.na(bf_end) & is.na(formula_end))) %>%
+  mutate(milk_end = max(bf_end, formula_end, na.rm = T)) %>%
+  gather(var, val, food_start, milk_end) %>%
+  filter(!is.na(val) | !is.na(val))
+
+ggplot(tmp, aes(x = val/30, fill = var)) +
+  geom_density(alpha = 0.5, adjust = 3) +
+  geom_label(data = filter(tmp, var == 'food_start')[1,], aes(fill = var), x = 14, y = 0.19, label = 'Food start') +
+  geom_label(data = filter(tmp, var == 'milk_end')[1,], aes(fill = var), x = 22, y = 0.05, label = 'Milk end') +
+  labs(x = "Months after birth", y = "Density") +
+  theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'none')
+
+```
+
+
+## Density of dietary transition times across infants.
+*Note:* For 'Milk', I included both formula and breastmilk. 
+
+\pagebreak
+
+```{r pairwise trait correlations}
+
+#I don't *want* to use the trait database with all the data extrapolated from congeners, but if I don't use it then there is *very* little to work with (which is why I did the extrapolation in the first place). And... in a sense... if we want to know which observations aren't independent, we *want* to use the extrapolated trait data. So that's what I'll do for the meantime. Really what we need are more trait data........
+
+j <- cor(traits[, -c(1)], use = 'pairwise.complete.obs')
+#j <- cor(traits_sparse[, -c(1:2)], use = 'pairwise.complete.obs')
+j[lower.tri(j, diag = T)] <- NA
+
+#two ways to look at correlations
+melt(j) %>%
+  filter(!is.na(value)) %>%
+  ggplot(aes(x = Var1, y = Var2, fill = value)) +
+    geom_tile() +
+    scale_fill_gradient2(low = 'blue', mid = 'white', high = 'red', name = 'Pears. Corr.') +
+    labs(x = '', y = '') +
+    theme_bw() +
+    theme(
+      axis.text.x = element_text(angle = 45, hjust = 1),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank())
+
+```
+
+## Pearson correlation coefficients among traits.
+
+\pagebreak
+
+```{r ranked trait correlations, fig.height=7}
+
+melt(j) %>%
+  filter(!is.na(value)) %>%
+  filter(abs(value) > 0.5) %>%
+  arrange(value) %>%
+  mutate(x = paste(Var1,Var2,sep = '~'), x = factor(x, x)) %>%
+  ggplot(aes(y = value, x = x, fill = value)) +
+    geom_bar(stat = 'identity') +
+    coord_flip() +
+    scale_fill_gradient2(low = 'blue', mid = 'white', high = 'red', 
+                         name = 'Pears. Corr.', midpoint = 0) +
+    labs(x = ' ', y = '') +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank())
+  
+```
+
+## Ranked pairwise Pearson correlations among traits > 0.5.
+
+\pagebreak
+
+```{r succession group boxplots, fig.height=8, fig.width=8}
+
+by_group %>%
+  ungroup() %>%
+  mutate(
+    group = as.character(group),
+    group = ifelse(group == 'Late successional', 'Late', group),
+    group = ifelse(group == 'Early successional', 'Early', group),
+    group = ifelse(group == 'Mid-successional / No trend', 'Other', group),
+    group = factor(group, levels = c('Early','Other','Late'))) %>%
+  select(otu, group) %>%
+  left_join(traits, by = 'otu') %>%
+  select(-otu) %>%
+  gather(trait, val, -group) %>%
+  filter(!is.na(val)) %>%
+  ggplot(aes(x = group, y = val, color = group, fill = group)) +
+    geom_boxplot(alpha = 0.2) +
+    scale_color_brewer(palette = 'Set1') + 
+    scale_fill_brewer(palette = 'Set1') + 
+    facet_wrap(~trait, scales = 'free') +
+    labs(x = '', y = '') +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'none')
+
+```
+
+## Trait-based differences among OTUs, grouped by successional stage.
+The early and late successional species should, given what we know about trait patterns over time (i.e., my brown bag talk). The interesting aspect is whether the 'Early and persistent' species exhibit different traits. 
+*Note:* this plot does not consider abundances. It is simply a comparison of species traits among the groups. Other than that, it is conceptually similar to the continuous time plots below.
+
+```{r percent shared, include = FALSE}
+
+j <- otus %>%
+  mutate(t = round(t/180)) %>%
+  group_by(subject, t) %>%
+  filter(sampleID == sampleID[[1]])
+
+all_otus <- expand.grid(unique(j$subject), unique(j$subject), t = sort(unique(j$t)))
+
+x <- data.frame(all_otus, shared = NA, unique = NA)
+x <- x[sample(c(1:nrow(x)), 1000), ]
+
+for (i in 1:nrow(x)) {
+  tmp1 <- j[j$subject == x$Var1[i], ]
+  tmp2 <- j[j$subject == x$Var2[i], ]
+  if (x$t[i] %in% tmp1$t & x$t[i] %in% tmp2$t) {
+    tmp1 <- tmp1[tmp1$t == x$t[i], ]
+    tmp2 <- tmp2[tmp2$t == x$t[i], ]
+    tmp <- tmp1$otu %in% tmp2$otu
+    x$shared[i] <- sum(tmp1$otu %in% tmp2$otu)
+    x$unique[i] <- length(tmp) - x$shared[i]
+  }
+  print(i)
+}
+
+x <- filter(x, !is.na(shared))
+
+x %>%
+  gather(var, val, shared, unique) %>%
+  ggplot(aes(x = t * 6, y = val, color = var)) + 
+    geom_point() +
+    stat_summary(fun.y = mean, geom = "line")
+
+x %>%
+  mutate(shared_per = x$shared / (x$shared + x$unique)) %>%
+  ggplot(aes(x = t * 6, y = shared_per)) + 
+    geom_point() +
+    stat_summary(fun.y = mean, geom = "line")
+
+```
+
+```{r PCA and common rare analysis, include=FALSE}
+
+library(pcaMethods)
+library(ggrepel) #must open in RGui for ggrepel to work
+
+  x <- traits_all[, -c(1)]
+  x <- traits_all[, -c(1:8)]#[x_all$Genus %in% tax$Genus, ]
+  x <- x
+  pairs(select(x, Copies_16S, GC_content, Oxygen_tolerance, pH_optimum, Salt_optimum, Temp_optimum), cex.labels = 2)
+  x <- scale(x, scale = TRUE, center = TRUE)
+  x1 <- as.data.frame(x) %>% 
+    select(Copies_16S, GC_content, Gram_positive, Length, Motility,
+           Oxygen_tolerance, pH_optimum, Salt_optimum, Spore, Temp_optimum, Width)
+  x1 <- x1[!is.na(rowSums(x1)), ]
+  pc1 <- pca(x1, method = "ppca", nPcs = 5, center = FALSE)
+  df1 <- data.frame(Trait = row.names(loadings(pc1)), loadings(pc1))
+  
+  ggplot(df1, aes(x = PC1, y = PC2)) +
+    geom_segment(aes(xend = 0, yend = 0)) +
+    geom_label_repel(aes(label = Trait)) +
+    #geom_label(aes(label = Trait)) +
+    xlab(paste("PC1", round(pc1@R2[1] * 100), "% of variance")) +
+    ylab(paste("PC2", round(pc1@R2[2] * 100), "% of variance")) + 
+    theme(legend.position = 'none') + th
+
+  x1 <- as.data.frame(x) %>% 
+    select(Copies_16S, B_vitamins, IgA, Spore_score)
+  x1 <- x1[!is.na(rowSums(x1)), ]
+  pc1 <- pca(x1, method = "ppca", nPcs = 2, center = FALSE)
+  df1 <- data.frame(Trait = row.names(loadings(pc1)), loadings(pc1))
+  
+  ggplot(df1, aes(x = PC1, y = PC2)) +
+    geom_segment(aes(xend = 0, yend = 0)) +
+    geom_label_repel(aes(label = Trait)) +
+    #geom_label(aes(label = Trait)) +
+    xlab(paste("PC1", round(pc1@R2[1] * 100), "% of variance")) +
+    ylab(paste("PC2", round(pc1@R2[2] * 100), "% of variance")) + 
+    theme(legend.position = 'none') + th
+
+detach("package:pcaMethods", unload=TRUE)
+
+#############################
+#the numbers of community members taht are common and rare, over time
+otus %>% group_by(subject, sampleID, t) %>% mutate(abun = abun / sum(abun)) %>% summarise(common = sum(abun > 0.001), rare = sum(abun <= 0.001)) %>% gather(group, rich, -subject, -sampleID, -t) %>% ggplot(aes(x = t, y = rich, color = group)) + geom_point() + stat_smooth(aes(lty = group), color = 'black') + labs(x = "Months after birth", y = "Number of OTUs") + scale_color_discrete(name = 'OTU category') + scale_linetype_discrete(name = 'OTU category') + ggtitle('# of common (>1%) and rare (<1%) OTUs, over time') + th
+
+# the proportion of community members that are common (>1%), over time
+otus %>% group_by(subject, sampleID, t) %>% mutate(abun = abun / sum(abun)) %>% summarise(common = sum(abun > 0.01), rare = sum(abun <= 0.01), commonP = common/(common + rare)) %>% ggplot(aes(x = t, y = commonP)) + geom_point() + labs(x = "Months after birth", y = "") + stat_smooth() + th + ggtitle('Proportion of OTUs that are common (>1%), over time')
+  
+```
+
+```{r null modeling, include = FALSE}
+
+#simcom <- function(rep) {
+  
+#  x <- otus %>%
+#  mutate(t = round(t/30)) %>%
+#  group_by(t) %>%
+#  do(data.frame(
+#    t = .$t[1],
+#    rep = rep,
+#    otu = sample(.$otu, size = 12000, prob = .$abun, replace = TRUE),
+#                stringsAsFactors = FALSE)) %>%
+#  group_by(t, rep, otu) %>%
+#  summarise(abun = length(otu)) %>%
+#  as.data.frame()
+#  
+#  return(x)
+#}
+#
+#x <- list()
+#for (i in c(1:3)) x[[i]] <- simcom(i)
+#x <- rbindlist(x)
+#x <- rbind(
+#  transmute(otus, subject, t, rep = 0, otu, abun),
+#  transmute(x, subject = 'null', t, rep, otu, abun)
+#)    
+  
+#meltdist_t <- function()
+
+```
+
+\pagebreak
+
+```{r delta plot, fig.height = 3.5}
+
+ggplot(j_delta, aes(x = delta, y = dist)) +
+  geom_point() +
+  stat_smooth(method = 'lm', lty = 2) +
+  facet_wrap(~group) +
+  th +
+  labs(x = 'Dissimilarity', y = 'Days between samples')
+  
+
+```
+
+## There is no relationship between the number of days between a sample (under 100 days) and the dissimilarity between community composition. 
+\pagebreak
+
+
+```{r dissimilarity among infants over time, fig.width = 4, include = FALSE}
+
+#custom function that calculates inter-baby differences over time (to avoid lengthy script)
+interbaby_dist <- function(x, meth = 'bray') {
+  
+  #calculate distance matrix; rename rows and col to match sampleIDs
+  ids <- x$sampleID
+    sample_ts <- otus %>% 
+    mutate(t = ceiling(t/30)) %>% 
+    distinct(sampleID, t) %>%
+    mutate(sampleID = factor(sampleID))
+  x <- x[, -c(1)]
+  x <- vegdist(x, method = meth)
+  x <- as.matrix(x)
+  row.names(x) <- ids
+  colnames(x) <- ids
+  
+  #melt distances, remove distances from mirrored ids and self-id pairs,join t, remove the weak sampling after 36 months
+  x <- melt(x, value.name = 'dist') %>%
+    filter(as.numeric(factor(Var1)) > as.numeric(factor(Var2))) %>%
+    left_join(sample_ts, by = c('Var1' = 'sampleID')) %>%
+    rename(id1_t = t) %>%
+    left_join(sample_ts, by = c('Var2' = 'sampleID')) %>%
+    rename(id1 = Var1, id2 = Var2, id2_t = t) %>%
+    filter(id1_t == id2_t & id1_t < 37)
+
+  return(x)
+}
+
+# filter the rarest species out, group by genus-level abundances to speed up distance matrix calculation (ensure each genus has a unique code), create wide table
+if (TRUE) {
+  j1 <- otus %>%
+    filter(abun > 12) %>%
+    select(-subject, -t) %>%
+    left_join(tax, by = 'otu') %>%
+    group_by(sampleID, otu) %>%
+    summarise(abun = sum(abun)) %>%
+    spread(otu, abun, fill = 0) %>%
+    interbaby_dist(meth = 'bray')
+  
+  saveRDS(j1, 'data\\otu_level_braycurtis.RDS')
+  
+} 
+
+#I wonder if i can use the meltdist function from above to streamline this....
+j1 <- readRDS(paste0(wd,'data\\otu_level_braycurtis.RDS'))
+
+j2 <- otus %>%
+    filter(abun > 12) %>%
+    select(-subject, -t) %>%
+    left_join(tax, by = 'otu') %>%
+    filter(Order != 'unclassified') %>%
+    group_by(Genus) %>%
+    mutate(genusID = paste(Genus, as.numeric(as.factor(paste(Order, Family))))) %>%
+    group_by(sampleID, genusID) %>%
+    summarise(abun = sum(abun)) %>%
+    spread(genusID, abun, fill = 0) %>%
+    interbaby_dist(meth = 'bray')
+
+#### Now the same thing for traits
+# filter the rarest species out, group by genus-level abundances to speed up distance matrix calculation (ensure each genus has a unique code), create wide table
+
+j3 <- otus %>%
+  select(-subject, -t) %>%
+  filter(abun > 0) %>%
+  mutate(otu = factor(otu)) %>%
+  left_join(traits[, c('otu','Sporulation','Motility','Copies_16S',
+                      'Gram_positive','Oxygen_tolerance','Gene_number')], by = 'otu') %>%
+  gather(trait, val, -sampleID, -otu, -abun) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  group_by(sampleID, trait) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  ungroup() %>%
+  spread(trait, val, fill = 0) %>%
+  interbaby_dist(meth = 'euclidean')
+
+j <- rbind(mutate(j1, group = 'OTUs (Bray-Curtis)') %>% mutate(dist = (as.numeric(scale(dist))+0.35)*1.55), 
+           mutate(j2, group = 'Genera (Bray-Curtis)'),
+           mutate(j3, group = 'Traits (Euclidean)') %>% mutate(dist = as.numeric(scale(dist))))
+
+j$group = factor(j$group, unique(j$group)[1:3])
+                 
+# the first line of code essentially lumps data into 2 month increments. Eventually, I should go back and modify the actual calculation, rather than this hack.
+j %>%
+  mutate(Months = id1_t %/% 3 * 2) %>%
+  ggplot(aes(x = factor(Months), y = dist, fill  = Months)) +
+    geom_boxplot(alpha = 0.5) +
+    scale_fill_gradient(low = 'blue', high = 'red') +
+    facet_wrap(~group, scales = 'free_y', ncol = 1) +
+    labs(x = 'Months after birth', y = 'Dissimilarity among infants') +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'none')
+
+```
+
+```{r mean dissimilarity among infants over time, fig.height = 3.5, fig.width = 4}
+
+j %>%
+  filter(group != 'Genera (Bray-Curtis)') %>%
+  rename(Months = id1_t) %>%
+  ggplot(aes(x = Months, y = dist, color = group)) +
+    stat_smooth() +
+    #facet_wrap(~group, scales = 'free_y', ncol = 2) +
+    labs(x = 'Months after birth', y = 'Dissimilarity among infants (scaled)') +
+    scale_color_discrete(name = '') +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom')
+
+#j %>% 
+#  left_join(meta[, c('subject','delivery')], by = c('id1' = 'subject')) %>%
+#  group_by(group, id1, delivery, id1_t) %>%
+#  filter(!id2 %in% meta$subject[meta$delivery == 'caesaren']) %>%
+#  ungroup() %>%
+#  mutate(delivery = ifelse(is.na(delivery), 'vaginal', delivery)) %>%
+#  group_by(group, id1, Months = id1_t, delivery) %>%
+#  summarise(dist = mean(dist)) %>%
+#  ggplot(aes(x = Months, y = dist, color = delivery)) +
+#    stat_smooth() +
+#    facet_wrap(~group, scales = 'free_y', ncol = 1) +
+#    labs(x = 'Months after birth', y = 'Interbaby dissimilarity') +
+#    theme_bw() +
+#    theme(
+#      panel.grid.minor = element_blank(),
+#      panel.grid.major = element_blank(),
+#      panel.background = element_blank(),
+#      legend.position = 'none')
+  
+```
+
+## Mean dissimilarity among infant gut microbiomes over early development.
+Community dissimilarity is calculated by grouping samples into one-month slices, and then calculating the average dissimilarity of all pairwise comparisons (except for samples from the same infant).   
+
+
+
+```{r antibiotic cohort traits, fig.height = 8, include = FALSE}
+
+j <- otus %>%
+  left_join(meta[, c('subject','treatment_group')], by = 'subject') %>%
+  filter(abun > 0) %>%
+  group_by(subject, treatment_group) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun, -treatment_group) %>%
+  ungroup()
+
+j %>%
+  filter(trait != 'Genome_Mb') %>%
+  group_by(trait, treatment_group, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  group_by(trait, treatment_group) %>%
+  #filter(trait %in% iwant) %>%
+  mutate(t = t/30) %>%
+  filter(t <= 36) %>%
+  ggplot(aes(x = t, y = val, color = treatment_group)) +
+    stat_smooth() +
+    scale_color_manual(values = c('black','red','blue')) +
+    facet_wrap(~trait, scale = 'free_y', ncol = 3) +
+    labs(x = "Months after birth", y = "Abundance-weighted community mean") +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+   ggtitle("Community-weighted mean trait values by treatment group")
+
+```
+
+\pagebreak
+
+```{r antibiotic treatment timing, include = FALSE}
+
+meta_anti <- fread(paste0(wd,"data\\diab_yassour_meta_antibiotics.csv")) %>%
+  filter(`Age (months)` != 'Not_known') %>%
+  transmute(
+    subject = Subject,
+    t = as.numeric(`Age (months)`),
+    type = `Antibiotic type`)
+
+j <- otus %>%
+  left_join(meta[, c('subject','treatment_group')], by = 'subject') %>%
+  filter(abun > 0) %>%
+  filter(treatment_group == 'Antibiotics') %>%
+  group_by(subject) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun, -treatment_group) %>%
+  group_by(subject, trait, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  mutate(t = t/30) %>%
+  filter(trait != 'Genome_Mb')
+
+p <- list()
+
+for(i in unique(j$subject)[1:7]) {
+
+p[[i]] <- ggplot(filter(j, subject == i), aes(x = t, y = val)) +
+    #stat_smooth(method = 'loess', color = 'black') +
+    geom_line() +
+    geom_point() +
+    geom_vline(data = filter(meta_anti, subject == i), aes(xintercept = t, color = type)) +
+    facet_wrap(~trait, scale = 'free_y', ncol = 3) +
+    labs(x = "Months after birth", y = "Abundance-weighted community mean") +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+    guides(color = guide_legend(nrow = 3)) +
+    ggtitle(paste("subject", i, ': traits vs. antibiotic treatments'))
+
+}
+
+meta_anti %>%
+  group_by(antibiotic_type = type) %>%
+  summarise(doses_administered = length(unique(paste(subject, t)))) %>%
+  arrange(desc(doses_administered)) %>%
+  kable()
+
+```
+
+
+\pagebreak
+
+```{r traits and birth mode, fig.height = 8, include = FALSE}
+
+j <- otus %>%
+  left_join(meta[, c('subject','delivery')], by = 'subject') %>%
+  filter(abun > 0) %>%
+  group_by(subject, delivery) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun, -delivery) %>%
+  ungroup()
+
+j %>%
+  filter(trait != 'Genome_Mb') %>%
+  group_by(trait, delivery, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  group_by(trait, delivery) %>%
+  mutate(t = t/30) %>%
+  filter(t <= 36) %>%
+  ggplot(aes(x = t, y = val, color = delivery)) +
+    stat_smooth(method = 'loess') +
+    scale_color_manual(values = c('black','red','blue')) +
+    facet_wrap(~trait, scale = 'free_y', ncol = 3) +
+    labs(x = "Months after birth", y = "Abundance-weighted community mean") +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+   ggtitle("Community-weighted mean trait values by delivery mode")
+
+```
+
+\pagebreak
+
+```{r dissimilarity over time by delivery mode}
+
+### bray curtis stuff
+meltdist <- function(x, sub, n, meth = 'bray') {
+  # n removes taxa with fewer than 10 reads per subject
+  # here, make a distance matrix using meth method and then melt it
+  x <- as.data.frame(x)
+  tz <- x$t
+  x$t <- NULL
+  x <- x[, sapply(x, is.numeric)]
+  x <- x[, colSums(x, na.rm = T) > n]
+  row.names(x) <- tz
+  x <- vegdist(x, method = meth)
+  x <- as.matrix(x)
+  x <- melt(x, varnames=c('t1', 't2'), value.name = 'dist')
+  x <- data.frame(subject = sub, x)
+  x$subject <- as.character(x$subject)
+  return(x)
+}
+
+j1 <- otus %>%
+  filter(abun > 0) %>%
+  group_by(subject) %>%
+  filter(min(t) < 90 & max(t) > 1095) %>%
+  filter(length(unique(t)) > 10) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  group_by(subject, trait, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  ungroup() %>%
+  spread(trait, val, fill = 0) %>%
+  group_by(subject) %>%
+  do(meltdist(., sub = .$subject[[1]], n = -1e6, meth = 'euclidean')) %>%
+  group_by(subject, t1) %>%
+  filter(t2 > t1) %>%
+  filter(t2 == min(t2)) %>%
+  mutate(delta = t2 - t1) %>%
+  filter(delta < 100) %>%
+  ungroup()
+
+j2 <- otus %>%
+  filter(abun > 0) %>%
+  group_by(subject) %>%
+  filter(min(t) < 90 & max(t) > 1095) %>%
+  filter(length(unique(t)) > 10) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  group_by(subject, trait, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  ungroup() %>%
+  spread(trait, val, fill = 0) %>%
+  group_by(subject) %>%
+  do(meltdist(., sub = .$subject[[1]], n = -1e6, meth = 'euclidean')) %>%
+  group_by(subject) %>%
+  filter(t2 == max(t2) & t1 != max(t2)) %>%
+  ungroup()
+
+j <- rbind(
+  mutate(j1, group2 = 'Trait dissimilarity to final sample'), 
+  mutate(j2, delta = NA, group2 = 'Trait dissimilarity to next sample'))
+
+j <- left_join(j, meta[, c('subject','delivery')], by = 'subject')
+
+j <- mutate(j, group2 = factor(group2, levels = unique(j$group2)[c(2,1)]))
+
+ggplot(j, aes(x = t1/30, y = dist, color = delivery)) +
+  stat_smooth() +
+  facet_wrap(~group2, scales = 'free') +
+  scale_color_discrete(name = '') +
+  theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+  labs(x = 'Months after birth', y = 'Dissimilarity (scaled)') +
+  ggtitle('Trait-based dissimilarity within babies, by birth mode')
+
+```
+
+\pagebreak
+
+```{r dissimilarity among infants over time by birth mode}
+
+#custom function that calculates inter-baby differences over time (to avoid lengthy script)
+interbaby_dist <- function(x, meth = 'bray') {
+  
+  #calculate distance matrix; rename rows and col to match sampleIDs
+  ids <- x$sampleID
+    sample_ts <- otus %>% 
+    mutate(t = ceiling(t/30)) %>% 
+    distinct(sampleID, t) %>%
+    mutate(sampleID = factor(sampleID))
+  x <- x[, -c(1)]
+  x <- vegdist(x, method = meth)
+  x <- as.matrix(x)
+  row.names(x) <- ids
+  colnames(x) <- ids
+  
+  #melt distances, remove distances from mirrored ids and self-id pairs,join t, remove the weak sampling after 36 months
+  x <- melt(x, value.name = 'dist') %>%
+    filter(as.numeric(factor(Var1)) > as.numeric(factor(Var2))) %>%
+    left_join(sample_ts, by = c('Var1' = 'sampleID')) %>%
+    rename(id1_t = t) %>%
+    left_join(sample_ts, by = c('Var2' = 'sampleID')) %>%
+    rename(id1 = Var1, id2 = Var2, id2_t = t) %>%
+    filter(id1_t == id2_t & id1_t < 37)
+
+  return(x)
+}
+
+cbabes <- otus %>%
+  left_join(meta[, c('subject','delivery')], by = 'subject') %>%
+  filter(delivery == 'caesaren')
+cbabes <- unique(cbabes$sampleID)
+
+j <- otus %>%
+  select(-subject, -t) %>%
+  filter(abun > 0) %>%
+  mutate(otu = factor(otu)) %>%
+  left_join(traits[, c('otu','Sporulation','Motility','Copies_16S',
+                      'Gram_positive','Oxygen_tolerance','Gene_number')], by = 'otu') %>%
+  gather(trait, val, -sampleID, -otu, -abun) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  group_by(sampleID, trait) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  ungroup() %>%
+  spread(trait, val, fill = 0) %>%
+  interbaby_dist(meth = 'euclidean') %>%
+  mutate(
+    group = ifelse(id1 %in% cbabes & id2 %in% cbabes, 'caesaren', NA),
+    group = ifelse(!id1 %in% cbabes & !id2 %in% cbabes, 'vaginal', group)) %>%
+  filter(!is.na(group))
+
+#j$group = factor(j$group, unique(j$group)[1:3])
+
+j %>%
+  rename(Months = id1_t) %>%
+  ggplot(aes(x = Months, y = dist, color = group)) +
+    stat_smooth() +
+    labs(x = 'Months after birth', y = 'Dissimilarity among infants (scaled)') +
+    scale_color_discrete(name = '') +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+  ggtitle("Trait-based dissimilarity among infants, by birth mode")
+
+```
+
+
+\pagebreak
+
+```{r}
+
+
+otus %>%
+  left_join(tax) %>%
+  left_join(traits) %>%
+  group_by(sampleID, t, Phylum) %>%
+  summarise(cwm = mean(Sporulation, w = abun, na.rm = T)) %>%
+  ggplot(aes(x = t/30, y = cwm, color = Phylum)) +
+   stat_smooth() +
+   labs(x = "Months after birth", y = "CWM sporulation score") +
+   th +
+   ggtitle("Changes in sporulation score over time, by Phylum")
+
+```
+
+\pagebreak
+
+```{r dissimilarity over time by treatment, include = FALSE}
+
+
+### bray curtis stuff
+meltdist <- function(x, sub, n, meth = 'bray') {
+  # n removes taxa with fewer than 10 reads per subject
+  # here, make a distance matrix using meth method and then melt it
+  x <- as.data.frame(x)
+  tz <- x$t
+  x$t <- NULL
+  x <- x[, sapply(x, is.numeric)]
+  x <- x[, colSums(x, na.rm = T) > n]
+  row.names(x) <- tz
+  x <- vegdist(x, method = meth)
+  x <- as.matrix(x)
+  x <- melt(x, varnames=c('t1', 't2'), value.name = 'dist')
+  x <- data.frame(subject = sub, x)
+  x$subject <- as.character(x$subject)
+  return(x)
+}
+
+j1 <- otus %>%
+  filter(abun > 0) %>%
+  group_by(subject) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  group_by(subject, trait, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  ungroup() %>%
+  spread(trait, val, fill = 0) %>%
+  group_by(subject) %>%
+  do(meltdist(., sub = .$subject[[1]], n = -1e6, meth = 'euclidean')) %>%
+  group_by(subject, t1) %>%
+  filter(t2 > t1) %>%
+  filter(t2 == min(t2)) %>%
+  mutate(delta = t2 - t1) %>%
+  filter(delta < 100) %>%
+  ungroup()
+
+j2 <- otus %>%
+  filter(abun > 0) %>%
+  group_by(subject) %>%
+  ungroup() %>%
+  left_join(traits, by = 'otu') %>%
+  gather(trait, val, -sampleID, -subject, -t, -otu, -abun) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  group_by(subject, trait, t) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  ungroup() %>%
+  spread(trait, val, fill = 0) %>%
+  group_by(subject) %>%
+  do(meltdist(., sub = .$subject[[1]], n = -1e6, meth = 'euclidean')) %>%
+  group_by(subject) %>%
+  filter(t2 == max(t2) & t1 != max(t2)) %>%
+  ungroup()
+
+j <- rbind(
+  mutate(j1, group2 = 'Trait dissimilarity to final sample'), 
+  mutate(j2, delta = NA, group2 = 'Trait dissimilarity to next sample'))
+
+j <- left_join(j, meta[, c('subject','treatment_group')], by = 'subject')
+
+j <- mutate(j, group2 = factor(group2, levels = unique(j$group2)[c(2,1)]))
+
+ggplot(j, aes(x = t1/30, y = dist, color = treatment_group)) +
+  stat_smooth() +
+  facet_wrap(~group2, scales = 'free') +
+  scale_color_discrete(name = '') +
+  theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+  labs(x = 'Months after birth', y = 'Dissimilarity (scaled)') +
+  ggtitle('Trait-based dissimilarity within babies, by treatment group')
+
+
+```
+
+\pagebreak
+
+```{r dissimilarity among infants over time by treatment group, include = FALSE}
+
+tmp <- otus %>%
+  left_join(meta[, c('subject','treatment_group')], by = 'subject')
+tg_antis <- unique(tmp$sampleID[tmp$treatment_group == 'Antibiotics'])
+tg_t1d <- unique(tmp$sampleID[tmp$treatment_group == 'T1D'])
+tg_control <- unique(tmp$sampleID[tmp$treatment_group == 'Control'])
+
+j <- otus %>%
+  select(-subject, -t) %>%
+  filter(abun > 0) %>%
+  mutate(otu = factor(otu)) %>%
+  left_join(traits[, c('otu','Sporulation','Motility','Copies_16S',
+                      'Gram_positive','Oxygen_tolerance','Gene_number')], by = 'otu') %>%
+  gather(trait, val, -sampleID, -otu, -abun) %>%
+  group_by(trait) %>%
+  mutate(val = scale(val)) %>%
+  group_by(sampleID, trait) %>%
+  summarise(val = mean(val, w = abun, na.rm = TRUE)) %>%
+  ungroup() %>%
+  spread(trait, val, fill = 0) %>%
+  interbaby_dist(meth = 'euclidean') %>%
+  mutate(
+    group = ifelse(id1 %in% tg_antis & id2 %in% tg_antis, 'Antibiotics', NA),
+    group = ifelse(id1 %in% tg_t1d & id2 %in% tg_t1d, 'T1D', group),
+    group = ifelse(id1 %in% tg_control & id2 %in% tg_control, 'Controls', group)) %>%
+  filter(!is.na(group))
+
+j %>%
+  rename(Months = id1_t) %>%
+  ggplot(aes(x = Months, y = dist, color = group)) +
+    stat_smooth() +
+    labs(x = 'Months after birth', y = 'Dissimilarity among infants (scaled)') +
+    scale_color_discrete(name = '') +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+  ggtitle("Trait-based dissimilarity among infants, by treatment group")
+
+```
+
+
+
+```{r prevalence and abundance} 
+
+j <- otus %>% 
+  left_join(meta[, c('subject','study')], by = 'subject') %>%
+  filter(study != 'Kostic2016') %>%
+  mutate(t = ifelse(t < 365, 'Early', 'Late')) %>%
+  group_by(otu, t) %>%
+  summarise(
+    abun = sum(abun),
+    prevalence = length(unique(subject))) %>%
+  group_by(t) %>%
+  mutate(abundance = as.numeric(factor(abun, levels = sort(unique(abun))))) %>%
+  mutate(
+    Importance = scale(abundance) + scale(prevalence),
+    Importance = Importance - min(Importance))
+
+#weirdest thing: there are a many OTUs ONLY in Kostic2016, and many OTUS ONLY in Kostic 2015 and Yassour2016. Weird, huh... mb should exclude Kostic2016 and make sure results don't change much... at some point...
+
+
+#also note that when i take kostic 2016 away, global richness falls to ~2900, meaning that about 1000 unique OTUs are in the nine babies of Kostic2016. Prob should drop....
+
+
+j1 <- filter(j, t == 'Early')
+
+p1 <- ggplot(j1, aes(x = abundance, y = prevalence)) +
+  geom_jitter(aes(color = Importance, alpha = Importance^2)) +
+  scale_color_gradient(high = 'red', low = 'white', name = 'Potential\nImportance') +
+  guides(alpha = 'none') +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.background = element_blank(),
+      legend.position = 'bottom') +
+  labs(x = 'Abundance rank', y = 'Prevalence') +
+  ggtitle('Early successional taxa')
+
+j2 <- filter(j, t == 'Late')
+
+p2 <- ggplot(j2, aes(x = abundance, y = prevalence)) +
+  geom_jitter(aes(color = Importance, alpha = Importance^2)) +
+  scale_color_gradient(high = 'blue', low = 'white', name = 'Potential\nImportance') +
+  guides(alpha = 'none') +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.background = element_blank(),
+    legend.position = 'bottom') +
+  labs(x = 'Abundance rank', y = 'Prevalence') +
+  ggtitle("Late successional taxa")
+
+mygrobs <- lapply(list(p1, p2), ggplotGrob)
+
+gt <- gtable(widths=unit(c(1,1), "null"),
+             heights=unit(1, "null"))
+
+gt <- gtable_add_grob(gt, mygrobs, 
+                       l=c(1,2),
+                       r=c(1,2),
+                       t=c(1,1),
+                       b=c(1,1))
+grid::grid.newpage()
+grid::grid.draw(gt)
+
+```
+
+\pagebreak
+
+```{r important taxa 1}
+
+j1 %>%
+  ungroup() %>%
+  left_join(tax, by = 'otu') %>%
+  select(Family, Genus, Species, OTU = otu, Importance) %>%
+  mutate(Importance = round(as.numeric(Importance), 3)) %>%
+  arrange(desc(Importance)) %>%
+  filter(seq_along(Importance) < 21) %>%
+  kable(caption = 'Early successional taxa, by importance')
+
+```
+
+\pagebreak
+
+```{r important taxa 2}
+
+j2 %>% 
+  ungroup() %>%
+  left_join(tax, by = 'otu') %>%
+  select(Family, Genus, Species, OTU = otu, Importance) %>%
+  mutate(Importance = round(as.numeric(Importance), 3)) %>%
+  arrange(desc(Importance)) %>%
+  filter(seq_along(Importance) < 21) %>%
+  kable(caption = 'Late successional taxa, by importance')
+
+```
+
+```{r tmp2 but interesting, fig.height = 4, include = FALSE}
+
+j <- otus %>%
+  left_join(meta) %>%
+  filter(study != 'Kostic2016') %>%
+  mutate(t = t / 30, allsubs = length(unique(subject))) %>%
+  group_by(otu) %>%
+  mutate(
+    a = ifelse(length(unique(subject)) >= allsubs, 'core', 'pan')
+  )
+
+k <- j %>% 
+  group_by(t, subject, a) %>%
+  summarise(abun = sum(abun), rich = length(unique(otu))) %>%
+  group_by(t, subject) %>%
+  mutate(abun = abun / sum(abun))
+
+ggplot(k, aes(x = t, y = abun, color = a)) +
+  stat_smooth()
+
+ggplot(k, aes(x = t, y = rich, color = a)) +
+  stat_smooth()
+
+j <- otus %>%
+  left_join(meta) %>%
+  filter(study != 'Kostic2016') %>%
+  mutate(t = round(t / 30)) %>%
+  filter(t <= 36) %>%
+  group_by(t) %>%
+  mutate(allsubs = length(unique(subject))) %>%
+  group_by(t, otu) %>%
+  mutate(a = ifelse(length(unique(subject)) >= allsubs * 0.5, 'Temp_core', 'Temp_pan'))
+
+k <- j %>% 
+  group_by(t, subject, a) %>%
+  summarise(abun = sum(abun), rich = length(unique(otu))) %>%
+  group_by(t, subject) %>%
+  mutate(abun = abun / sum(abun), rich = rich / sum(rich)) 
+
+ggplot(k, aes(x = t, y = abun, color = a)) +
+  stat_smooth()
+
+ggplot(k, aes(x = t, y = rich, color = a)) +
+  stat_smooth()
+
+```
+
