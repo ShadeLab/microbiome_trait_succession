@@ -1,27 +1,23 @@
 #Microbial data scubbing and organization... work in progress
 #John Guittar
-#last edit: Feb 16 2018
 
+#set working directory, load packages
 wd <- 'C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\'
 setwd(wd)
 source('custom_functions.R')
-library(tidyverse)
 library(data.table)
-
-#load taxonomy
-tax <- readRDS('data\\tax.RDS')
+library(tidyverse)
 
 #load full picrust/greengenes taxonomy
-pitax <- fread('C:\\Users\\John\\Documents\\msu\\analysis\\picrust-1.1.2\\picrust\\data\\gg_13_8_99.gg.tax', stringsAsFactors = FALSE)
-pitax <- pitax %>%
-  rename(otu = V1, tax = V2) %>%
-  mutate(tax = gsub("\\s|.__|\\[|\\]|Other", "", tax)) %>%
-  mutate(otu = paste0('otu',otu)) %>%
-  separate(tax, sep = ';', c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species","drop"), fill = 'right') %>%
-  select(-drop)
-pitax <- as.data.frame(apply(pitax, 2, function(x) ifelse(x == '', NA, x)))
+ggtax <- readRDS('data\\ggtax.RDS')
+ggtax <- mutate_all(ggtax, as.character)
 
-####first: Edits from by Barberan et al 2016
+#load our OTU data; 
+#determine our taxonomy data (to know which species to focus on while webcrawling, etc)
+otus_wide <- readRDS(file = 'data\\otus_wide.RDS')
+tax <- filter(ggtax, otu %in% names(otus_wide))
+
+####First: Edits drawn from from Barberan et al 2016 script
 ####Then: my own edits
 
 #read table
@@ -45,7 +41,7 @@ levels(ijsem$Oxygen)[levels(ijsem$Oxygen)=="microerophile"]<-"microaerophile"
 #this step splits the range values and takes the mean value
 #values that are not numeric are transformed to NAs
 ijsem$pH_optimum<-as.character(ijsem$pH_optimum)
-ijsem$pH_optimum<-sapply(ijsem$pH_optimum, simplify=T, function(x){log10(10^mean(swan(unlist(strsplit(x, split="-", fixed=T)))))})
+ijsem$pH_optimum<-sapply(ijsem$pH_optimum, simplify=T, function(x){mean(swan(unlist(strsplit(x, split="-", fixed=T))), na.rm = T)})
 
 #remove pH values <0 and >10
 ijsem$pH_optimum[ijsem$pH_optimum<0 | ijsem$pH_optimum>10]<-NA
@@ -66,7 +62,7 @@ ijsem$Salt_optimum<-sapply(ijsem$Salt_optimum, simplify=T, function(x){mean(swan
 #there are some formatting issues that should be solved
 
 
-##############Below are my additional edits
+############## Now, my additional edits
 
 #Assign oxygen score
 ijsem$Oxygen_score <- c(5,4,3,2,1)[match(ijsem$Oxygen, 
@@ -100,16 +96,13 @@ x[filt] <- rowMeans(cbind(
   as.numeric(sapply(strsplit(x[filt], '-'), function(x) x[[1]])),
   as.numeric(sapply(strsplit(x[filt], '-'), function(x) x[[2]]))))
 
-#if it has a backsclash, assume it was a decimal point
+#if it has a backslash, assume it was a decimal point
 filt <- grepl("\\/", x) & !is.na(x)
 x[filt] <- paste(sapply(strsplit(x[filt], '\\/'), function(x) x[[1]]),
                  sapply(strsplit(x[filt], '\\/'), function(x) x[[2]]), sep = '.')
 
 ijsem$Length <- swan(x)
 
-# remove the inordinately large values...
-ijsem$Length[ijsem$Length > 250] <- NA
-ijsem$Length[ijsem$Length == 0] <- NA
 
 ######################
 
@@ -138,8 +131,6 @@ x[filt] <- paste(sapply(strsplit(x[filt], '\\/'), function(x) x[[1]]),
                  sapply(strsplit(x[filt], '\\/'), function(x) x[[2]]), sep = '.')
 
 ijsem$Width <- as.numeric(x)
-ijsem$Width[ijsem$Width > 250] <- NA
-ijsem$Width[ijsem$Width == 0] <- NA
 
 #############################################
 
@@ -214,6 +205,7 @@ ijsem <- select(ijsem, Genus, Species, GC_content = GC,
   mutate_if(is.factor, as.character)
 
 ###########################################################
+# now, sporulation data from Browne et al 2016
 
 spo <- read.csv('data/Browne2016_sporulationTable.csv', header = T, skip = 1)
 
@@ -226,27 +218,6 @@ spo <- spo %>%
     Species = unlist(lapply(strsplit(as.character(Sp), " |_"), function(x) x[[2]])),
     trait = 'Spore_score',
     val = si)
-
-#############
-
-# load 16s gene copy number data, derived from PICRUSt
-gcn <- read.table('C:\\Users\\John\\Documents\\msu\\analysis\\picrust-1.1.2\\picrust\\data\\16S_13_5_precalculated.tab', stringsAsFactors = FALSE)
-gcn <- gcn %>%
-  transmute(
-    otu = paste0('otu', V1), 
-    trait = 'Copies_16S', 
-    val = V2)
-
-#add full 16S copy number from picrust to picrust taxonomy
-#I will remove the subset of 16S data later
-pitax <- pitax %>%
-  mutate(otu = as.character(otu)) %>%
-  left_join(gcn, by = 'otu') %>% 
-  rename(Copies_16S = val) %>% 
-  select(-trait)
-
-gcn <- gcn %>%
-  inner_join(tax[, c('otu','Genus','Species')], by = 'otu')
 
 ####################################### Exploring BacDrive
 
@@ -334,7 +305,7 @@ bd <- mutate_if(bd, is.factor, as.character)
 ###############################
 
 ## Genome size, GC content, and Gene Number from NCBI...
-genos <- fread('data\\NCBI_prokaryotes.txt') %>% 
+genos <- fread('bigdata_unsynced\\NCBI_prokaryotes.txt') %>% 
   filter(Status == 'Complete Genome') %>%
   transmute(
     sp = gsub("'|\\[|\\]", "", `Organism/Name`),
@@ -357,9 +328,10 @@ rrnDB <- read.csv('data//rrnDB-5.3.csv') %>%
     Species = sapply(sapply(sp, strsplit, ' '), function(x) ifelse(length(x) > 1, x[[2]], NA)),
     trait = 'Copies_16S') %>%
   transmute(Genus, Species, trait, val = X16S.gene.count) %>%
-  filter(!is.na(val))
+  filter(!is.na(val)) %>%
+  mutate(Species = ifelse(is.na(Species), 'unclassified', Species))
 
-################ IGA???
+################ IgA
 iga <- read.csv('data\\Palm2014_IGA.csv', stringsAsFactors = FALSE)
 iga <- t(iga)
 colnames(iga) <- iga[1, ]
@@ -377,7 +349,7 @@ iga <- iga %>%
   summarise(val = log(mean(ici) + 1))
 
 #################
-#b-vitamins?
+#b-vitamins
 bvit <- read.csv('data\\Bvitamins_Magnusdottir2015.csv', stringsAsFactors = FALSE) %>%
   mutate(Genus = sapply(sapply(tax, strsplit, ' '), function(x) x[[1]]),
          Species = sapply(sapply(tax, strsplit, ' '), function(x) x[[2]])) %>%
@@ -387,26 +359,127 @@ bvit <- read.csv('data\\Bvitamins_Magnusdottir2015.csv', stringsAsFactors = FALS
   group_by(Genus, Species, trait = 'B_vitamins') %>%
   summarise(val = length(unique(Bvit[val > 0])))
 
-# what about GOLD - JGI?
+################################
 
+#load traits from JGI
+# currently I drop otu-level taxonomy, but I could probably figure it out with
+# gg to genbank accession id: 
+# ftp://greengenes.microbio.me/greengenes_release/gg_13_5/gg_13_5_accessions.txt.gz
+# NCBI ID to genbank accession (a huge file):
+# ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/ # not sure which one
+jgi <- fread("bigdata_unsynced\\GOLD-328_Organism_Metadata_02232018.txt")
+
+#remove duplicate oxygen column
+jgi <- jgi[, -9]
+
+#convert null to NA
+jgi[jgi == '(null)'] <- NA
+
+#clean columns
+jgi <- jgi %>%
+  transmute(
+    Species = SPECIES, 
+    Width = CELL_DIAMETER, 
+    Length = CELL_LENGTH, 
+    Gram_positive = GRAM_STAIN,
+    Motility = MOTILITY,
+    Oxygen_tolerance = OXYGEN_REQUIREMENT, 
+    pH_optimum = PH,
+    Spore = SPORULATION)
+
+#Fix taxonomy
+jgi <- separate(jgi, Species, c("Genus","Species"), extra = 'merge', fill = "right") %>%
+  mutate(Species = gsub("sp. ", "", Species))
+
+# deal with width - take averages of ranges when necessary.
+jgi <- jgi %>%
+  mutate(
+    Width = ifelse(Width == '803nm', 0.803, Width),
+    Width = gsub(" |[[:alpha:]]|¿|¼|\\?|\\&#956;|`", "", Width)
+  ) %>%
+  separate(Width, c("Width0","Width1"), fill = 'right', sep = '-') %>%
+  mutate(Width = ifelse(is.na(Width0), Width0, 
+                        ifelse(is.na(Width1), as.numeric(Width0),
+                               (as.numeric(Width1) + as.numeric(Width0)) / 2))) %>%
+  mutate(Width = as.numeric(Width)) %>%
+  select(-Width0, -Width1)
+
+# same with length
+jgi <- jgi %>%
+  mutate(
+    Length = ifelse(Length == '803nm', 0.803, Length),
+    Length = gsub(" |[[:alpha:]]|¿|¼|\\?|\\&#956;|`|\\&#8197;", "", Length),
+    Length = gsub(".5.0", "5.0", Length, fixed = T),
+    Length = gsub("1.55.0", "1.55", Length, fixed = T),
+    Length = gsub("0.81.2", "0.8-1.2", Length, fixed = T)
+    
+  ) %>%
+  separate(Length, c("Length0","Length1"), fill = 'right', sep = '-') %>%
+  mutate(Length = ifelse(is.na(Length0), Length0, 
+                         ifelse(is.na(Length1), as.numeric(Length0),
+                                (as.numeric(Length1) + as.numeric(Length0)) / 2))) %>%
+  mutate(Length = as.numeric(Length)) %>%
+  select(-Length0, -Length1)
+
+# gram positive, motility, oxygen tolerance, sporulation
+jgi <- jgi %>%
+  mutate(
+    Gram_positive = c(1,0)[match(Gram_positive, c('Gram+','Gram-'))],
+    Motility = c(1,1,0,0)[match(Motility, c('Motile','Chemotactic','Non-motile','Nonmotile'))],
+    Oxygen_tolerance = c(5,5,4,3,2,1,1)[match(jgi$Oxygen_tolerance, 
+                                              c('Obligate aerobe','Aerobe','Microaerophilic','Facultative','Facultative anaerobe','Anaerobe','Obligate anaerobe'))],
+    Spore = c(1,1,0)[match(Spore, c('Non-sporulating','Nonsporulating','Sporulating'))])
+
+#ph optimum
+jgi <- jgi %>%
+  mutate(
+    pH_optimum = gsub(" |~", "", pH_optimum),
+    pH_optimum = ifelse(pH_optimum %in% c('acido-sensible','Notknown'), NA, pH_optimum)) %>%
+  separate(pH_optimum, c('pH0','pH1'), fill = 'right', sep = '-') %>%
+  mutate(pH_optimum = ifelse(is.na(pH0), pH0, 
+                             ifelse(is.na(pH1), as.numeric(pH0),
+                                    (as.numeric(pH1) + as.numeric(pH0)) / 2))) %>%
+  mutate(pH_optimum = as.numeric(pH_optimum)) %>%
+  select(-pH0, -pH1)
+
+jgi <- jgi %>%
+  gather(trait, val, -Genus, -Species) %>%
+  filter(!is.na(val))
+
+
+###################################################
 
 # put it all together
 x <- bind_rows(
   mutate(ijsem, source = 'IJSEM'),
   mutate(spo, source = 'Browne2016'),
   mutate(bd, source = 'BacDrive'),
-  transmute(gcn, Genus, Species, trait, val, source = 'PICRUSt'),
   mutate(genos, source = 'NCBI'),
   mutate(rrnDB, source = 'rrnDB'),
   mutate(iga, source = 'Palm2014'),
-  mutate(bvit, source = 'Mag2015')
+  mutate(bvit, source = 'Mag2015'),
+  mutate(jgi, source = 'JGI')
 )
 
 uncleaned <- nrow(x)
 ### I looked at all the points plotted using 
-#ggplot(x, aes(x = 1, y = val)) + geom_jitter() + facet_wrap(~trait, scales = 'free')
-#ggplot(x, aes(x = val)) + geom_histogram(bins = 100) + facet_wrap(~trait, scales = 'free') + scale_y_sqrt()
+#
+#ggplot(x, aes(x = val)) + geom_density() + facet_wrap(~trait, scales = 'free')
 # identifying and removing outliers
+# remove inordinately large values...
+
+##At some point, I would like/may want to use this slightly more stringent outlier filter
+#x <- x %>%
+#  filter(!(trait == 'Copies_16S' & val > 20)) %>%
+#  filter(!(trait == 'GC_content' & (val > 80 | val < 20))) %>%
+#  filter(!(trait == 'Gene_number' & val > 11000)) %>%
+#  filter(!(trait == 'Genome_Mb' & val > 14)) %>%
+#  filter(!(trait == 'Length' & (val > 12 | val <= 0))) %>%
+#  filter(!(trait == 'pH_optimum' & val < 4)) %>%
+#  filter(!(trait == 'Salt_optimum' & val > 25)) %>%
+#  filter(!(trait == 'Temp_optimum' & val > 80)) %>%
+#  filter(!(trait == 'Width' & (val > 4 | val <=0)))
+
 x <- x %>%
   filter(!(trait == 'Copies_16S' & val > 20)) %>%
   filter(!(trait == 'GC_content' & (val > 80 | val < 20))) %>%
@@ -418,26 +491,52 @@ x <- x %>%
   filter(!(trait == 'Temp_optimum' & val > 80)) %>%
   filter(!(trait == 'Width' & val > 8))
 
-print(paste(uncleaned - nrow(x), "of", nrow(x), "outliers were removed"))
+print(paste(uncleaned - nrow(x), "outliers of", nrow(x), "data points were removed"))
 
 #for plotting source-wise comparisons
 x1 <- x
 
+#calculate means among species. Log length/width data
 x <- x %>%
+  mutate(Species = ifelse(Species == 'sp.', 'unclassified', Species)) %>%
   group_by(Genus, Species, trait) %>%
-  summarise(val = mean(val)) %>%
+  summarise(val = mean(val, na.rm = T)) %>%
   mutate(val = ifelse(trait %in% c('Length','Width'), log(val), val))
 
-x_all <- spread(x, trait, val) %>%
-  filter(Genus != 'unclassified')
 
-x_sparse <- x %>%
-  spread(trait, val) %>%
-  filter(Species != 'unclassified') %>%
-  filter(Genus %in% tax$Genus & Species %in% tax$Species)
+####################################################################
 
+# DATA QUESTIONS
+# Evaluating the accuracy of genus level means, by comparing variance
+# Comparing trait data from different sources. 
 if (FALSE) {
-  ## plotting coverages 
+  
+  ###First let's look at how 16S copy number compares...
+  tmp <- bind_rows(
+    fread('data\\16S_13_5_precalculated_picrust.tab') %>% 
+      transmute(
+        group = 'PICRUSt',
+        otu = paste0('otu',`#OTU_IDs`),
+        val = `16S_rRNA_Count`),
+    rrnDB %>%
+      filter(Species != 'unclassified') %>%
+      group_by(Genus, Species) %>%
+      summarise(group = 'rrnDB', val = mean(val)) %>%
+      left_join(ggtax[, c('Genus','Species','otu')], by = c('Genus','Species')) %>%
+      ungroup() %>%
+      select(-Genus, -Species)) %>%
+  group_by(group, otu) %>%
+  summarise(val = mean(val)) %>%
+  spread(group, val)
+  
+  ggplot(tmp, aes(x = rrnDB, y = PICRUSt)) +
+    geom_abline(lty = 3, color = 'black') +
+    geom_jitter(width = 0.2, height = 0.2, alpha = 0.1) +
+    stat_smooth(method = 'lm', color = 'blue') +
+    th +
+    labs(x = '16S Copy numbers according to rrnDB', y = '16S Copy numbers according to PICRUSt')
+    
+    ## plotting coverages 
   x1 <- x1 %>%
     filter(!Genus %in% c('02d06','1-68')) %>%
     group_by(Genus, Species, trait, source) %>%
@@ -457,13 +556,6 @@ if (FALSE) {
     geom_point() +
     facet_wrap(~trait, scales = 'free')
   
-  x1 %>%
-    filter(!is.na(PICRUSt) & !is.na(rrnDB)) %>%
-    ggplot(aes(x = PICRUSt, y = rrnDB)) +
-    geom_point() +
-    geom_abline(slope = 1) +
-    facet_wrap(~trait, scales = 'free')
-  
   sims <- x %>%
     group_by(Genus, trait) %>%
     filter(length(unique(Species)) > 2 | (trait == 'IgA' & length(unique(Species)) > 1)) %>%
@@ -473,8 +565,6 @@ if (FALSE) {
       var = var(val)) %>%
     group_by(trait, n) %>%
     mutate(var_random = mean(replicate(100, var(sample(x$val[x$trait == trait[1]], size = n)))))
-  
-  sims <- filter(sims, trait != 'Spore')
   
   sims %>%
     group_by(trait) %>%
@@ -504,10 +594,6 @@ if (FALSE) {
     filter(Genus %in% tax$Genus) %>%
     mutate(trait = ifelse(trait == 'Spore_score', 'Sporulation', trait)) %>%
     group_by(trait) %>%
-    #filter(!(trait == 'Length' & var_random - var < -2)) %>%
-    #filter(!(trait == 'Salt_optimum' & var_random - var < -5)) %>%
-    #filter(!(trait == 'pH_optimum' & var_random - var < -0.5)) %>%
-    #filter(!(trait == 'Width' & var_random - var < -0.5)) %>%
     mutate(
       diff = var_random - var,
       max = max(abs(diff))) %>%
@@ -529,7 +615,6 @@ if (FALSE) {
       diff = var_random - var,
       max = max(abs(diff)),
       in_study = factor(as.character(Genus %in% tax$Genus), levels = c(TRUE, FALSE))) %>%
-    #filter(in_study == TRUE) %>%
     ggplot(aes(x = diff, fill = trait)) +
     geom_histogram(aes(y =..density.., color = trait), bins = 30, alpha = 0) + 
     geom_density(alpha = 0.7, lty = 2, color = NA) +
@@ -547,95 +632,62 @@ if (FALSE) {
       axis.text = element_blank(),
       axis.ticks = element_blank())
   
-  tax_genus <- x %>%
-         filter(Genus %in% tax$Genus) %>%
-         filter(Genus != 'unclassified') %>%
-         group_by(Genus, trait) %>%
-         summarise(val_genus = mean(val)) %>%
-         filter(!is.na(val_genus)) %>%
-         ungroup()
-    
-    tax_traits <- x %>%
-      group_by(Genus, Species, trait) %>%
-      summarise(val = mean(val)) %>%
-      ungroup() %>%
-      spread(trait, val) %>%
-      right_join(tax[, c('Genus','Species', 'otu')], by = c('Genus','Species')) %>%
-      gather(trait, val_species, -Genus, -Species, -otu) %>%
-      mutate(
-        val_genus = tax_genus$val_genus[match(paste(Genus, trait), paste(tax_genus$Genus, tax_genus$trait))],
-        data_level = ifelse(!is.na(val_species), 'Species', ifelse(!is.na(val_genus), 'Genus', 'None')),
-        val = ifelse(data_level == 'Species', val_species, ifelse(data_level == 'Genus', val_genus, NA))) %>%
-      select(-val_species, -val_genus) %>%
-      mutate_if(is.character, as.factor)
-
-    tax_traits %>%
-      filter(trait != 'Spore') %>%
-      filter(data_level != 'None') %>%
-      group_by(Genus, trait) %>%
-      summarise(
-        Measured = -length(unique(Species[data_level == 'Species'])),
-        Inferred = length(unique(Species[data_level == 'Genus']))) %>%
-      gather(Source, val, Measured, Inferred) %>%
-      ungroup() %>%
-      mutate(Genus = as.numeric(as.factor(Genus))) %>%
-      ggplot(aes(x = Genus, y = val, fill = Source)) +
-        geom_bar(stat = 'identity') +
-        facet_wrap(~trait, ncol = 4)
-
-  }
+}
 ###################################################################################
 
-sims <- x %>%
-  group_by(Genus, trait) %>%
-  filter(length(unique(Species)) > 2 | (trait == 'IgA' & length(unique(Species)) > 1)) %>%
-  summarise(
-    n = length(Genus),
-    mean = mean(val),
-    var = var(val)) %>%
-  group_by(trait, n) %>%
-  mutate(var_random = mean(replicate(100, var(sample(x$val[x$trait == trait[1]], size = n)))))
-
-# calculate our best idea of trait based on taxonomic info
-# species when possible, otherwise genus
+# filter out all rows without species-level data, or otus found in our study
 x <- x %>%
-  ungroup() %>%
-  filter(Genus %in% tax$Genus) %>%
-  mutate(
-    Species = ifelse(Species == 'unclassified', '', Species),
-    data_level = ifelse(paste(Genus, Species) %in% paste(tax$Genus, tax$Species), 'Species','Genus'),
-    Species = ifelse(data_level == 'Genus', 'unclassified', Species)) %>%
-  group_by(trait, Genus) %>%
-  left_join(sims[, c('Genus','var','var_random')], by = "Genus") %>%
-  mutate(val = ifelse(data_level == 'Genus' & var < var_random, mean(val), val)) %>%
-  group_by(Genus, Species, trait) %>%
-  summarise(val = mean(val)) %>%
-  spread(trait, val)
+  spread(trait, val) %>%
+  inner_join(ggtax[, c('Genus','Species','otu')], by = c('Genus', 'Species')) %>%
+  filter(Species != 'unclassified' | otu %in% tax$otu)
 
-tax <- tax %>%
-  left_join(x, by = c('Genus','Species'))
+# Add a last minute manual entry
+#https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3346390/
+x$Aggregation_score[x$Genus == 'Bifidobacterium' & x$Species != 'unclassified'] <- 1 
 
-# Add a few last minute manual entries
-tax$Aggregation_score[tax$Genus == 'Bifidobacterium'] <- 1 #https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3346390/
-
-#Merge spore scores (if no score and ijsem says 0, then 0; 
+# Merge spore scores (if no score and ijsem says 0, then 0; 
 # otherwise the median of spore score when we know for ijsem spore == 1
+x <- x %>% 
+  mutate(
+    Sporulation = ifelse(is.na(Spore_score), 
+                         ifelse(Spore < 0.5, 0, median(Spore_score[tax$Spore > 0], na.rm = T)), Spore_score)) %>%
+  ungroup() %>%
+  select(-Spore, -Spore_score, -Genus, -Species) %>%
+  select(otu, everything())
 
-tax <- tax %>% mutate(
-  Sporulation = ifelse(is.na(Spore_score), 
-    ifelse(Spore < 0.5, 0, median(tax$Spore_score[tax$Spore > 0], na.rm = T)), Spore_score))
+#add bugbase trait preditions
+bugdat <- fread('data\\default_traits_precalculated_bugbase.txt') %>%
+  rename(otu = V1) %>%
+  mutate(otu = paste0('otu',otu))
 
-traits <- select(tax, -Domain, -Phylum, -Class, -Order, -Family, -Genus, -Species, -Spore, -Spore_score)
+x <- full_join(x, bugdat, by = 'otu')
 
-x_all <- left_join(pitax, x_all[, names(x_all) != 'Copies_16S'], by = c("Genus", "Species"))
-write.csv(x_all, file = 'data\\traits_all.csv', row.names = FALSE)
-write.csv(x_sparse, file = 'data\\traits_sparse.csv', row.names = FALSE)
-write.csv(traits, file = 'data\\traits.csv', row.names = FALSE)
-print("saved traits.csv, traits_sparse.csv, and traits_all.csv to msu/data/")
+#drop unwanted/redundant traits
+x <- x %>%
+  mutate(
+    Aerobic = NULL,
+    Aggregation_score = NULL,
+    Contains_Mobile_Elements = NULL,
+    Facultatively_Anaerobic = NULL,
+    Genome_Mb = NULL,
+    Gram_positive = rowMeans(cbind(Gram_positive, Gram_Positive), na.rm=TRUE),
+    Gram_Positive = NULL,
+    Gram_Negative = NULL,
+    Oxygen_tolerance = NULL,
+    pH_optimum = NULL,
+    Potentially_Pathogenic = NULL,
+    Salt_optimum = NULL,
+    Stress_Tolerant = NULL,
+    Width = NULL) %>%
+  rename(
+    Obligate_anaerobe = Anaerobic,
+    Forms_biofilms = Forms_Biofilms)
 
-rm(list = ls())
+saveRDS(x, file = 'data\\traits_sparse.RDS')
 
-#########PROTRAIT DATA STUFF
+#rm(list = ls())
+
+#########PROTRAIT DATA SANDBOX
 #prot <- fread('data\\ProTraits_binaryIntegratedPr0.90.txt')
 #prot[prot == '?'] <- NA
 #prot[, c(2:ncol(prot))] <- apply(prot[,c(2:ncol(prot))], 2, as.numeric)
