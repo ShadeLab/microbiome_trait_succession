@@ -6,7 +6,7 @@ wd <- 'C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\data\\'
 source('C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\succession_custom_functions.R')
 
 #load packages
-loadpax(pkg = c('Hmisc','gtable','dplyr','tidyr','knitr','data.table','vegan','GGally','grid','gridExtra','betapart','scales','stringr', 'phyloseq','ape','kableExtra','poilog','ggtree','ggplot2'))
+loadpax(pkg = c('Hmisc','gtable','dplyr','tidyr','knitr','data.table','vegan','GGally','grid','gridExtra','betapart','scales','stringr', 'phyloseq','ape','kableExtra','poilog','ggtree','ggplot2','scales'))
 
 #load data
 otus <- readRDS(file = paste0(wd, 'otus.RDS'))
@@ -43,7 +43,7 @@ trait_names <- c(
   "B_vitamins" = "B vitamins",
   "Copies_16S" = "16S gene copies",
   "GC_content" = "GC content",
-  "Gene_number"= "Genes",
+  "Gene_number"= "Gene number",
   "Genome_Mb" = "Genome size",
   "Gram_positive" = "Gram-positive",
   "IgA"        = "IgA binding affinity",
@@ -63,12 +63,12 @@ tabTraitSources <- function(){}
 trait_units <- data.frame(stringsAsFactors = FALSE,
                           "Aggregation_score" = "0 (never) to 1 (observed aggregation)",
                           "B_vitamins" = "No. B-vitamin pathways in genome",
-                          "Copies_16S" = "No. in 16S gene copies in genome",
+                          "Copies_16S" = "No. in 16S rRNA gene copies in genome",
                           "GC_content" = "Percent (\\%) guanine and cytosine in genome",
                           "Gene_number" = "No. genes in genome",
                           "Gram_positive" = "0 (Gram-negative) to 1 (Gram-positive)",
                           "IgA" = "log ([IgA+]/[IgA-] + 1)",  
-                          "Length" = "log ($\\mu$m)",   
+                          "Length" = "log ($\\mu$m)",
                           "Motility" = "0 (never motile) to 1 (always motile)",  
                           "Oxygen_tolerance" = "0 (obligate anaerobe) to 5 (obligate aerobe)",
                           "pH_optimum" = "pH",    
@@ -183,7 +183,7 @@ figTraitCoverage <- ggplot(trait_coverage, aes(x = trait, y = abun, fill = Sourc
 figTreeTraits <- function(){}
 
 #load tax
-tax_tmp <- bind_rows(tax_LTP, tax_mouse[, c('otu','Genus','Species')]) %>%
+tax_tmp <- bind_rows(tax_LTP, tax[, c('otu','Genus','Species')]) %>%
   mutate(spp = paste(Genus, Species)) %>%
   select(-Genus, -Species)
 
@@ -209,10 +209,9 @@ j <- data.frame(otu = tree$tip.label, stringsAsFactors = FALSE) %>%
          trait = factor(trait, levels = unique(trait))) %>%
   rename(id = otu)
 
-ggtree(tree, size = 0.05, layout = 'circular') +
-  geom_tiplab2(label = '_______', 
-               size = 3, aes(color = group))
-
+#ggtree(tree, size = 0.05, layout = 'circular') +
+#  geom_tiplab2(label = '_______', 
+#               size = 3, aes(color = group))
 
 p <- ggtree(tree, size = 0.05) +
   geom_tiplab(label = '____________________________________________________', vjust = -.29, offset = 0.01, 
@@ -223,7 +222,7 @@ figTreeTraits <- facet_plot(p, panel = "Trait observations", data = j, geom = ge
            color = 'transparent', stroke = 0) + 
   theme_tree2() + 
   scale_color_manual(values = c('black','red')) +
-  scale_x_continuous(breaks = c(1:15)) +
+  scale_x_continuous(breaks = c(1:16)) +
   guides(
     fill = guide_legend(override.aes = list(size = 4, alpha = 1, color = 'black'), 
                         order = 0, ncol = 2), 
@@ -1047,9 +1046,14 @@ figInterbabyDissTreat <- ggplot(j, aes(x = tbin, y = dist, color = group)) +
       panel.background = element_blank(),
       legend.position = 'bottom')
 
+
+#### Supplementary data ####
+traits_sparse %>% write.csv(paste0(wd, 'SupplementaryData_1_trait_value_observations.csv'))
+traits %>% spread(trait, val) %>% write.csv(paste0(wd, 'SupplementaryData_2_trait_value_predictions.csv'))
+
 #### Stats and facts ####
 #N for pairwise trait comparisons by trait
-tree_Npairs <- trait_deltas %>% group_by(trait) %>% summarise(n = length(dist_bin)) %>% filter(n == min(n) | n == max(n)) %>% arrange(n)
+tree_Npairs <- trait_deltas %>% mutate(trait = trait_names[match(trait, names(trait_names))]) %>% group_by(trait) %>% summarise(n = length(dist_bin)) %>% filter(n == min(n) | n == max(n)) %>% arrange(n)
 
 #number of OTUs in tree that are ours (before rarefaction)
 Notus_ours <- sum(grepl('OTU', tree$tip.label))
@@ -1111,5 +1115,4 @@ meta %>%
     geom_bar(color = 'black', aes(group = subject)) + 
     th + 
     labs(x = 'Days of antibiotic treatment', y = 'Number of infants')
-
 
