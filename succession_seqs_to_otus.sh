@@ -94,15 +94,15 @@ wget http://drive5.com/sintax/silva_16s_v123.fa.gz
 gunzip silva_16s_v123.fa.gz
 /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -sintax seqs_filtered_uniques_otus.fa -db silva_16s_v123.fa -tabbedout seqs_filtered_uniques_otus_taxonomy_SILVA.sintax -strand both
 
-#map ZOTU to SILVA (haven't run this yet)
+#map ZOTU to SILVA
 /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -sintax seqs_filtered_uniques_zotus.fa -db silva_16s_v123.fa -tabbedout seqs_filtered_uniques_zotus_taxonomy_SILVA.sintax -strand both
 
-#map OTU to LTP (not sure if necessary, but it's fast)
+#map OTU to LTP (not sure if necessary)
 wget http://drive5.com/sintax/ltp_16s_v123.fa.gz
 gunzip ltp_16s_v123.fa.gz
 /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -sintax seqs_filtered_uniques_otus.fa -db ltp_16s_v123.fa -tabbedout seqs_filtered_uniques_otus_taxonomy_LTP.sintax -strand both
 
-#map OTU to gg (only necessary if i want to reverse map back to gg for bugbase predictions)
+#map OTU to gg (not sure if necessary)
 wget http://drive5.com/sintax/gg_16s_13.5.fa.gz
 gunzip gg_16s_13.5.fa.gz
 /mnt/research/rdp/public/thirdParty/usearch10.0.240_i86linux64 -sintax seqs_filtered_uniques_otus.fa -db gg_16s_13.5.fa -tabbedout seqs_filtered_uniques_otus_taxonomy_GG.sintax -strand both

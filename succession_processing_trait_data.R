@@ -3,32 +3,30 @@
 
 ##Overview
 #1. load raw taxonomic data from usearch output
-#2. load taxonomy from LTP (Living Tree Project)
-#3. remove any ambiguities/special characters
+#2. load taxonomy provided by LTP (Living Tree Project)
+#3. remove ambiguities/special characters
 #4. gather and combine trait data from various sources
 #5. match trait data to as many taxa as possible, either from usearch or LTP
-#6. save raw trait data (no phylogenetic inference yet) 
+#6. save raw trait data (in the next script, we will use phylogenetic inference to infer unknown trait values) 
 
 ######################################################################
 ######################################################################
 ######################################################################
 
-#set working directory, load packages
-wd <- 'C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\data'
-setwd(wd)
-source('C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\succession_custom_functions.R')
+#load packages
 loadpax(c('data.table','tidyverse'))
+source('succession_custom_functions.R')
 
 #load taxonomy data, which will be used to filter otu unnecessary taxa
-tax_succ <- readRDS('succession_tax_SILVA.RDS')
-tax_LTP <- readRDS('tax_LTP.RDS')
+tax_succ <- readRDS('data\\succession_tax_SILVA.RDS')
+tax_LTP <- readRDS('data\\tax_LTP.RDS')
 
 ### Begin amassing trait data...
 ####First: Edits drawn directly from Barberan et al 2016 script: 
 #https://figshare.com/articles/International_Journal_of_Systematic_and_Evolutionary_Microbiology_IJSEM_phenotypic_database/4272392
 
 #read ijsem table
-ijsem<-read.delim('IJSEM_pheno_db_v1.0.txt', sep="\t", header=T, check.names=F, fill=T,
+ijsem<-read.delim('data\\IJSEM_pheno_db_v1.0.txt', sep="\t", header=T, check.names=F, fill=T,
                   na.strings=c("NA", "", "Not indicated", " Not indicated","not indicated", "Not Indicated", "n/a", "N/A", "Na", "Not given", "not given","Not given for yeasts", "not indicated, available in the online version", "Not indicated for yeasts", "Not Stated", "Not described for yeasts", "Not determined", "Not determined for yeasts"))
 
 #simplify column names
@@ -113,7 +111,6 @@ ijsem$Length <- swan(j)
 
 
 #now width
-
 j <- as.character(ijsem$Width)
 j <- gsub(' |\\(|\\)|not.+|indiameter|Filament.+', '', j)
 j <- gsub(',', '.', j, fixed = TRUE)
@@ -198,7 +195,7 @@ j[filt] <- rowMeans(cbind(
 
 ijsem$GC <- swan(j)
 
-# select traits for analylsis...
+# select traits for analysis...
 ijsem <- select(ijsem, Genus, Species, GC_content = GC, 
                 Oxygen_tolerance = Oxygen_score, Length, Width, 
                 Motility = Motility, Spore, 
@@ -214,7 +211,7 @@ ijsem <- select(ijsem, Genus, Species, GC_content = GC,
 # https://www.nature.com/articles/nature17645#supplementary-information 
 # [data edited in excel for easier processing)
 
-spo <- read.csv('Browne2016_sporulationTable.csv', header = T, skip = 1)
+spo <- read.csv('data\\Browne2016_sporulationTable.csv', header = T, skip = 1)
 
 # fix long colnames
 colnames(spo) <- substr(colnames(spo), 1, 2)
@@ -229,17 +226,18 @@ spo <- spo %>%
 ####################################### Exploring bacdive, https://bacdive.dsmz.de/
 
 if (FALSE) {
-  # currently, this takes a really long time (~20 hrs). I copy paste it into a new R window, which is why I am keeping the wd and packages
+  # currently, this takes a really long time (~20 hrs). 
+  # I copy paste it into a new R window, which is why I am keeping the wd and packages
   
   #setup
-  wd <- 'C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\data'
+  wd <- 'dir'
   setwd(wd)
-  source('C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\succession_custom_functions.R')
+  source('succession_custom_functions.R')
   loadpax(c('data.table','tidyverse','RCurl','rjson','stringr'))
   
   #load tax
-  tax_LTP <- readRDS('LTP_tax.RDS')
-  tax_succ <- readRDS('succession_tax_SILVA.RDS')
+  tax_LTP <- readRDS('data\\LTP_tax.RDS')
+  tax_succ <- readRDS('data\\succession_tax_SILVA.RDS')
   tax <- tax_succ %>%
     select(otu, Genus, Species) %>%
     bind_rows(tax_LTP) %>%
@@ -254,7 +252,7 @@ if (FALSE) {
   needed <- sort(unique(c(needed$Genus, needed$needed)))
   
   #read previous backdat queries to know when to start
-  bacdat <- readRDS('bacdive_Sept10_2018.RDS')
+  bacdat <- readRDS('data\\bacdive_Sept10_2018.RDS')
   needed <- needed[!needed %in% names(bacdat)]
   
   ##sometimes there is an error and a particular entry must be skipped
@@ -263,13 +261,13 @@ if (FALSE) {
   #loop through each needed entry. Future large downloads may want to save each entry, because saving/resaving to hard-disk is unnecessarily resource intensive (but necessary to avoid loss in case of (semi-frequent) errors)
   for (i in needed) {
     bacdat[[i]] <- bac_search(i)
-    saveRDS(bacdat, 'bacdive_Sept10_2018.RDS')
+    saveRDS(bacdat, 'data\\bacdive_Sept10_2018.RDS')
   }
   
 } 
 
 #load bacdive data
-bacdat <- readRDS('bacdive_Sept10_2018.RDS')
+bacdat <- readRDS('data\\bacdive_Sept10_2018.RDS')
 
 #to determine what to filter for, refer to this list of fields:
 bacdat_fields <- unlist(bacdat[[1]][[1]])
@@ -339,8 +337,9 @@ bacdat <- bacdat %>%
 
 ###############################
 
-## get Genome size, GC content, and Gene Number from NCBI ftp site... (Which is down now??)
-genos <- fread('NCBI_prokaryotes.txt') %>% 
+## get Genome size, GC content, and Gene Number from NCBI ftp site.
+#ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/prokaryotes.txt
+genos <- fread('data\\NCBI_prokaryotes.txt') %>% 
   filter(Status == 'Complete Genome') %>%
   transmute(
     sp = gsub("'|\\[|\\]", "", `Organism/Name`),
@@ -356,7 +355,7 @@ genos <- fread('NCBI_prokaryotes.txt') %>%
 # also found this -- not sure how much overlap there is between them, but am merging them to be safe
 #https://www.ncbi.nlm.nih.gov/genome/browse/#!/overview/
 
-genos2 <- fread('genome_size_NCBI.csv') %>%
+genos2 <- fread('data\\genome_size_NCBI.csv') %>%
   transmute(sp = `#Organism Name`, val = `Size(Mb)`) %>%
   mutate(sp = gsub(' bacterium.*', '', sp),
          sp = gsub("'.*", "", sub("'?", "", sp))) %>%
@@ -372,7 +371,7 @@ genos <- bind_rows(genos, genos2)
 #https://rrndb.umms.med.umich.edu/static/download/
 #i modified it a bit in excel before processing
 
-rrnDB <- read.csv('rrnDB-5.3.csv') %>%
+rrnDB <- read.csv('data\\rrnDB-5.3.csv') %>%
   mutate(
     sp = gsub("'|\\[|\\]", "", NCBI.scientific.name),
     Genus = sapply(sapply(sp, strsplit, ' '), function(x) x[[1]]),
@@ -386,7 +385,7 @@ rrnDB <- read.csv('rrnDB-5.3.csv') %>%
 #https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4174347/
 #i modified it a bit in excel before processing
 
-iga <- read.csv('Palm2014_IGA.csv', stringsAsFactors = FALSE)
+iga <- read.csv('data\\Palm2014_IGA.csv', stringsAsFactors = FALSE)
 iga <- t(iga)
 colnames(iga) <- iga[1, ]
 iga <- as.data.frame(iga[c(2:nrow(iga)), ])
@@ -406,7 +405,7 @@ iga <- iga %>%
 #################
 #extract number of b-vitamins in genomes from Magnusdottir 2015
 #https://www.frontiersin.org/articles/10.3389/fgene.2015.00148/full
-bvit <- read.csv('Bvitamins_Magnusdottir2015.csv', stringsAsFactors = FALSE) %>%
+bvit <- read.csv('data\\Bvitamins_Magnusdottir2015.csv', stringsAsFactors = FALSE) %>%
   mutate(Genus = sapply(sapply(tax, strsplit, ' '), function(x) x[[1]]),
          Species = sapply(sapply(tax, strsplit, ' '), function(x) x[[2]])) %>%
   mutate(Species = ifelse(Species == 'sp.', 'unclassified', Species)) %>%
@@ -422,7 +421,7 @@ bvit <- read.csv('Bvitamins_Magnusdottir2015.csv', stringsAsFactors = FALSE) %>%
 # currently I drop otu-level taxonomy, but I could probably figure it out with
 # https://gold.jgi.doe.gov/organisms?id=Go0384442
 # (ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/ could be useful later)
-jgi <- fread("GOLD-328_Organism_Metadata_02232018.txt", quote = "")
+jgi <- fread("data\\GOLD-328_Organism_Metadata_02232018.txt", quote = "")
 
 #remove duplicate oxygen column
 jgi <- jgi[, -9]
@@ -537,7 +536,7 @@ x <- x %>%
   filter(!(trait == 'Temp_optimum' & val > 80)) %>%
   filter(!(trait == 'Width' & val > 8))
 
-print(paste(x_unclean - nrow(x), "outliers of", nrow(x), "data points were removed"))
+print(paste(x_unclean - nrow(x), "outliers of", nrow(x), "trait value data points were removed"))
 
 #Genus/Species fixes
 #any species with a special character, including 'sp.', becomes 'unclassified'
@@ -583,7 +582,7 @@ x <- x %>%
 x <- x %>% 
   mutate(
     Sporulation = ifelse(is.na(Spore_score), 
-                         ifelse(Spore > 0, median(Spore_score[Spore > 0], na.rm = T), 0), Spore_score)) %>%
+                         ifelse(Spore > 0, median(Spore[Spore > 0], na.rm = T), 0), Spore_score)) %>%
   ungroup() %>%
   select(-Spore, -Spore_score)
 
@@ -598,5 +597,5 @@ tmp <- bind_rows(select(tax_succ, Genus, Species), select(tax_LTP, Genus, Specie
 x <- filter(x, paste(Genus, Species) %in% paste(tmp$Genus, tmp$Species))
 
 ###save RDS
-saveRDS(x, file = 'traits_sparse.RDS')
-saveRDS(trait_sources, file = 'trait_sources.RDS')
+saveRDS(x, file = 'data\\traits_sparse.RDS')
+saveRDS(trait_sources, file = 'data\\trait_sources.RDS')

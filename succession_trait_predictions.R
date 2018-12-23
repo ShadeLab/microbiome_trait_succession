@@ -2,27 +2,24 @@
 #John Guittar
 
 #load packages and set working directory
-wd <- 'C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\data'
-setwd(wd)
-source('C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\succession_custom_functions.R')
+source('succession_custom_functions.R')
 loadpax(c('tidyverse','ape','castor'))
 
 #load tree with LTP and mouse tips, calculated with usearch
-tre <- read_tree(write.tree(read.tree('LTP_succession.tree')))
+tre <- read_tree(write.tree(read.tree('data\\LTP_succession.tree')))
 
 #load rarefied OTU abundances
-otus <- readRDS(file = 'otus.RDS')
+otus <- readRDS(file = 'data\\otus.RDS')
 
 #load traits, remove genome size because it is essentially the same as gene number
-traits <- as.data.frame(readRDS('traits_sparse.RDS')) %>% 
-  mutate(binomial = paste(Genus, Species)) %>%
-  select(-Genome_Mb)
+traits <- as.data.frame(readRDS('data\\traits_sparse.RDS')) %>% 
+  mutate(binomial = paste(Genus, Species))
 trait_names <- names(traits)[!names(traits) %in% c('Genus','Species','binomial')]
 
 #load taxonomy files (used to link otus and traits)
 #files were created in succession_processing_trait_data.R
-tax_LTP <- readRDS('LTP_tax.RDS')
-tax_succ <- readRDS('succession_tax_SILVA.RDS') %>%
+tax_LTP <- readRDS('data\\LTP_tax.RDS')
+tax_succ <- readRDS('data\\succession_tax_SILVA.RDS') %>%
   select(otu, Genus, Species)
 tax <- bind_rows(tax_LTP, tax_succ) %>%
   mutate(binomial = paste(Genus, Species))
@@ -119,7 +116,6 @@ mods <- mods %>%
     linear_asym = plyr::try_default(nls(delta~SSasympOrig(dist, Asym, lrc), data = .),
                                     default = NA, quiet = TRUE),
     log = lm(delta~log(dist), data = .),
-    logistic = plyr::try_default(nls(delta ~ SSlogis(dist, Asym, xmid, scal), data = .), default = NA, quiet = TRUE))
 
 #model names for plotting later
 mod_names <- c(null = 'Null', linear = 'Linear regression', linear_asym = 'Asymptotic regression',
@@ -158,7 +154,7 @@ best_mods <- mods %>%
   pull(sort(best))
 
 #create a dataframe of null expectations of delta for each trait
-#To remove phylogenetic effects, null delta is calculated as the mean pairwise trait-based distance for all randoly selected pairs of otus with greater than 10% difference in their 16S V4 region -- except for Salt optimum and ph optimum, which have no observable phylogenetic effect
+#To remove phylogenetic effects, null delta is calculated as the mean pairwise trait-based distance for all randoly selected pairs of otus with greater than 10% difference in their 16S V4 region
 null_thresh <- obs %>%
   filter(dist_bin > 0.1) %>%
   group_by(trait, dist_bin) %>%
@@ -201,7 +197,7 @@ traits <- dat %>%
   transmute(otu, trait, val = SCP)
 
 #write files
-saveRDS(preds, 'trait_delta_models.RDS')
-saveRDS(dat, 'traits_all_predictions.RDS')
-saveRDS(traits, 'traits.RDS')
-saveRDS(obs, 'trait_deltas.RDS')
+saveRDS(preds, 'data\\trait_delta_models.RDS')
+saveRDS(dat, 'data\\traits_all_predictions.RDS')
+saveRDS(traits, 'data\\traits.RDS')
+saveRDS(obs, 'data\\trait_deltas.RDS')

@@ -1,15 +1,19 @@
 # set wd and load packages
-setwd('C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\data\\')
+library(vegan)
 library(tidyverse)
 library(data.table)
 library(stringr)
 
 #### Metadata ####
-#read metadata
-d1_meta1 <- fread("diab_yassour_meta_antibiotics.csv")
-d1_meta2 <- fread("diab_yassour_meta_feeding.csv")[, c(1:5)]
-d1_meta3 <- fread("diab_yassour_meta_general.csv")[, c(1:6)]
-d2_meta <- fread("diab_t1d_meta.csv")
+# metadata from Yassour et al. 2016. Natural history of the infant gut microbiome and impact of antibiotic treatment on bacterial strain diversity and stability. Science translational medicine 8:343ra81. [www.sciencetranslationalmedicine.org/cgi/content/full/8/343/343ra81/DC1 as supplementary table S1]
+
+#note that the supplementary file is an excel file with three worksheets; below, each worksheet was saved as three individual csv files
+d1_meta1 <- fread("data\\diab_yassour_meta_antibiotics.csv")
+d1_meta2 <- fread("data\\diab_yassour_meta_feeding.csv")[, c(1:5)]
+d1_meta3 <- fread("data\\diab_yassour_meta_general.csv")[, c(1:6)]
+
+# metadata from Kostic et al. 2016. The Dynamiccs of the human gut microbiome in development and in progression towards type 1 diabetes 17:260-273. [https://www.cell.com/cell-host-microbe/fulltext/S1931-3128(15)00021-9]
+d2_meta <- fread("data\\diab_t1d_meta.csv")
 
 #merge d1 metadata files
 d1_meta <- d1_meta1 %>%
@@ -62,7 +66,8 @@ meta <- meta %>%
     bf_end = as.numeric(bf_end))
 
 #### OTU data ####
-otus <- read.table('seqs_filtered_uniques_OTU_table.txt', header = TRUE, sep = '\t', row.names = 1, comment.char = '')
+# otu file generated using succession_seqs_to_otus.sh and usearch pipeline
+otus <- read.table('data\\seqs_filtered_uniques_OTU_table.txt', header = TRUE, sep = '\t', row.names = 1, comment.char = '')
 otus <- otus[, colSums(otus) > 5000]
 set.seed(7)
 otus <- as.data.frame(t(rrarefy(t(otus), 5000)))
@@ -90,9 +95,10 @@ otus <- otus %>%
   ungroup()
 
 #### Taxonomic data ####
-#load raw taxonomy data from usearch
-#Note: I also tried to use LTP to assign taxonomy. But it has WAY more 'unclassified'. Since we're just interested in getting taxon traits by mining the literature -- not on taxonomy/phylogeny per se -- we get way more hits if we use the whole SILVA database. Later, we map the OTUs onto the LTP phylogeny based on 16S similarity.
-tax_succ_SILVA <- read.table(paste0(wd, 'seqs_filtered_uniques_otus_taxonomy_SILVA.sintax'), fill = TRUE) %>%
+# SILVA sintax (taxonomy) file generated using succession_seqs_to_otus.sh and usearch pipeline
+#Note: I also tried to use LTP to assign taxonomy. But it has WAY more 'unclassified'. Since we're just interested in getting taxon traits by mining the literature -- i.e., not on taxonomy/phylogeny per se -- we get way more hits if we use the whole SILVA database. Later, we map the OTUs onto the LTP phylogeny based on 16S similarity.
+#I clean up some of the messier taxonomic designations
+tax_succ_SILVA <- read.table('data\\seqs_filtered_uniques_otus_taxonomy_SILVA.sintax', fill = TRUE) %>%
   select(otu = V1, tax = V4) %>%
   separate(tax, c('Kingdom','Phylum','Class','Order','Family','Genus','Species'), sep = ',', fill = 'right') %>%
   mutate_all(funs(gsub('\\w:', '', .))) %>%
@@ -118,9 +124,9 @@ tax_succ_SILVA <- read.table(paste0(wd, 'seqs_filtered_uniques_otus_taxonomy_SIL
     Species = gsub('\\[|\\]', '', Species),
     Species = ifelse(Species %in% c('KT','LYH','unidentified'), NA, Species))
 
-#load raw taxonomy data from LTP version 132 (for searching trait databases)
-#https://www.arb-silva.de/fileadmin/silva_databases/living_tree/LTP_release_132/LTPs132_SSU.csv
-tax_LTP <- read.table('LTPs132_SSU.csv', sep = '\t')
+#load raw taxonomy data from LTP version 132, which is used for searching trait databases, 
+#downloaded at [https://www.arb-silva.de/fileadmin/silva_databases/living_tree/LTP_release_132/LTPs132_SSU.csv]
+tax_LTP <- read.table('data\\LTPs132_SSU.csv', sep = '\t')
 tax_LTP <- tax_LTP[!duplicated(tax_LTP$V1), ]
 tax_LTP <- transmute(tax_LTP, otu = as.character(V1), 
                      Genus = unlist(lapply(strsplit(as.character(V5), ' ', fixed = TRUE), function(x) x[1])), 
@@ -128,35 +134,38 @@ tax_LTP <- transmute(tax_LTP, otu = as.character(V1),
 tax_LTP$Genus[tax_LTP$otu == 'Y18189'] <- 'Clostridium'
 tax_LTP$Species[tax_LTP$otu == 'Y18189'] <- 'polyendosporum'
 
-#filter out metadata without associated subjects (or subjects with < 10 samples)
+#remove a c-section infant that also received heavy antibiotics
+meta <- meta[meta$subject != 'E004628', ]
+otus <- filter(otus, subject != 'E004628')
+
+#remove metadata with no associated subjects or subjects with < 10 samples
 meta <- filter(meta, subject %in% otus$subject)
 
-#filter out taxonomic data
+#remove taxonomic data with no associated subjects or subjects with < 10 samples
 tax_succ_SILVA <- filter(tax_succ_SILVA, otu %in% otus$otu)
 
 #replace taxonomic NA with 'unclassified'
 tax_succ_SILVA[is.na(tax_succ_SILVA)] <- 'unclassified'
 
-#rename T1D treatment group as Control, because we are only looking at antibiotics. T1D is one of many possible confounding factors, but we can't address all of those, so we're not going to worry about it
+#rename T1D treatment group as Control, because we are only looking at antibiotics as a predictor. T1D is one of many possible confounding factors, but we can't address all of them in this very-general study
 meta$treatment_group[meta$treatment_group == 'T1D'] <- 'Control'
 
 #fix one missing country entry
 meta$country[meta$subject == 'E028794'] <- 'Finland'
 meta$treatment_group[meta$subject == 'E028794'] <- 'Control'
 
-#remove a c-section infant that also received heavy antibiotics
-meta <- meta[meta$subject != 'E004628', ]
-otus <- filter(otus, subject != 'E004628')
-
 #fix treatment group to exclude infants that received less than 50 days ab
 meta <- mutate(meta,
   treatment_group = ifelse(delivery == 'caesaren', 'C-section',
     ifelse(!is.na(antibiotic_days) & antibiotic_days > 49, 'Antibiotics',
-    ifelse(!is.na(antibiotic_days) & antibiotic_days == 0 & subject != 'E022137', 'Control', 'None'))))
+    ifelse(!is.na(antibiotic_days) & antibiotic_days == 0, 'Control', 'None'))))
+
+#?& subject != 'E022137'? At some point I removed this infant because it's finnish, unlike all the others, but now... i'm leaving it in.
+
 
 #### Save data ####
-saveRDS(otus, file = 'otus.RDS')
-saveRDS(meta, file = 'subject_metadata.RDS')
-saveRDS(tax_succ_SILVA, 'succession_tax_SILVA.RDS')
-saveRDS(tax_LTP, 'tax_LTP.RDS')
+saveRDS(otus, file = 'data\\otus.RDS')
+saveRDS(meta, file = 'data\\subject_metadata.RDS')
+saveRDS(tax_succ_SILVA, 'data\\succession_tax_SILVA_all.RDS')
+saveRDS(tax_LTP, 'data\\tax_LTP.RDS')
 

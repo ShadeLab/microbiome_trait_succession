@@ -24,14 +24,14 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FA
 library(scales)
 
 #initialize manuscript formatting script
-source('C:\\Users\\John\\Documents\\initialize_manuscript.R')
+source('~\\initialize_manuscript.R')
 
 #load data, create figures
-source('C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\succession_analysis.R')
+source('~\\msu\\microbiome_trait_succession\\succession_analysis.R')
 
 #set directory where figures will be loaded/generated
 #note that kable_as_image doesn't work if there are underscores in the headers...
-image_dir <- 'C:\\Users\\John\\Documents\\msu\\microbiome_trait_succession\\images\\'
+image_dir <- '~\\msu\\microbiome_trait_succession\\images\\'
 
 ```
 
@@ -203,11 +203,12 @@ As in the ecological studies of macroorganisms, trait-based analysis of gut micr
 
 JG, AS and EL conceived the study, JG developed methods, analyzed data, and wrote the manuscript, and all authors discussed analysis and revised the manuscript.
 
+\newline
+
 #Acknowledgments
 
 This work was supported in part by Michigan State University through computational resources provided by the Institute for Cyber-Enabled Research. AS acknowledges support from the National Science Foundation under Grant No DEB#1749544. JG was supported by the Michigan State University Foundation funding to EL.
 
-`r pagebreak`
 
 ```{r --Tables and Figures--, include = FALSE} 
 ``` 
@@ -262,8 +263,11 @@ if (FALSE) {
 ```{r figTaxOverTime, include = FALSE}
 
 #it is necessary to do this because the normal plot_it() function doesn't work for grid objects
-png(filename = paste0(image_dir, "figTaxOverTime", '.png'), units = 'in', type = "cairo", width = 6.5, height = 6.5, res = 300)
-grid::grid.newpage()
+png(filename = paste0(image_dir, "figTaxOverTime", '.png'), units = 'in', type = "cairo", width = 6, height = 6, res = 300)
+grid::grid.draw(figTaxOverTime)
+while(dev.cur() != 1) dev.off()
+
+pdf(file = paste0(image_dir, "figTaxOverTime", '.pdf'), width = 6, height = 6)
 grid::grid.draw(figTaxOverTime)
 while(dev.cur() != 1) dev.off()
 
@@ -280,7 +284,7 @@ ref(type = 'figure', name = 'figTaxOverTime')
 
 ```{r figCWMs, include = FALSE}
 
-plot_it(figCWMs, name = 'figCWMs', dir = image_dir, width = 6.5, height = 7.5)
+plot_it(figCWMs, name = 'figCWMs', dir = image_dir, width = 6.5, height = 7, png = FALSE, pdf = TRUE)
 
 ```
 
@@ -292,7 +296,7 @@ plot_it(figCWMs, name = 'figCWMs', dir = image_dir, width = 6.5, height = 7.5)
 
 ```{r figCWMsTreat, include = FALSE}
 
-plot_it(figCWMsTreat, name = 'figCWMsTreat', dir = image_dir, width = 6.5, height = 7)
+plot_it(figCWMsTreat, name = 'figCWMsTreat', dir = image_dir, width = 6.5, height = 7.5, pdf = TRUE)
 
 ```
 
@@ -304,7 +308,7 @@ plot_it(figCWMsTreat, name = 'figCWMsTreat', dir = image_dir, width = 6.5, heigh
 
 ```{r figIntrababyDiss, include = FALSE}
 
-plot_it(figIntrababyDiss, name = 'figIntrababyDiss', dir = image_dir, width = 5.5, height = 5.5)
+plot_it(figIntrababyDiss, name = 'figIntrababyDiss', dir = image_dir, width = 5.5, height = 5.5, pdf = TRUE)
 
 ```
 
@@ -316,7 +320,7 @@ plot_it(figIntrababyDiss, name = 'figIntrababyDiss', dir = image_dir, width = 5.
 
 ```{r figInterbabyDiss, include = FALSE}
 
-plot_it(figInterbabyDiss, name = 'figInterbabyDiss', dir = image_dir, width = 5.5, height = 4)
+plot_it(figInterbabyDiss, name = 'figInterbabyDiss', dir = image_dir, width = 6.5, height = 3.5, pdf = TRUE)
 
 ```
 
@@ -337,7 +341,7 @@ tabHSP <- kable(tabHSP, format = 'latex', escape = F, booktabs = T, align = c('l
   kable_styling() %>%
   row_spec(0, bold = T) %>% 
   footnote(threeparttable = TRUE, 
-           general = "Pearson correlations coefficients among different methods of hidden state character prediction. IC: Independent Contrasts; SBT: Subtree Averaging; SCP: Weighted Squared-change Parsimony. Traits that were not amenable to hidden state prediction were omitted due to insufficient data.", 
+           general = "Pearson correlations coefficients among estimates arising from three methods of hidden state character prediction. Predictions were made for all OTUs found in gut microbiome samples and/or from the Living Tree Project which could not be directly associated with trait observations. Only predictions which fell within acceptable phylogenetic distances to trait observations were considered (refer to Methods), thus N ranged from 8122 (Oxygen tolerance) to B vitamins (13511). IC: Independent Contrasts; SBT: Subtree Averaging; SCP: Weighted Squared-change Parsimony. Traits that were not amenable to hidden state prediction were omitted due to insufficient data.", 
            general_title = paste0("Table S", refs$tabHSP, "."), 
            title_format = "bold")
 
@@ -351,7 +355,7 @@ kable_as_image(tabHSP, filename = paste0(image_dir,'tabHSP'), density = 500)
 
 ```{r figSampling, include = FALSE}
 
-plot_it(figSampling, type = 'supplementary figure', name = 'figSampling', dir = image_dir, width = 6.5, height = 5.5)
+plot_it(figSampling, type = 'supplementary figure', name = 'figSampling', dir = image_dir, width = 6.5, height = 7)
 
 ```
 
@@ -363,7 +367,7 @@ plot_it(figSampling, type = 'supplementary figure', name = 'figSampling', dir = 
 
 ```{r figTreeTraits, include = FALSE}
 
-plot_it(figTreeTraits, type = 'supplementary figure', name = 'figTreeTraits', dir = image_dir, width = 6.5, height = 8.5)
+plot_it(figTreeTraits, type = 'supplementary figure', name = 'figTreeTraits', dir = image_dir, width = 7, height = 6.5)
 
 ```
 
@@ -375,7 +379,7 @@ plot_it(figTreeTraits, type = 'supplementary figure', name = 'figTreeTraits', di
 
 ```{r figThresholds, include = FALSE}
 
-plot_it(figThresholds, type = 'supplementary figure', name = 'figThresholds', dir = image_dir, width = 7, height = 8.5)
+plot_it(figThresholds, type = 'supplementary figure', name = 'figThresholds', dir = image_dir, width = 9, height = 8)
 
 ```
 
@@ -399,7 +403,7 @@ plot_it(figTraitCoverage, type = 'supplementary figure', name = 'figTraitCoverag
 
 ```{r figCWMsSuccGroup, include = FALSE}
 
-plot_it(figCWMsSuccGroup, type = 'supplementary figure', name = 'figCWMsSuccGroup', dir = image_dir, width = 7.5, height = 7)
+plot_it(figCWMsSuccGroup, type = 'supplementary figure', name = 'figCWMsSuccGroup', dir = image_dir, width = 7.5, height = 7.5)
 
 ```
 
@@ -423,7 +427,7 @@ plot_it(figTraitCorr, type = 'supplementary figure', name = 'figTraitCorr', dir 
 
 ```{r figSporulatorsTime, include = FALSE}
 
-plot_it(figSporulatorsTime, type = 'supplementary figure', name = 'figSporulatorsTime', dir = image_dir, width = 7.5, height = 7)
+plot_it(figSporulatorsTime, type = 'supplementary figure', name = 'figSporulatorsTime', dir = image_dir, width = 6.5, height = 6)
 
 ```
 
@@ -436,7 +440,7 @@ plot_it(figSporulatorsTime, type = 'supplementary figure', name = 'figSporulator
 
 ```{r figCWMsVariance, include = FALSE}
 
-plot_it(figCWMsVariance, type = 'supplementary figure', name = 'figCWMsVariance', dir = image_dir, width = 6.5, height = 7)
+plot_it(figCWMsVariance, type = 'supplementary figure', name = 'figCWMsVariance', dir = image_dir, width = 6.5, height = 7.5)
 
 ```
 
@@ -449,7 +453,7 @@ plot_it(figCWMsVariance, type = 'supplementary figure', name = 'figCWMsVariance'
 
 ```{r figInterbabyDissTreat, include = FALSE}
 
-plot_it(figInterbabyDissTreat, type = 'supplementary figure', name = 'figInterbabyDissTreat', dir = image_dir, width = 6.5, height = 4)
+plot_it(figInterbabyDissTreat, type = 'supplementary figure', name = 'figInterbabyDissTreat', dir = image_dir, width = 6.5, height = 3.5)
 
 ```
 

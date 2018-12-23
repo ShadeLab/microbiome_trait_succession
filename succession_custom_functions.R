@@ -1,4 +1,7 @@
-# Custom functions for microbiome analyses. Created Feb 28, 2017.
+# Custom functions for microbiome analyses.
+# Created by John Guittar
+
+scaleFUN <- function(x) sprintf("%.1f", x)
 
 loadpax <- function(pkg){
   # (1) checks package installation, (2) installs them if not, then (3) loads them
@@ -9,7 +12,7 @@ loadpax <- function(pkg){
 }
 
 swan <- function (x) {
-	#suppress warnings as numeric
+	# suppress warnings when converting to numeric
 	suppressWarnings(as.numeric(x))
 }
 
@@ -50,8 +53,6 @@ th <- theme_bw() +
     panel.grid.minor = element_blank(),
     panel.grid.major = element_blank(),
     panel.background = element_blank())
-
-
 
 meltdist <- function(x, y, tree = NULL, method = c('bray','euclidean','unifrac')) {
   #meltdist takes a list of samples (x) and an otu table (y) and calculates intersample dissimilarity using (meth)
