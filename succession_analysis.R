@@ -1,7 +1,7 @@
 #### Setup ####
 
 #setwd
-#setwd('~\\msu\\microbiome_trait_succession\\')
+setwd('~\\msu\\microbiome_trait_succession\\')
 
 #load custom functions
 source('succession_custom_functions.R')
@@ -61,6 +61,25 @@ trait_names <- c(
   "Width"              = "Width"
 )
 
+trait_units <- data.frame(stringsAsFactors = FALSE,
+  "Aggregation_score" = "0 (never) to 1 (observed aggregation)",
+  "B_vitamins"        = "No. B-vitamin pathways in genome",
+  "Copies_16S"        = "No. in 16S rRNA gene copies in genome",
+  "GC_content"        = "Percent (\\%) guanine and cytosine in genome",
+  "Gene_number"       = "No. genes in genome",
+  "Genome_Mb"         = "Genome size in megabases",
+  "Gram_positive"     = "0 (Gram-negative) to 1 (Gram-positive)",
+  "IgA"               = "log ([IgA+]/[IgA-] + 1)",  
+  "Length"            = "log ($\\mu$m)",
+  "Motility"          = "0 (never motile) to 1 (always motile)",  
+  "Oxygen_tolerance"  = "0 (obligate anaerobe) to 5 (obligate aerobe)",
+  "pH_optimum"        = "pH",    
+  "Salt_optimum"      = "g per l",  
+  "Sporulation"       = "0 (never sporulates) to 1 (sporulates easily)",  
+  "Temp_optimum"      = "$^{\\circ}$C",  
+  "Width"             = "log ($\\mu$m)"
+)
+
 trait_names_units <- c(
   "Aggregation_score" = "Aggregation score",
   "B_vitamins"        = "B vitamins (#)",
@@ -85,25 +104,6 @@ trait_names_units <- c(
 ##Table of trait sources
 tabTraitSources <- function(){}
 
-trait_units <- data.frame(stringsAsFactors = FALSE,
-  "Aggregation_score" = "0 (never) to 1 (observed aggregation)",
-  "B_vitamins"        = "No. B-vitamin pathways in genome",
-  "Copies_16S"        = "No. in 16S rRNA gene copies in genome",
-  "GC_content"        = "Percent (\\%) guanine and cytosine in genome",
-  "Gene_number"       = "No. genes in genome",
-  "Genome_Mb"         = "Genome size in megabases",
-  "Gram_positive"     = "0 (Gram-negative) to 1 (Gram-positive)",
-  "IgA"               = "log ([IgA+]/[IgA-] + 1)",  
-  "Length"            = "log ($\\mu$m)",
-  "Motility"          = "0 (never motile) to 1 (always motile)",  
-  "Oxygen_tolerance"  = "0 (obligate anaerobe) to 5 (obligate aerobe)",
-  "pH_optimum"        = "pH",    
-  "Salt_optimum"      = "g per l",  
-  "Sporulation"       = "0 (never sporulates) to 1 (sporulates easily)",  
-  "Temp_optimum"      = "$^{\\circ}$C",  
-  "Width"             = "log ($\\mu$m)"
-)
-
 tabTraitSources <- trait_units %>%
   gather(Trait, Units) %>%
   left_join(trait_sources, by = 'Trait') %>%
@@ -127,7 +127,7 @@ j <- expand.grid(unique(traits$trait), unique(traits$trait)) %>%
                        ifelse(pval < 0.01, '**',
                               ifelse(pval < 0.05, '*', ''))))
 
-#convert to numeric to remove redundances
+#convert to numeric to eliminate redundancies
 j <- filter(j, as.numeric(Var1) > as.numeric(Var2))
 j$Var1 <- factor(j$Var1, levels = rev(levels(j$Var1)))
 
@@ -575,22 +575,6 @@ j <- otus %>%
   mutate(t = round(t)) %>%
   filter(t < 37 & t > 1)
 
-#plot
-# figCWMs <- ggplot(j, aes(x = t, y = cwm)) +
-#   stat_summary(fun.y = mean, color = 'red', geom = "point") + 
-#   stat_summary(fun.data = mean_cl_boot, color = 'red', geom = "linerange") +
-#   stat_smooth(color = 'black', se = FALSE) +
-#   facet_wrap(~trait, scale = 'free', ncol = 3) +
-#   scale_x_continuous(breaks = c(3,9,15,21,27,33)) +
-#   labs(x = "Months after birth", y = "Abundance-weighted community mean")  +
-#   theme_classic() +
-#   theme(strip.background = element_blank(), 
-#         legend.position = 'none') +
-#   annotate("segment", x=-Inf, xend=Inf, y=-Inf, yend=-Inf)+
-#   annotate("segment", x=-Inf, xend=-Inf, y=-Inf, yend=Inf)
-# 
-#figCWMs
-
 myplots <- list()
 ts <- sort(unique(j$trait))
 for (i in ts) {
@@ -699,26 +683,6 @@ tmp3 <- tmp %>%
   ungroup() %>%
   rename(tbin = tbin0)
 
-#plot
-# figCWMsTreat <- ggplot(tmp, aes(x = tbin, y = val, color = treatment)) +
-#   stat_summary(fun.data = "mean_cl_boot", size = .25) +
-#   geom_line(data = tmp2) +
-#   scale_shape_discrete(guide = FALSE) +
-#   geom_text(aes(label = symb), data = tmp3, show.legend = FALSE, size = 6) +
-#   geom_point(aes(y = yval), data = tmp3, alpha = 0) +
-#   facet_wrap(~trait, scales = 'free', ncol = 3) +
-#   scale_color_manual(values = c('black',"#00A480","#FF6200"), name = '') +
-#   scale_x_continuous(breaks = c(3,9,15,21,27,33)) +
-#   expand_limits(x = 2) +
-#   theme_classic() +
-#   theme(strip.background = element_blank(), 
-#         legend.position = 'bottom') +
-#   labs(x = 'Months after birth', y = 'Abundance-weighted community mean') +
-#   annotate("segment", x=-Inf, xend=Inf, y=-Inf, yend=-Inf)+
-#   annotate("segment", x=-Inf, xend=-Inf, y=-Inf, yend=Inf)
-# 
-# figCWMsTreat
-
 myplots <- list()
 ts <- sort(unique(tmp$trait))
 for (i in ts) {
@@ -768,9 +732,6 @@ xtitle <- ggdraw() + draw_label("Months after birth", size = 12)
 figCWMsTreat <- plot_grid(ps, xtitle, myleg, ncol = 1, rel_heights = c(1,0.06, 0.06))
 
 
-
-
-
 ## Figure showing the variance of trait values of *cells* (not species)
 figCWMsVariance <- function(){}
 
@@ -788,22 +749,6 @@ tmp <- otus %>%
   filter(t < 37 & t >= 2) %>%
   mutate(trait = trait_names[match(trait, names(trait_names))],
          trait = ifelse(trait == 'Temperature optimum', 'Temp. optimum', trait))
-
-#plot
-# figCWMsVariance <- ggplot(tmp, aes(x = t, y = var, color = trait)) +
-#   stat_summary(fun.y = mean, geom = "point") + 
-#   stat_summary(fun.data = mean_cl_boot, geom = "linerange") +
-#   stat_smooth(se = FALSE) +
-#   scale_x_continuous(breaks= seq(10,30,by=10)) +
-#   facet_wrap(~trait, ncol = 3) +
-#   labs(x = "Months after birth", y = "Abundance-weighted community variance") +
-#   theme_minimal() +
-#   theme(
-#     legend.position = 'none',
-#     panel.background = element_blank(),
-#     strip.background = element_blank()) +
-#   annotate("segment", x=-Inf, xend=Inf, y=-Inf, yend=-Inf)+
-#   annotate("segment", x=-Inf, xend=-Inf, y=-Inf, yend=Inf)
 
 myplots <- list()
 ts <- sort(unique(tmp$trait))
@@ -922,17 +867,6 @@ yvals <- c(
 
 #add yvals to dataframe
 tmp <- tmp %>% mutate(yval = yvals[match(trait, names(yvals))])
-
-#plot
-# figCWMsSuccGroup <- ggplot(tmp, aes(x = group, y = val)) +
-#   facet_wrap(~trait, scales = 'free') +
-#   stat_summary(fun.data = "mean_cl_boot") +
-#   geom_text(aes(label = label, y = yval), size = 2, data = filter(tmp, !is.na(label))) +
-#   th +
-#   labs(x = 'OTU successional group', y = 'Trait value')
-# 
-#figCWMsSuccGroup
-
 
 myplots <- list()
 ts <- sort(unique(tmp$trait))
@@ -1128,25 +1062,6 @@ tmp <- j %>%
   mutate(symb = ifelse(sig & dist == max(dist), symb, NA),
          sig = ifelse(is.na(symb), NA, sig))
 
-#plot
-# figIntrababyDiss <- ggplot(j, aes(x = tbin, y = dist, lty = data)) +
-#     stat_summary(fun.y = mean, geom = "point", aes(shape = data)) + 
-#     stat_summary(fun.data = mean_cl_boot, geom = "linerange", data = filter(j, tbin < 39)) +
-#     geom_text(aes(label = symb, y = dist + 0.5), data = tmp, size = 6) +
-#     geom_line(data = tmp) +
-#     facet_grid(method ~ group, scales = 'free') +
-#     labs(x = 'Months after birth', y = '') +
-#     scale_linetype_discrete(name = '') +
-#     scale_shape_manual(values = c(16,1), name = '') +
-#     scale_x_continuous(breaks = c(3,9,15,21,27,33)) +
-#     theme_bw() +
-#     theme(
-#       panel.grid.minor = element_blank(),
-#       panel.grid.major = element_blank(),
-#       panel.background = element_blank(),
-#       legend.position = 'bottom')
-# 
-# figIntrababyDiss
 
 p1 <- j %>%
   filter(method == 'OTU-based dissimilarity' & group == 'Dissimilarity to next sample') %>%
